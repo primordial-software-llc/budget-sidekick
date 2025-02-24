@@ -122,6 +122,10 @@ export default function DebitAccountReport() {
     }));
   };
   
+  const calculateNetTotal = () => {
+    return Object.values(structure).reduce((total, data) => total + data.amount, 0);
+  };
+  
   return (
     <DashboardLayout 
       currentLedger={currentLedger}
@@ -142,6 +146,12 @@ export default function DebitAccountReport() {
               onToggle={handleToggle}
             />
           ))}
+          <div className="flex items-center py-2 border-t mt-4">
+            <span className="flex-grow font-medium">Net</span>
+            <span className={`font-mono font-medium ${calculateNetTotal() >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              {calculateNetTotal() >= 0 ? '+' : '-'}${Math.abs(calculateNetTotal()).toFixed(2)}
+            </span>
+          </div>
         </div>
       </div>
     </DashboardLayout>

@@ -34,7 +34,7 @@ function createNestedStructure(entries) {
         current[category] = {
           amount: 0,
           children: {},
-          isExpanded: true
+          isExpanded: false
         };
       }
       
@@ -75,6 +75,7 @@ function BudgetItem({ name, data, level = 0, onToggle, fullPath = name }) {
   const hasChildren = data?.children ? Object.keys(data.children).length > 0 : false;
   const amount = data?.amount || 0;
   const isPositive = amount >= 0;
+  const prefix = isPositive ? '+' : '-';
   
   return (
     <div>
@@ -94,7 +95,7 @@ function BudgetItem({ name, data, level = 0, onToggle, fullPath = name }) {
         )}
         <span className="flex-grow">{name}</span>
         <span className={`font-mono ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-          ${Math.abs(amount).toFixed(2)}
+          {prefix}${Math.abs(amount).toFixed(2)}
         </span>
       </div>
       
@@ -171,6 +172,11 @@ export default function BudgetReport() {
     });
   };
   
+  const calculateNetTotal = () => {
+    if (!structure.Income || !structure.Expenses) return 0;
+    return structure.Income.amount + structure.Expenses.amount; // Expenses are already negative
+  };
+
   return (
     <DashboardLayout 
       currentLedger={currentLedger}
@@ -191,6 +197,12 @@ export default function BudgetReport() {
               onToggle={handleToggle}
             />
           ))}
+          <div className="flex items-center py-2 border-t mt-4">
+            <span className="flex-grow font-medium">Net</span>
+            <span className={`font-mono font-medium ${calculateNetTotal() >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+              {calculateNetTotal() >= 0 ? '+' : '-'}${Math.abs(calculateNetTotal()).toFixed(2)}
+            </span>
+          </div>
         </div>
       </div>
     </DashboardLayout>
