@@ -2,8 +2,60 @@
 
 import Link from 'next/link';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
+import { UploadIcon, DownloadIcon } from 'lucide-react';
+import { exportLedgerData, importLedgerData  } from '@/utils/indexedDB';
 
 export default function DashboardLayout({ children, currentLedger, availableLedgers, setCurrentLedger, activeTab }) {
+  const handleExport = async () => {
+    try {
+      const data = await exportLedgerData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `budget-sidekick-export-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Export failed:', error);
+      alert('Failed to export data');
+    }
+  };
+
+  const handleImport = async () => {
+    try {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.json';
+      
+      input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          try {
+            const importData = JSON.parse(e.target.result);
+            const result = await importLedgerData(importData);
+            alert(`Import completed: ${result.success} successful, ${result.failed} failed`);
+            window.location.reload();
+          } catch (error) {
+            console.error('Import failed:', error);
+            alert('Failed to import data: Invalid file format');
+          }
+        };
+        reader.readAsText(file);
+      };
+
+      input.click();
+    } catch (error) {
+      console.error('Import failed:', error);
+      alert('Failed to import data');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header/Navigation Bar */}
@@ -46,6 +98,23 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
                   <option key={name} value={name}>{name}</option>
                 ))}
               </select>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleImport}
+                className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              >
+                <UploadIcon className="w-4 h-4" />
+                Import
+              </button>
+              <button
+                onClick={handleExport}
+                className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+              >
+                <DownloadIcon className="w-4 h-4" />
+                Export
+              </button>
             </div>
           </div>
         </div>
