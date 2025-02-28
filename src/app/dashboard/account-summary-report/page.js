@@ -6,18 +6,19 @@ import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
 import Link from 'next/link';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 import DashboardLayout from '@/components/DashboardLayout';
+import Decimal from '@/lib/decimal-config';
 
 // Helper function to create nested structure
 function createNestedStructure(entries) {
   // Initialize structure with Income and Expenses categories
   const structure = {
     Income: {
-      amount: 0,
+      amount: new Decimal(0),
       children: {},
       isExpanded: true
     },
     Expenses: {
-      amount: 0,
+      amount: new Decimal(0),
       children: {},
       isExpanded: true
     }
@@ -26,20 +27,20 @@ function createNestedStructure(entries) {
   // First pass: create the structure and set leaf amounts
   entries.forEach(entry => {
     const categories = entry.name.split(':');
-    const topLevelCategory = entry.amount >= 0 ? 'Income' : 'Expenses';
+    const topLevelCategory = new Decimal(entry.amount).gte(0) ? 'Income' : 'Expenses';
     let current = structure[topLevelCategory].children;
     
     categories.forEach((category, index) => {
       if (!current[category]) {
         current[category] = {
-          amount: 0,
+          amount: new Decimal(0),
           children: {},
           isExpanded: false
         };
       }
       
       if (index === categories.length - 1) {
-        current[category].amount = entry.amount; // Keep original value with sign
+        current[category].amount = new Decimal(entry.amount);
         current[category].isLeaf = true;
       }
       
@@ -49,14 +50,14 @@ function createNestedStructure(entries) {
   
   // Helper function to calculate totals recursively
   const calculateTotals = (node) => {
-    if (!node) return 0;
+    if (!node) return new Decimal(0);
     if (node.isLeaf) return node.amount;
     
-    let total = 0;
+    let total = new Decimal(0);
     for (const childKey in node.children) {
       const childTotal = calculateTotals(node.children[childKey]);
       node.children[childKey].amount = childTotal;
-      total += childTotal;
+      total = total.plus(childTotal);
     }
     
     node.amount = total;
@@ -73,9 +74,8 @@ function createNestedStructure(entries) {
 // Component to render a budget item
 function BudgetItem({ name, data, level = 0, onToggle, fullPath = name }) {
   const hasChildren = data?.children ? Object.keys(data.children).length > 0 : false;
-  const amount = data?.amount || 0;
-  const isPositive = amount >= 0;
-  const prefix = isPositive ? '+' : '-';
+  const amount = new Decimal(data?.amount || 0);
+  const isPositive = amount.gte(0);
   
   return (
     <div>
@@ -95,7 +95,7 @@ function BudgetItem({ name, data, level = 0, onToggle, fullPath = name }) {
         )}
         <span className="flex-grow">{name}</span>
         <span className={`font-mono ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-          {prefix}${Math.abs(amount).toFixed(2)}
+          ${amount.toFormat(2)}
         </span>
       </div>
       
@@ -173,8 +173,8 @@ export default function BudgetReport() {
   };
   
   const calculateNetTotal = () => {
-    if (!structure.Income || !structure.Expenses) return 0;
-    return structure.Income.amount + structure.Expenses.amount; // Expenses are already negative
+    if (!structure.Income || !structure.Expenses) return new Decimal(0);
+    return new Decimal(structure.Income.amount).plus(structure.Expenses.amount);
   };
 
   return (
@@ -198,10 +198,15 @@ export default function BudgetReport() {
             />
           ))}
           <div className="flex items-center py-2 border-t mt-4">
-            <span className="flex-grow font-medium">Net</span>
-            <span className={`font-mono font-medium ${calculateNetTotal() >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {calculateNetTotal() >= 0 ? '+' : '-'}${Math.abs(calculateNetTotal()).toFixed(2)}
-            </span>
+            <span className="flex-grow font-medium">Total</span>
+            {(() => {
+              const netTotal = calculateNetTotal();
+              return (
+                <span className={`font-mono font-medium ${netTotal.gte(0) ? 'text-green-600' : 'text-red-600'}`}>
+                  ${netTotal.toFormat(2)}
+                </span>
+              );
+            })()}
           </div>
         </div>
       </div>

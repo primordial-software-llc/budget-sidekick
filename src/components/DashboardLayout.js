@@ -132,7 +132,7 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
             </Link>
             <Link 
               href="/dashboard/account-summary-report" 
-              className={`px-4 py-3 text-white ${activeTab === 'withdrawals-obligations-report' ? 'bg-blue-800' : 'hover:bg-blue-800'}`}
+              className={`px-4 py-3 text-white ${activeTab === 'report' ? 'bg-blue-800' : 'hover:bg-blue-800'}`}
             >
               Account Summary Report
             </Link>

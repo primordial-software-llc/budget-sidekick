@@ -21,6 +21,7 @@ import { DB_NAME, DB_VERSION, STORE_NAME } from '@/utils/constants';
 import Link from 'next/link';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 import DashboardLayout from '@/components/DashboardLayout';
+import Decimal from '@/lib/decimal-config';
 
 function Dashboard() {
   const router = useRouter();
@@ -304,31 +305,34 @@ function Dashboard() {
               </tr>
             </thead>
             <tbody>
-              {ledgerEntries.map((entry, index) => (
-                <tr key={index} className="border-b hover:bg-gray-50">
-                  <td className={`p-4 ${entry.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                    ${Math.abs(entry.amount).toFixed(2)}
-                  </td>
-                  <td className="p-4">{entry.day}</td>
-                  <td className="p-4">{entry.name}</td>
-                  <td className="p-4">
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleEdit(entry)}
-                        className="p-2 text-blue-500 hover:bg-blue-50 rounded-full"
-                      >
-                        <PencilIcon className="w-5 h-5" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(entry)}
-                        className="p-2 text-red-500 hover:bg-red-50 rounded-full"
-                      >
-                        <TrashIcon className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+              {ledgerEntries.map((entry, index) => {
+                const amount = new Decimal(entry.amount);
+                return (
+                  <tr key={index} className="border-b hover:bg-gray-50">
+                    <td className={`p-4 ${amount.gte(0) ? 'text-green-600' : 'text-red-600'}`}>
+                      ${amount.toFormat(2)}
+                    </td>
+                    <td className="p-4">{entry.day}</td>
+                    <td className="p-4">{entry.name}</td>
+                    <td className="p-4">
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleEdit(entry)}
+                          className="p-2 text-blue-500 hover:bg-blue-50 rounded-full"
+                        >
+                          <PencilIcon className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(entry)}
+                          className="p-2 text-red-500 hover:bg-red-50 rounded-full"
+                        >
+                          <TrashIcon className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

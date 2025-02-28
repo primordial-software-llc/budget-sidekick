@@ -1,10 +1,11 @@
- 'use client';
+'use client';
 
 import { useState, useEffect } from 'react';
 import { getLedger, getAllLedgerNames } from '@/utils/indexedDB';
 import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 import DashboardLayout from '@/components/DashboardLayout';
+import Decimal from '@/lib/decimal-config';
 
 // Helper function to extract payment account
 function getPaymentAccount(name) {
@@ -39,8 +40,8 @@ function createPaymentAccountStructure(entries) {
 
 // Component to render a payment account item
 function PaymentAccountItem({ name, data, onToggle }) {
-  const amount = data?.amount || 0;
-  const isPositive = amount >= 0;
+  const amount = new Decimal(data?.amount || 0);
+  const isPositive = amount.gte(0);
   
   return (
     <div>
@@ -59,20 +60,23 @@ function PaymentAccountItem({ name, data, onToggle }) {
         )}
         <span className="flex-grow">{name}</span>
         <span className={`font-mono ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-          ${Math.abs(amount).toFixed(2)}
+          ${amount.toFormat(2)}
         </span>
       </div>
       
       {data.isExpanded && data.entries.length > 0 && (
         <div className="ml-6">
-          {data.entries.map((entry, index) => (
-            <div key={index} className="flex justify-between py-1">
-              <span className="text-gray-600">{entry.name.split('-')[0].trim()}</span>
-              <span className={`font-mono ${entry.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                ${Math.abs(entry.amount).toFixed(2)}
-              </span>
-            </div>
-          ))}
+          {data.entries.map((entry, index) => {
+            const entryAmount = new Decimal(entry.amount);
+            return (
+              <div key={index} className="flex justify-between py-1">
+                <span className="text-gray-600">{entry.name.split('-')[0].trim()}</span>
+                <span className={`font-mono ${entryAmount.gte(0) ? 'text-green-600' : 'text-red-600'}`}>
+                  ${entryAmount.toFormat(2)}
+                </span>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
@@ -123,7 +127,8 @@ export default function DebitAccountReport() {
   };
   
   const calculateNetTotal = () => {
-    return Object.values(structure).reduce((total, data) => total + data.amount, 0);
+    return Object.values(structure).reduce((total, data) => 
+      total.plus(new Decimal(data.amount || 0)), new Decimal(0));
   };
   
   return (
@@ -147,10 +152,15 @@ export default function DebitAccountReport() {
             />
           ))}
           <div className="flex items-center py-2 border-t mt-4">
-            <span className="flex-grow font-medium">Net</span>
-            <span className={`font-mono font-medium ${calculateNetTotal() >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-              {calculateNetTotal() >= 0 ? '+' : '-'}${Math.abs(calculateNetTotal()).toFixed(2)}
-            </span>
+            <span className="flex-grow font-medium">Total</span>
+            {(() => {
+              const netTotal = calculateNetTotal();
+              return (
+                <span className={`font-mono font-medium ${netTotal.gte(0) ? 'text-green-600' : 'text-red-600'}`}>
+                  ${netTotal.toFormat(2)}
+                </span>
+              );
+            })()}
           </div>
         </div>
       </div>
