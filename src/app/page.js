@@ -10,9 +10,9 @@ import {
 
 function SimpleLedgerDemo() {
   return (
-    <div className="grid grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-        <h3 className="text-gray-900 font-semibold text-base text-center mb-3">Payroll</h3>
+        <h3 className="text-gray-900 font-semibold text-base text-center mb-3">Pay Stub</h3>
         <div className="space-y-1.5">
           <div className="flex justify-between text-sm">
             <span className="text-gray-700">Income:Salary:Gross</span>
@@ -70,19 +70,19 @@ function SimpleLedgerDemo() {
         <div className="space-y-1.5">
           <div className="flex justify-between text-sm">
             <span className="text-gray-700 truncate pr-2">Assets:Property:Land</span>
-            <span className="text-green-600 font-medium tabular-nums">+$375K</span>
+            <span className="text-green-600 font-medium tabular-nums">+$175,000.00</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-700 truncate pr-2">Assets:Property:Building</span>
-            <span className="text-green-600 font-medium tabular-nums">+$225K</span>
+            <span className="text-green-600 font-medium tabular-nums">+$125,000.00</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-700 truncate pr-2">Liabilities:Mortgage</span>
-            <span className="text-red-600 font-medium tabular-nums">-$450K</span>
+            <span className="text-red-600 font-medium tabular-nums">-$250,000.00</span>
           </div>
           <div className="flex justify-between text-sm pt-1.5 mt-1.5 border-t border-gray-200">
             <span className="text-gray-900 font-medium">Net Worth:</span>
-            <span className="text-green-600 font-medium tabular-nums">$150K</span>
+            <span className="text-green-600 font-medium tabular-nums">$50,000.00</span>
           </div>
         </div>
       </div>
