@@ -63,23 +63,25 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
         <div className="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center">
           {/* Logo Section */}
           <div className="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" className="h-12">
-              <style>
-                {`.logo-text { font-family: Arial, sans-serif; font-weight: bold; }
-                  .budget { fill: #1e3a5f; }
-                  .sidekick { fill: #3498db; }`}
-              </style>
-              <g transform="translate(5,10) scale(0.83)">
-                <path d="M10 50 L20 40 L30 45 L40 15 L50 25" fill="none" stroke="#27ae60" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path>
-                <circle cx="20" cy="40" r="3" fill="#3498db"></circle>
-                <circle cx="30" cy="45" r="3" fill="#3498db"></circle>
-                <circle cx="40" cy="15" r="3" fill="#3498db"></circle>
-                <path d="M5 55 L55 55" stroke="#1e3a5f" strokeWidth="2"></path>
-                <path d="M5 10 L5 55" stroke="#1e3a5f" strokeWidth="2"></path>
-              </g>
-              <text x="70" y="35" className="logo-text budget" fontSize="24">Budget</text>
-              <text x="70" y="55" className="logo-text sidekick" fontSize="24">Sidekick</text>
-            </svg>
+            <Link href="/dashboard">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" className="h-12">
+                <style>
+                  {`.logo-text { font-family: Arial, sans-serif; font-weight: bold; }
+                    .budget { fill: #1e3a5f; }
+                    .sidekick { fill: #3498db; }`}
+                </style>
+                <g transform="translate(5,10) scale(0.83)">
+                  <path d="M10 50 L20 40 L30 45 L40 15 L50 25" fill="none" stroke="#27ae60" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path>
+                  <circle cx="20" cy="40" r="3" fill="#3498db"></circle>
+                  <circle cx="30" cy="45" r="3" fill="#3498db"></circle>
+                  <circle cx="40" cy="15" r="3" fill="#3498db"></circle>
+                  <path d="M5 55 L55 55" stroke="#1e3a5f" strokeWidth="2"></path>
+                  <path d="M5 10 L5 55" stroke="#1e3a5f" strokeWidth="2"></path>
+                </g>
+                <text x="70" y="35" className="logo-text budget" fontSize="24">Budget</text>
+                <text x="70" y="55" className="logo-text sidekick" fontSize="24">Sidekick</text>
+              </svg>
+            </Link>
           </div>
 
           {/* Right side buttons */}
@@ -124,6 +126,12 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
       <div className="bg-blue-900">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex space-x-6">
+            <Link 
+              href="/dashboard/overview" 
+              className={`px-4 py-3 text-white ${activeTab === 'overview' ? 'bg-blue-800' : 'hover:bg-blue-800'}`}
+            >
+              Overview
+            </Link>
             <Link 
               href="/dashboard" 
               className={`px-4 py-3 text-white ${activeTab === 'entries' ? 'bg-blue-800' : 'hover:bg-blue-800'}`}
