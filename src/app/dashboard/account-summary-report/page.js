@@ -1,10 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { getLedger, getAllLedgerNames } from '@/utils/indexedDB';
 import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
-import Link from 'next/link';
-import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 import DashboardLayout from '@/components/DashboardLayout';
 import Decimal from '@/lib/decimal-config';
 import { useSearchParams } from 'next/navigation';
@@ -118,7 +116,8 @@ function BudgetItem({ name, data, level = 0, onToggle, fullPath = name }) {
   );
 }
 
-export default function BudgetReport() {
+// Create a new component to handle the search params logic
+function BudgetReportContent() {
   const [structure, setStructure] = useState({});
   const [currentLedger, setCurrentLedger] = useState('');
   const [availableLedgers, setAvailableLedgers] = useState([]);
@@ -213,5 +212,14 @@ export default function BudgetReport() {
         </div>
       </div>
     </DashboardLayout>
+  );
+}
+
+// Main component wrapped with Suspense
+export default function BudgetReport() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BudgetReportContent />
+    </Suspense>
   );
 } 
