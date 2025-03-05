@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { getLedger, getAllLedgerNames } from '@/utils/indexedDB';
 import DashboardLayout from '@/components/DashboardLayout';
 import Decimal from '@/lib/decimal-config';
+import { useRouter } from 'next/navigation';
 
 function createNestedStructure(entries) {
   const structure = {
@@ -30,6 +31,7 @@ function createNestedStructure(entries) {
 }
 
 function LedgerSummaryCard({ title, data }) {
+  const router = useRouter();
   if (!data) return null;
   
   const netTotal = data.Income.amount.plus(data.Expenses.amount);
@@ -41,7 +43,10 @@ function LedgerSummaryCard({ title, data }) {
     .sort(([, a], [, b]) => a.minus(b));
 
   return (
-    <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+    <div 
+      className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+      onClick={() => router.push(`/dashboard/account-summary-report?ledger=${encodeURIComponent(title)}`)}
+    >
       <h3 className="text-gray-900 font-semibold text-base text-center mb-3">{title}</h3>
       <div className="space-y-1.5">
         {incomes.map(([name, amount]) => (
@@ -74,6 +79,7 @@ function LedgerSummaryCard({ title, data }) {
 export default function Overview() {
   const [ledgerData, setLedgerData] = useState({});
   const [availableLedgers, setAvailableLedgers] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const loadAllLedgers = async () => {

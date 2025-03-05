@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 import DashboardLayout from '@/components/DashboardLayout';
 import Decimal from '@/lib/decimal-config';
+import { useSearchParams } from 'next/navigation';
 
 // Helper function to create nested structure
 function createNestedStructure(entries) {
@@ -121,25 +122,26 @@ export default function BudgetReport() {
   const [structure, setStructure] = useState({});
   const [currentLedger, setCurrentLedger] = useState('');
   const [availableLedgers, setAvailableLedgers] = useState([]);
+  const searchParams = useSearchParams();
   
   useEffect(() => {
     const loadLedgers = async () => {
       try {
         const ledgerNames = await getAllLedgerNames();
         setAvailableLedgers(ledgerNames);
-        // Get the stored ledger from localStorage, fallback to first ledger if none stored
-        const storedLedger = localStorage.getItem(LOCAL_STORAGE_KEY_LEDGER);
-        if (storedLedger && ledgerNames.includes(storedLedger)) {
-          setCurrentLedger(storedLedger);
-        } else if (ledgerNames.length > 0) {
-          setCurrentLedger(ledgerNames[0]);
+        
+        // Get the ledger from URL query parameter
+        const ledgerFromUrl = searchParams.get('ledger');
+        
+        if (ledgerFromUrl && ledgerNames.includes(ledgerFromUrl)) {
+          setCurrentLedger(ledgerFromUrl);
         }
       } catch (error) {
         console.error('Error loading ledgers:', error);
       }
     };
     loadLedgers();
-  }, []);
+  }, [searchParams]);
   
   useEffect(() => {
     const loadData = async () => {
