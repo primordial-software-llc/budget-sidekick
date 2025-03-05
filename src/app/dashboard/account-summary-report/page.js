@@ -1,16 +1,15 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { getLedger, getAllLedgerNames } from '@/utils/indexedDB';
 import { ChevronDownIcon, ChevronRightIcon } from 'lucide-react';
 import DashboardLayout from '@/components/DashboardLayout';
 import Decimal from '@/lib/decimal-config';
-import { useSearchParams } from 'next/navigation';
+import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 
-// Helper function to create nested structure
-function createNestedStructure(entries) {
-  // Initialize structure with Income and Expenses categories
-  const structure = {
+function createNestedStructure(entries) { // Helper function to create nested structure
+  
+  const structure = { // Initialize structure with Income and Expenses categories
     Income: {
       amount: new Decimal(0),
       children: {},
@@ -23,8 +22,8 @@ function createNestedStructure(entries) {
     }
   };
   
-  // First pass: create the structure and set leaf amounts
-  entries.forEach(entry => {
+  
+  entries.forEach(entry => { // First pass: create the structure and set leaf amounts
     const categories = entry.name.split(':');
     const topLevelCategory = new Decimal(entry.amount).gte(0) ? 'Income' : 'Expenses';
     let current = structure[topLevelCategory].children;
@@ -47,8 +46,8 @@ function createNestedStructure(entries) {
     });
   });
   
-  // Helper function to calculate totals recursively
-  const calculateTotals = (node) => {
+  
+  const calculateTotals = (node) => { // Helper function to calculate totals recursively
     if (!node) return new Decimal(0);
     if (node.isLeaf) return node.amount;
     
@@ -63,14 +62,12 @@ function createNestedStructure(entries) {
     return total;
   };
   
-  // Calculate totals for Income and Expenses separately
   structure.Income.amount = calculateTotals(structure.Income);
   structure.Expenses.amount = calculateTotals(structure.Expenses);
   
   return structure;
 }
 
-// Component to render a budget item
 function BudgetItem({ name, data, level = 0, onToggle, fullPath = name }) {
   const hasChildren = data?.children ? Object.keys(data.children).length > 0 : false;
   const amount = new Decimal(data?.amount || 0);
@@ -116,12 +113,10 @@ function BudgetItem({ name, data, level = 0, onToggle, fullPath = name }) {
   );
 }
 
-// Create a new component to handle the search params logic
 function BudgetReportContent() {
   const [structure, setStructure] = useState({});
   const [currentLedger, setCurrentLedger] = useState('');
   const [availableLedgers, setAvailableLedgers] = useState([]);
-  const searchParams = useSearchParams();
   
   useEffect(() => {
     const loadLedgers = async () => {
@@ -129,18 +124,18 @@ function BudgetReportContent() {
         const ledgerNames = await getAllLedgerNames();
         setAvailableLedgers(ledgerNames);
         
-        // Get the ledger from URL query parameter
-        const ledgerFromUrl = searchParams.get('ledger');
-        
-        if (ledgerFromUrl && ledgerNames.includes(ledgerFromUrl)) {
-          setCurrentLedger(ledgerFromUrl);
+        const storedLedger = localStorage.getItem(LOCAL_STORAGE_KEY_LEDGER);
+        if (storedLedger && ledgerNames.includes(storedLedger)) {
+          setCurrentLedger(storedLedger);
+        } else if (ledgerNames.length > 0) {
+          setCurrentLedger(ledgerNames[0]);
         }
       } catch (error) {
         console.error('Error loading ledgers:', error);
       }
     };
     loadLedgers();
-  }, [searchParams]);
+  }, []);
   
   useEffect(() => {
     const loadData = async () => {
@@ -215,11 +210,6 @@ function BudgetReportContent() {
   );
 }
 
-// Main component wrapped with Suspense
 export default function BudgetReport() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <BudgetReportContent />
-    </Suspense>
-  );
+  return <BudgetReportContent />;
 } 

@@ -5,6 +5,7 @@ import { getLedger, getAllLedgerNames } from '@/utils/indexedDB';
 import DashboardLayout from '@/components/DashboardLayout';
 import Decimal from '@/lib/decimal-config';
 import { useRouter } from 'next/navigation';
+import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 
 function createNestedStructure(entries) {
   const structure = {
@@ -45,7 +46,7 @@ function LedgerSummaryCard({ title, data }) {
   return (
     <div 
       className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-      onClick={() => router.push(`/dashboard/account-summary-report?ledger=${encodeURIComponent(title)}`)}
+      onClick={() => router.push(`/dashboard/account-summary-report`)}
     >
       <h3 className="text-gray-900 font-semibold text-base text-center mb-3">{title}</h3>
       <div className="space-y-1.5">
@@ -105,6 +106,11 @@ export default function Overview() {
     loadAllLedgers();
   }, []);
 
+  const handleLedgerSelect = (ledgerName) => {
+    localStorage.setItem(LOCAL_STORAGE_KEY_LEDGER, ledgerName);
+    router.push('/dashboard/account-summary-report');
+  };
+
   return (
     <DashboardLayout
       currentLedger={availableLedgers[0] || ''}
@@ -117,11 +123,15 @@ export default function Overview() {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {availableLedgers.map(ledgerName => (
-            <LedgerSummaryCard
-              key={ledgerName}
-              title={ledgerName}
-              data={ledgerData[ledgerName]}
-            />
+            <div 
+              key={ledgerName} 
+              onClick={() => handleLedgerSelect(ledgerName)}
+            >
+              <LedgerSummaryCard
+                title={ledgerName}
+                data={ledgerData[ledgerName]}
+              />
+            </div>
           ))}
         </div>
       </div>
