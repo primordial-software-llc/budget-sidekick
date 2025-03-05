@@ -31,7 +31,7 @@ function createNestedStructure(entries) {
   return structure;
 }
 
-function LedgerSummaryCard({ title, data }) {
+function LedgerSummaryCard({ title, data, onClick }) {
   const router = useRouter();
   if (!data) return null;
   
@@ -46,7 +46,7 @@ function LedgerSummaryCard({ title, data }) {
   return (
     <div 
       className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-      onClick={() => router.push(`/dashboard/account-summary-report`)}
+      onClick={onClick}
     >
       <h3 className="text-gray-900 font-semibold text-base text-center mb-3">{title}</h3>
       <div className="space-y-1.5">
@@ -123,13 +123,11 @@ export default function Overview() {
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {availableLedgers.map(ledgerName => (
-            <div 
-              key={ledgerName} 
-              onClick={() => handleLedgerSelect(ledgerName)}
-            >
+            <div key={ledgerName}>
               <LedgerSummaryCard
                 title={ledgerName}
                 data={ledgerData[ledgerName]}
+                onClick={() => handleLedgerSelect(ledgerName)}
               />
             </div>
           ))}
