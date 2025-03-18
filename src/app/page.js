@@ -7,6 +7,8 @@ import {
   ArrowRightIcon,
   CheckCircleIcon,
 } from 'lucide-react';
+import Reviews from '@/components/Reviews';
+import CallToAction from '@/components/CallToAction';
 
 function SimpleLedgerDemo() {
   return (
@@ -92,7 +94,7 @@ function SimpleLedgerDemo() {
 
 function Home() {
   return (
-    <>
+    <main className="min-h-screen">
       {/* Gradient Header Banner */}
       <div className="bg-gradient-to-r from-blue-600 via-blue-800 to-purple-800 text-white">
         <div className="max-w-6xl mx-auto px-6 py-20 text-center">
@@ -105,9 +107,9 @@ function Home() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto p-6 space-y-12">
+      <div className="relative">
         {/* Login Button */}
-        <div className="flex justify-end -mt-8">
+        <div className="absolute right-4 top-4 z-10">
           <Link 
             href="/dashboard" 
             className="bg-white text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors shadow-lg"
@@ -117,59 +119,55 @@ function Home() {
         </div>
 
         {/* Main Features */}
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center mb-4">
-              <BookIcon className="w-6 h-6 text-blue-600 mr-2" />
-              <h3 className="text-xl font-semibold">Nested Accounts</h3>
+        <div className="max-w-6xl mx-auto px-6 py-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105">
+              <div className="flex items-center mb-4">
+                <BookIcon className="w-8 h-8 text-blue-600 mr-3" />
+                <h3 className="text-xl font-bold">Nested Accounts</h3>
+              </div>
+              <p className="text-gray-600 leading-relaxed">
+                Use intuitive colon-separated hierarchies like Expenses:Food:Groceries or Income:Salary:Gross for powerful organization.
+              </p>
             </div>
-            <p className="text-gray-600">
-              Use intuitive colon-separated hierarchies like Expenses:Food:Groceries or Income:Salary:Gross for powerful organization.
-            </p>
-          </div>
 
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center mb-4">
-              <CheckCircleIcon className="w-6 h-6 text-blue-600 mr-2" />
-              <h3 className="text-xl font-semibold">Multiple Entities</h3>
+            <div className="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105">
+              <div className="flex items-center mb-4">
+                <CheckCircleIcon className="w-8 h-8 text-blue-600 mr-3" />
+                <h3 className="text-xl font-bold">Multiple Entities</h3>
+              </div>
+              <p className="text-gray-600 leading-relaxed">
+                Maintain separate ledgers for different business entities and personal finances, each with their own account structure.
+              </p>
             </div>
-            <p className="text-gray-600">
-              Maintain separate ledgers for different business entities and personal finances, each with their own account structure.
-            </p>
-          </div>
 
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center mb-4">
-              <ArrowRightIcon className="w-6 h-6 text-blue-600 mr-2" />
-              <h3 className="text-xl font-semibold">Flexible Categories</h3>
+            <div className="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105">
+              <div className="flex items-center mb-4">
+                <ArrowRightIcon className="w-8 h-8 text-blue-600 mr-3" />
+                <h3 className="text-xl font-bold">Flexible Categories</h3>
+              </div>
+              <p className="text-gray-600 leading-relaxed">
+                Tag transactions with financial institutions, categories, and other attributes to build detailed reports.
+              </p>
             </div>
-            <p className="text-gray-600">
-              Tag transactions with financial institutions, categories, and other attributes to build detailed reports.
-            </p>
           </div>
         </div>
 
         {/* Visual Demo */}
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-2xl font-bold mb-6 text-center">Organize Your Financial World</h2>
-          <SimpleLedgerDemo />
+        <div className="max-w-6xl mx-auto px-6 pb-16">
+          <div className="bg-white rounded-xl shadow-xl p-8">
+            <h2 className="text-3xl font-bold text-center mb-8">Organize Your Financial World</h2>
+            <SimpleLedgerDemo />
+          </div>
         </div>
 
+        {/* Reviews Section */}
+        <Reviews />
+
         {/* Call to Action */}
-        <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
-          <p className="text-lg mb-6">
-            Create your first ledger with powerful account hierarchies today.
-          </p>
-          <Link 
-            href="/dashboard"
-            className="bg-white text-blue-600 font-semibold px-8 py-3 rounded-lg hover:bg-blue-50 transition-colors inline-block"
-          >
-            Create Your Ledger →
-          </Link>
-        </div>
+        <CallToAction />
       </div>
-    </>
+    </main>
   );
 }
 
