@@ -12,12 +12,13 @@ import {
   XIcon,
   SearchIcon,
   DownloadIcon,
-  PlusIcon
+  PlusIcon,
+  LayersIcon
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { saveLedger, getLedger, getAllLedgerNames } from '@/utils/indexedDB';
-import { DB_NAME, DB_VERSION, STORE_NAME } from '@/utils/constants';
+import { saveLedger, getLedger, getAllLedgerNames, getTransactionsByLedger } from '@/utils/indexedDB';
+import { DB_NAME, DB_VERSION, LEDGER_STORE, FEATURES } from '@/utils/constants';
 import Link from 'next/link';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 import DashboardLayout from '@/components/DashboardLayout';
@@ -27,6 +28,7 @@ function Dashboard() {
   const router = useRouter();
   
   const [ledgerEntries, setLedgerEntries] = useState([]);
+  const [entrySourceMap, setEntrySourceMap] = useState({});
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState('add');
@@ -88,6 +90,33 @@ function Dashboard() {
       try {
         const entries = await getLedger(currentLedger);
         setLedgerEntries(entries);
+        
+        // If transactions feature is enabled, check for entries with transaction sources
+        if (FEATURES.ENABLE_TRANSACTIONS) {
+          const transactions = await getTransactionsByLedger(currentLedger);
+          
+          // Create a map of account+day to transaction count
+          const transactionMap = {};
+          transactions.forEach(transaction => {
+            const day = new Date(transaction.date).getDate();
+            const key = `${transaction.accountName}|${day}`;
+            transactionMap[key] = (transactionMap[key] || 0) + 1;
+          });
+          
+          // Mark entries that have associated transactions
+          const sourceMap = {};
+          entries.forEach(entry => {
+            const key = `${entry.name}|${entry.day}`;
+            if (transactionMap[key] && transactionMap[key] > 0) {
+              sourceMap[key] = {
+                hasTransactions: true,
+                count: transactionMap[key]
+              };
+            }
+          });
+          
+          setEntrySourceMap(sourceMap);
+        }
       } catch (error) {
         console.error('Error loading ledger entries:', error);
       }
@@ -96,6 +125,17 @@ function Dashboard() {
   }, [currentLedger]);
 
   const handleEdit = (entry) => {
+    const key = `${entry.name}|${entry.day}`;
+    
+    // If this entry is from transactions, redirect to the transactions page
+    if (FEATURES.ENABLE_TRANSACTIONS && entrySourceMap[key]?.hasTransactions) {
+      // Notify user they should edit this via transactions
+      if (confirm("This entry is aggregated from transactions. Would you like to view the transactions page instead?")) {
+        router.push('/dashboard/transactions');
+        return;
+      }
+    }
+    
     setModalMode('edit');
     setEditingEntry(entry);
     setFormData({
@@ -107,6 +147,15 @@ function Dashboard() {
   };
 
   const handleDelete = (entryToDelete) => {
+    const key = `${entryToDelete.name}|${entryToDelete.day}`;
+    
+    // If this entry is from transactions, warn the user
+    if (FEATURES.ENABLE_TRANSACTIONS && entrySourceMap[key]?.hasTransactions) {
+      if (!confirm("This entry is aggregated from transactions. Deleting it directly may cause inconsistencies. Continue anyway?")) {
+        return;
+      }
+    }
+    
     const updatedEntries = ledgerEntries.filter(entry => 
       entry.day !== entryToDelete.day || 
       entry.amount !== entryToDelete.amount || 
@@ -218,16 +267,16 @@ function Dashboard() {
 
       request.onupgradeneeded = (event) => {
         const db = event.target.result;
-        if (!db.objectStoreNames.contains(STORE_NAME)) {
-          db.createObjectStore(STORE_NAME);
+        if (!db.objectStoreNames.contains(LEDGER_STORE)) {
+          db.createObjectStore(LEDGER_STORE);
         }
       };
 
       request.onsuccess = (event) => {
         const db = event.target.result;
         try {
-          const transaction = db.transaction([STORE_NAME], 'readwrite');
-          const store = transaction.objectStore(STORE_NAME);
+          const transaction = db.transaction([LEDGER_STORE], 'readwrite');
+          const store = transaction.objectStore(LEDGER_STORE);
           
           store.delete(currentLedger);
           
@@ -295,46 +344,80 @@ function Dashboard() {
           </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gradient-to-r from-blue-900 to-blue-500 text-white">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
               <tr>
-                <th className="p-4 text-left">Amount</th>
-                <th className="p-4 text-left">Day</th>
-                <th className="p-4 text-left">Name</th>
-                <th className="p-4 text-left">Actions</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Day
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Account Name
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Amount
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
             </thead>
-            <tbody>
-              {ledgerEntries
-                .sort((a, b) => a.day - b.day || b.amount - a.amount)
-                .map((entry, index) => {
-                  const amount = new Decimal(entry.amount);
-                  return (
-                    <tr key={index} className="border-b hover:bg-gray-50">
-                      <td className={`p-4 ${amount.gte(0) ? 'text-green-600' : 'text-red-600'}`}>
-                        ${amount.toFormat(2)}
-                      </td>
-                      <td className="p-4">{entry.day}</td>
-                      <td className="p-4">{entry.name}</td>
-                      <td className="p-4">
-                        <div className="flex gap-2">
+            <tbody className="bg-white divide-y divide-gray-200">
+              {ledgerEntries.length === 0 ? (
+                <tr>
+                  <td colSpan="4" className="px-6 py-4 text-center text-gray-500">
+                    No ledger entries found. Add your first entry to get started.
+                  </td>
+                </tr>
+              ) : (
+                [...ledgerEntries]
+                  .sort((a, b) => {
+                    // First by day
+                    if (a.day !== b.day) return a.day - b.day;
+                    // Then by name
+                    return a.name.localeCompare(b.name);
+                  })
+                  .map((entry, index) => {
+                    const key = `${entry.name}|${entry.day}`;
+                    const hasTransactions = entrySourceMap[key]?.hasTransactions;
+                    const transactionCount = entrySourceMap[key]?.count || 0;
+                    
+                    return (
+                      <tr key={index} className={`hover:bg-gray-50 ${hasTransactions ? 'bg-blue-50' : ''}`}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          {entry.day}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            {hasTransactions && (
+                              <div className="mr-2 flex items-center" title={`Aggregated from ${transactionCount} transactions`}>
+                                <LayersIcon className="w-4 h-4 text-blue-500" />
+                                <span className="ml-1 text-xs text-blue-500">{transactionCount}</span>
+                              </div>
+                            )}
+                            {entry.name}
+                          </div>
+                        </td>
+                        <td className={`px-6 py-4 whitespace-nowrap text-right ${entry.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          {new Decimal(entry.amount).toFixed(2)}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <button
                             onClick={() => handleEdit(entry)}
-                            className="p-2 text-blue-500 hover:bg-blue-50 rounded-full"
+                            className="text-indigo-600 hover:text-indigo-900 mr-3"
                           >
-                            <PencilIcon className="w-5 h-5" />
+                            <PencilIcon className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleDelete(entry)}
-                            className="p-2 text-red-500 hover:bg-red-50 rounded-full"
+                            className="text-red-600 hover:text-red-900"
                           >
-                            <TrashIcon className="w-5 h-5" />
+                            <TrashIcon className="w-4 h-4" />
                           </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
+                        </td>
+                      </tr>
+                    );
+                  })
+              )}
             </tbody>
           </table>
         </div>

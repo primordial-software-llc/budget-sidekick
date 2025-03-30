@@ -20,6 +20,40 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Budget Sidekick Features
+
+### Ledger and Account Structure
+Budget Sidekick organizes finances using a ledger and account structure:
+- **Ledgers**: Separate sets of accounts for different entities (businesses, personal finances)
+- **Accounts**: Hierarchical accounts using colon-separated notation (e.g., Income:Salary, Expenses:Food:Groceries)
+- **Entries**: Individual financial entries with amount, day of month, and account name
+
+### Transactions Feature (New)
+The new transactions feature allows detailed tracking of individual financial transactions:
+
+- **Transaction Recording**: Record individual transactions with detailed information:
+  - Amount
+  - Date
+  - Account
+  - Description
+  - Category
+  - Payee
+
+- **Aggregation to Ledger Entries**: Transactions can be aggregated and posted to ledger entries
+  - Transactions for the same account and day are combined
+  - Maintains backwards compatibility with existing ledger entries
+  - Use the "Post to Ledger" button to update ledger entries
+
+- **Data Import/Export**: The import/export functionality now includes transaction data
+  - Exports both ledger and transaction data
+  - Imports preserve both data types
+
+### Notes on Database Structure
+The application uses IndexedDB for client-side storage:
+- DB Version 2 adds support for transactions
+- Existing ledger data is fully preserved
+- Feature flags enable controlled rollout of transaction features
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
