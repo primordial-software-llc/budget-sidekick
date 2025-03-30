@@ -5,6 +5,7 @@ import {
   LayersIcon,
   BarChart3Icon,
   BookOpenIcon,
+  PiggyBank,
 } from 'lucide-react';
 import Reviews from '@/components/Reviews';
 import CallToAction from '@/components/CallToAction';
@@ -153,10 +154,30 @@ function TransactionDemo() {
       </div>
       
       <div className="flex items-center justify-center mt-6">
-        <button className="flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 shadow-md transition-colors">
-          <LayersIcon className="w-5 h-5 mr-2" />
-          <span>Post to Ledger</span>
-        </button>
+        <div className="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl max-w-lg shadow-sm">
+          <div className="flex items-center justify-center mb-3">
+            <LayersIcon className="w-6 h-6 text-blue-600 mr-2" />
+            <h4 className="text-lg font-semibold text-blue-800">Transaction Lists & Posting</h4>
+          </div>
+          <p className="text-gray-700 mb-3">Create transaction lists for specific categories, then post them to your accounts as line items</p>
+          <div className="flex items-center justify-center gap-4 text-sm text-gray-600 flex-wrap mb-4">
+            <div className="flex items-center">
+              <svg className="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+              <span>Category-specific lists</span>
+            </div>
+            <div className="flex items-center">
+              <svg className="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+              <span>Post as account line items</span>
+            </div>
+          </div>
+          <Link 
+            href="/dashboard" 
+            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 shadow-sm transition-colors text-sm"
+          >
+            <span>Try it now</span>
+            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -252,7 +273,7 @@ function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <Link href="/education" className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+            <Link href="/education/sec-filing-timelines" className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
               <h3 className="text-xl font-bold text-blue-700 mb-3">SEC Filing Timelines</h3>
               <p className="text-gray-600 mb-4">
                 Understanding when companies report their official numbers is essential for making informed investment decisions.
@@ -260,21 +281,21 @@ function Home() {
               <div className="text-blue-600 font-medium">Read Article →</div>
             </Link>
             
-            <div className="bg-white rounded-xl shadow-md p-6 opacity-75">
-              <h3 className="text-xl font-bold text-gray-500 mb-3">Financial Statement Analysis</h3>
-              <p className="text-gray-500 mb-4">
-                Learn how to extract meaningful insights from balance sheets, income statements, and cash flow reports.
+            <Link href="/education/50-30-20-budget" className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-bold text-blue-700 mb-3">50/30/20 Budget Rule</h3>
+              <p className="text-gray-600 mb-4">
+                Divides after-tax income into needs (50%), wants (30%), and savings/debt (20%) for a balanced financial life.
               </p>
-              <div className="text-gray-500 font-medium">Coming Soon</div>
-            </div>
+              <div className="text-blue-600 font-medium">Read Article →</div>
+            </Link>
             
-            <div className="bg-white rounded-xl shadow-md p-6 opacity-75">
-              <h3 className="text-xl font-bold text-gray-500 mb-3">Tax Planning Essentials</h3>
-              <p className="text-gray-500 mb-4">
-                Understanding key tax concepts and strategies for both personal and business finances.
+            <Link href="/education/retirement-account-limits" className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
+              <h3 className="text-xl font-bold text-blue-700 mb-3">Retirement Account Limits</h3>
+              <p className="text-gray-600 mb-4">
+                Compare Roth vs. 401(k) account limits, tax advantages, and why account ownership matters for your retirement.
               </p>
-              <div className="text-gray-500 font-medium">Coming Soon</div>
-            </div>
+              <div className="text-blue-600 font-medium">Read Article →</div>
+            </Link>
           </div>
           
           <div className="text-center">
