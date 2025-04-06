@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { PieChart, DollarSign, AlertTriangle, BarChart3, Wallet, BadgeCheck, Percent, Scale, ExternalLink, Lock, CreditCard, PiggyBank, BookOpen } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Disclaimer from '@/components/Disclaimer';
 
 const RetirementAccountGuide = () => {
 	return (
@@ -441,6 +442,10 @@ function RetirementAccountLimitsPage() {
 					<div className="grid grid-cols-1 gap-8">
 						{/* Featured Article */}
 						<RetirementAccountGuide />
+						<Disclaimer 
+							articleId="retirement-account-limits"
+							message="This content is educational in nature and updated as of {{year}}. Retirement account rules and limits are subject to change. For personalized advice, consult with a qualified financial professional."
+						/>
 					</div>
 				</div>
 			</main>

@@ -9,6 +9,9 @@ import {
 } from 'lucide-react';
 import Reviews from '@/components/Reviews';
 import CallToAction from '@/components/CallToAction';
+import Footer from '@/components/Footer';
+import educationContent from '@/data/education-content.json';
+import { iconMap } from '@/utils/icons';
 
 function SimpleLedgerDemo() {
   return (
@@ -113,25 +116,27 @@ function TransactionDemo() {
               <thead className="bg-gray-100">
                 <tr>
                   <th className="px-4 py-2 text-left text-xs font-medium text-gray-700">Description</th>
-                  <th className="px-4 py-2 text-right text-xs font-medium text-gray-700">Amount</th>
+                  <th className="px-4 py-2 text-right text-xs font-medium text-gray-700 whitespace-nowrap">Amount</th>
                   <th className="px-4 py-2 text-left text-xs font-medium text-gray-700">Override Account</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 <tr>
                   <td className="px-4 py-2 text-sm text-gray-900">Bread</td>
-                  <td className="px-4 py-2 text-sm text-red-600 text-right">-$5.00</td>
+                  <td className="px-4 py-2 text-sm text-red-600 text-right whitespace-nowrap">-$5.00</td>
                   <td className="px-4 py-2 text-sm text-gray-500"></td>
                 </tr>
                 <tr>
                   <td className="px-4 py-2 text-sm text-gray-900">Milk</td>
-                  <td className="px-4 py-2 text-sm text-red-600 text-right">-$5.00</td>
+                  <td className="px-4 py-2 text-sm text-red-600 text-right whitespace-nowrap">-$5.00</td>
                   <td className="px-4 py-2 text-sm text-gray-500"></td>
                 </tr>
                 <tr className="bg-yellow-50">
                   <td className="px-4 py-2 text-sm text-gray-900">Candy</td>
-                  <td className="px-4 py-2 text-sm text-red-600 text-right">-$15.00</td>
-                  <td className="px-4 py-2 text-sm text-yellow-700">Discretionary:Personal</td>
+                  <td className="px-4 py-2 text-sm text-red-600 text-right whitespace-nowrap">-$15.00</td>
+                  <td className="px-4 py-2 text-sm text-yellow-700 truncate max-w-[120px] md:max-w-none">
+                    <span className="block truncate" title="Discretionary:Personal">Discretionary:Personal</span>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -185,137 +190,139 @@ function TransactionDemo() {
 
 function Home() {
   return (
-    <main className="min-h-screen">
-      {/* Gradient Header Banner */}
-      <div className="bg-gradient-to-r from-blue-600 via-blue-800 to-purple-800 text-white">
-        <div className="max-w-6xl mx-auto px-6 py-20 text-center">
-          <h1 className="text-5xl font-bold mb-6">
-            Simple Ledgers for Business & Personal Finance
-          </h1>
-          <p className="text-xl opacity-90 max-w-2xl mx-auto">
-            Track detailed transactions and manage finances across multiple revenue streams and entities with powerful account hierarchies.
-          </p>
-        </div>
-      </div>
-
-      <div className="relative">
-        {/* Login Button */}
-        <div className="absolute right-4 top-4 z-10">
-          <Link 
-            href="/dashboard" 
-            className="bg-white text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors shadow-lg"
-          >
-            Login to Dashboard →
-          </Link>
-        </div>
-
-        {/* Main Features */}
-        <div className="max-w-6xl mx-auto px-6 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105">
-              <div className="flex items-center mb-4">
-                <BookIcon className="w-8 h-8 text-blue-600 mr-3" />
-                <h3 className="text-xl font-bold">Nested Accounts</h3>
-              </div>
-              <p className="text-gray-600 leading-relaxed">
-                Use intuitive colon-separated hierarchies like Expenses:Food:Groceries or Income:Salary:Gross for powerful organization.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105">
-              <div className="flex items-center mb-4">
-                <LayersIcon className="w-8 h-8 text-blue-600 mr-3" />
-                <h3 className="text-xl font-bold">Detailed Transactions</h3>
-              </div>
-              <p className="text-gray-600 leading-relaxed">
-                Record individual transactions with dates and descriptions, then post them to your ledger accounts when ready.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105">
-              <div className="flex items-center mb-4">
-                <BarChart3Icon className="w-8 h-8 text-blue-600 mr-3" />
-                <h3 className="text-xl font-bold">Flexible Reporting</h3>
-              </div>
-              <p className="text-gray-600 leading-relaxed">
-                Generate custom reports across your entities and account hierarchies to gain insights into your financial health.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="max-w-6xl mx-auto px-6 pb-16">
-          <div className="bg-white rounded-xl shadow-xl p-8">
-            <h2 className="text-3xl font-bold text-center mb-8">Complete Financial Reporting & Month-End Clarity</h2>
-            <SimpleLedgerDemo />
-          </div>
-        </div>
-
-        <div className="max-w-6xl mx-auto px-6 pb-16">
-          <h2 className="text-3xl font-bold text-center mb-4">Transaction Tracking and Ledger Posting</h2>
-          <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
-            Record individual transactions with dates and descriptions, then post to your ledger accounts when you're ready to update your books.
-          </p>
-          <TransactionDemo />
-        </div>
-
-        {/* Financial Education Section */}
-        <div className="max-w-6xl mx-auto px-6 pb-16 bg-gradient-to-r from-blue-50 to-indigo-50 py-12 rounded-xl">
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <BookOpenIcon className="w-6 h-6 text-blue-600" />
-              <h2 className="text-3xl font-bold text-gray-900">Financial Education</h2>
-            </div>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Strengthen your financial knowledge with our growing library of educational resources
-              designed to help you make better financial decisions.
+    <>
+      <main className="min-h-screen">
+        {/* Gradient Header Banner */}
+        <div className="bg-gradient-to-r from-blue-600 via-blue-800 to-purple-800 text-white">
+          <div className="max-w-6xl mx-auto px-6 py-20 text-center">
+            <h1 className="text-5xl font-bold mb-6">
+              Simple Ledgers for Business & Personal Finance
+            </h1>
+            <p className="text-xl opacity-90 max-w-2xl mx-auto">
+              Track detailed transactions and manage finances across multiple revenue streams and entities with powerful account hierarchies.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <Link href="/education/sec-filing-timelines" className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-bold text-blue-700 mb-3">SEC Filing Timelines</h3>
-              <p className="text-gray-600 mb-4">
-                Understanding when companies report their official numbers is essential for making informed investment decisions.
-              </p>
-              <div className="text-blue-600 font-medium">Read Article →</div>
-            </Link>
-            
-            <Link href="/education/50-30-20-budget" className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-bold text-blue-700 mb-3">50/30/20 Budget Rule</h3>
-              <p className="text-gray-600 mb-4">
-                Divides after-tax income into needs (50%), wants (30%), and savings/debt (20%) for a balanced financial life.
-              </p>
-              <div className="text-blue-600 font-medium">Read Article →</div>
-            </Link>
-            
-            <Link href="/education/retirement-account-limits" className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow">
-              <h3 className="text-xl font-bold text-blue-700 mb-3">Retirement Account Limits</h3>
-              <p className="text-gray-600 mb-4">
-                Compare Roth vs. 401(k) account limits, tax advantages, and why account ownership matters for your retirement.
-              </p>
-              <div className="text-blue-600 font-medium">Read Article →</div>
-            </Link>
-          </div>
-          
-          <div className="text-center">
-            <Link 
-              href="/education" 
-              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 shadow-md transition-colors"
-            >
-              <BookOpenIcon className="w-5 h-5 mr-2" />
-              <span>Explore All Educational Resources</span>
-            </Link>
-          </div>
         </div>
 
-        {/* Reviews Section */}
-        <Reviews />
+        <div className="relative">
+          {/* Login Button */}
+          <div className="absolute right-4 top-4 z-10">
+            <Link 
+              href="/dashboard" 
+              className="bg-white text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors shadow-lg"
+            >
+              Login to Dashboard →
+            </Link>
+          </div>
 
-        {/* Call to Action */}
-        <CallToAction />
-      </div>
-    </main>
+          {/* Main Features */}
+          <div className="max-w-6xl mx-auto px-6 py-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105">
+                <div className="flex items-center mb-4">
+                  <BookIcon className="w-8 h-8 text-blue-600 mr-3" />
+                  <h3 className="text-xl font-bold">Nested Accounts</h3>
+                </div>
+                <p className="text-gray-600 leading-relaxed">
+                  Use intuitive colon-separated hierarchies like Expenses:Food:Groceries or Income:Salary:Gross for powerful organization.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105">
+                <div className="flex items-center mb-4">
+                  <LayersIcon className="w-8 h-8 text-blue-600 mr-3" />
+                  <h3 className="text-xl font-bold">Detailed Transactions</h3>
+                </div>
+                <p className="text-gray-600 leading-relaxed">
+                  Record individual transactions with dates and descriptions, then post them to your ledger accounts when ready.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105">
+                <div className="flex items-center mb-4">
+                  <BarChart3Icon className="w-8 h-8 text-blue-600 mr-3" />
+                  <h3 className="text-xl font-bold">Flexible Reporting</h3>
+                </div>
+                <p className="text-gray-600 leading-relaxed">
+                  Generate custom reports across your entities and account hierarchies to gain insights into your financial health.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="max-w-6xl mx-auto px-6 pb-16">
+            <div className="bg-white rounded-xl shadow-xl p-8">
+              <h2 className="text-3xl font-bold text-center mb-8">Complete Financial Reporting & Month-End Clarity</h2>
+              <SimpleLedgerDemo />
+            </div>
+          </div>
+
+          <div className="max-w-6xl mx-auto px-6 pb-16">
+            <h2 className="text-3xl font-bold text-center mb-4">Transaction Tracking and Ledger Posting</h2>
+            <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
+              Record individual transactions with dates and descriptions, then post to your ledger accounts when you're ready to update your books.
+            </p>
+            <TransactionDemo />
+          </div>
+
+          {/* Financial Education Section */}
+          <div className="max-w-6xl mx-auto px-6 pb-16 bg-gradient-to-r from-blue-50 to-indigo-50 py-12 rounded-xl">
+            <div className="text-center mb-8">
+              <div className="flex items-center justify-center gap-2 mb-3">
+                <BookOpenIcon className="w-6 h-6 text-blue-600" />
+                <h2 className="text-3xl font-bold text-gray-900">Financial Education</h2>
+              </div>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Strengthen your financial knowledge with our growing library of educational resources
+                designed to help you make better financial decisions.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              {educationContent.articles
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 3)
+                .map((article) => {
+                  const IconComponent = iconMap[article.icon];
+                  return (
+                    <Link 
+                      key={article.id}
+                      href={`/education/${article.id}`} 
+                      className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow"
+                    >
+                      <div className="flex items-center gap-2 mb-3">
+                        {IconComponent && <IconComponent className="w-5 h-5 text-blue-600" />}
+                        <h3 className="text-xl font-bold text-blue-700">{article.title}</h3>
+                      </div>
+                      <p className="text-gray-600 mb-4">
+                        {article.description}
+                      </p>
+                      <div className="text-blue-600 font-medium">Read Article →</div>
+                    </Link>
+                  );
+                })}
+            </div>
+            
+            <div className="text-center">
+              <Link 
+                href="/education" 
+                className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 shadow-md transition-colors"
+              >
+                <BookOpenIcon className="w-5 h-5 mr-2" />
+                <span>Explore All Educational Resources</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Reviews Section */}
+          <Reviews />
+
+          {/* Call to Action */}
+          <CallToAction />
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 }
 

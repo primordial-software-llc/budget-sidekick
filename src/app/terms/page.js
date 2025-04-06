@@ -1,338 +1,377 @@
-import React from 'react';
-import Link from 'next/link';
-import { Shield, BookOpen, FileText, AlertTriangle, Code, Copyright, FileCheck, Scale, File, Gavel } from 'lucide-react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { FileText, CheckCircle, AlertTriangle, Clock, Users, Shield, Scale } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import { recordConsent, getLatestConsent } from '@/utils/indexedDB';
+import { useRouter } from 'next/navigation';
 
-function TermsOfServicePage() {
+function TermsOfService() {
+  // Get current year for copyright and last updated text
+  const currentYear = new Date().getFullYear();
+  const router = useRouter();
+  
+  const [loading, setLoading] = useState(true);
+  const [hasConsented, setHasConsented] = useState(false);
+  const [consentInfo, setConsentInfo] = useState(null);
+  const [isChecked, setIsChecked] = useState(false);
+  
+  // Current terms version
+  const TERMS_VERSION = '1.0';
+  
+  // Load user profile on mount to check if consent has been given
+  useEffect(() => {
+    const checkConsent = async () => {
+      try {
+        const latestConsent = await getLatestConsent('terms');
+        if (latestConsent && latestConsent.consented) {
+          setHasConsented(true);
+          setConsentInfo(latestConsent);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error('Error checking terms consent:', error);
+        setLoading(false);
+      }
+    };
+    
+    checkConsent();
+  }, []);
+  
+  const handleConsentChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
+  
+  const handleSubmitConsent = async () => {
+    if (!isChecked) return;
+    
+    try {
+      // Record consent with the new function
+      await recordConsent('terms', TERMS_VERSION, true);
+      
+      setHasConsented(true);
+      
+      // Get the latest consent to display details
+      const latestConsent = await getLatestConsent('terms');
+      setConsentInfo(latestConsent);
+      
+      // Redirect to dashboard after consent
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 1500);
+    } catch (error) {
+      console.error('Error saving consent:', error);
+      alert('There was a problem saving your consent. Please try again.');
+    }
+  };
+  
+  const revokeConsent = async () => {
+    try {
+      // Record consent revocation with the new function
+      await recordConsent('terms', TERMS_VERSION, false);
+      
+      setHasConsented(false);
+      setIsChecked(false);
+    } catch (error) {
+      console.error('Error revoking consent:', error);
+      alert('There was a problem revoking your consent. Please try again.');
+    }
+  };
+
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-50 py-12">
+      <main className="bg-gray-50 py-12">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="mb-8">
-            <Breadcrumbs items={[
-              { label: 'Home', href: '/' },
-              { label: 'Terms of Service & EULA' }
-            ]} />
-            <h1 className="text-3xl font-bold text-gray-900 mt-2">Terms of Service & End User License Agreement</h1>
+          <div className="mb-8 text-center">
+            <div className="flex justify-center mb-4">
+              <FileText className="h-16 w-16 text-blue-600" />
+            </div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Terms of Service</h1>
+            <p className="text-gray-600">Last Updated: April 2025</p>
+          </div>
+
+          <div className="bg-white p-8 rounded-xl shadow-md mb-8">
+            <div className="prose max-w-none">
+              <p className="text-gray-600 mb-8">
+                Welcome to Budget Sidekick. These Terms of Service ("Terms") govern your use of the Budget Sidekick 
+                application and website (the "Service") operated by Primordial Software ("we," "us," or "our"). By 
+                accessing or using the Service, you agree to be bound by these Terms. If you disagree with any part 
+                of the Terms, you may not access the Service.
+              </p>
+
+              <div className="bg-amber-50 p-5 rounded-lg border border-amber-200 mb-8">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="h-6 w-6 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h3 className="text-amber-800 font-semibold mb-2">Important Notice</h3>
+                    <p className="text-amber-700 text-sm">
+                      Budget Sidekick is a financial planning and budgeting tool designed for informational purposes only. 
+                      We are not a bank, financial institution, investment advisor, or tax preparation service. The Service 
+                      should not be used as a substitute for professional financial advice, and financial decisions should not 
+                      be made solely based on the information provided by the Service.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-10">
+                <div className="flex items-center gap-3 mb-4 pb-2 border-b border-gray-100">
+                  <CheckCircle className="h-6 w-6 text-blue-600 flex-shrink-0" />
+                  <h2 className="text-xl font-bold text-gray-900 m-0">1. Acceptance of Terms</h2>
+                </div>
+                <p className="text-gray-600 mb-4">
+                  By creating an account or using the Service in any way, you acknowledge that you have read, understood, 
+                  and agree to be bound by these Terms. If you are using the Service on behalf of an organization, you are 
+                  agreeing to these Terms on behalf of that organization, and you represent and warrant that you have the 
+                  authority to do so.
+                </p>
+                <p className="text-gray-600">
+                  We reserve the right to modify these Terms at any time. We will provide notice of significant changes by 
+                  posting a notice on our website, sending you an email, or through a notification within the Service. Your 
+                  continued use of the Service after changes become effective constitutes your acceptance of the changes.
+                </p>
+              </div>
+
+              <div className="mb-10">
+                <div className="flex items-center gap-3 mb-4 pb-2 border-b border-gray-100">
+                  <Users className="h-6 w-6 text-blue-600 flex-shrink-0" />
+                  <h2 className="text-xl font-bold text-gray-900 m-0">2. Account Registration and Security</h2>
+                </div>
+                <p className="text-gray-600 mb-4">
+                  To use certain features of the Service, you must register for an account. When you register, you agree to provide accurate, 
+                  current, and complete information about yourself and to keep this information updated.
+                </p>
+                <p className="text-gray-600 mb-4">
+                  You are responsible for:
+                </p>
+                <ul className="list-disc pl-6 text-gray-600 space-y-2 mb-4">
+                  <li>Maintaining the confidentiality of your account credentials</li>
+                  <li>All activities that occur under your account</li>
+                  <li>Immediately notifying us of any unauthorized use of your account</li>
+                </ul>
+                <p className="text-gray-600">
+                  We reserve the right to disable any user account if we believe you have violated these Terms or if we 
+                  determine that your account activity poses a risk to the security of the Service.
+                </p>
+              </div>
+
+              <div className="mb-10">
+                <div className="flex items-center gap-3 mb-4 pb-2 border-b border-gray-100">
+                  <Shield className="h-6 w-6 text-blue-600 flex-shrink-0" />
+                  <h2 className="text-xl font-bold text-gray-900 m-0">3. Privacy and Data Protection</h2>
+                </div>
+                <p className="text-gray-600 mb-4">
+                  Our <a href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</a> describes how we collect, use, and protect your personal information. By using the Service, 
+                  you agree to the collection and use of information in accordance with our Privacy Policy.
+                </p>
+                <p className="text-gray-600">
+                  While we implement appropriate security measures to protect your data, you acknowledge that no method of 
+                  transmission over the Internet or electronic storage is 100% secure. We cannot guarantee the absolute security 
+                  of your information.
+                </p>
+              </div>
+
+              <div className="mb-10">
+                <div className="flex items-center gap-3 mb-4 pb-2 border-b border-gray-100">
+                  <Scale className="h-6 w-6 text-blue-600 flex-shrink-0" />
+                  <h2 className="text-xl font-bold text-gray-900 m-0">4. User Responsibilities and Restrictions</h2>
+                </div>
+                <p className="text-gray-600 mb-4">
+                  When using the Service, you agree to:
+                </p>
+                <ul className="list-disc pl-6 text-gray-600 space-y-2 mb-4">
+                  <li>Comply with all applicable laws and regulations</li>
+                  <li>Provide accurate financial information</li>
+                  <li>Use the Service only for lawful purposes</li>
+                  <li>Respect the intellectual property rights of others</li>
+                </ul>
+                <p className="text-gray-600 mb-4">
+                  You agree not to:
+                </p>
+                <ul className="list-disc pl-6 text-gray-600 space-y-2 mb-4">
+                  <li>Use the Service in any way that could damage, disable, overburden, or impair the Service</li>
+                  <li>Attempt to gain unauthorized access to any part of the Service or the systems or networks connected to the Service</li>
+                  <li>Use any automated means to access the Service or collect any information from the Service</li>
+                  <li>Use the Service for any illegal or unauthorized purpose</li>
+                  <li>Impersonate any person or entity or falsely state or misrepresent your affiliation with a person or entity</li>
+                  <li>Share your account credentials with third parties</li>
+                </ul>
+              </div>
+
+              <div className="mb-10">
+                <div className="flex items-center gap-3 mb-4 pb-2 border-b border-gray-100">
+                  <Clock className="h-6 w-6 text-blue-600 flex-shrink-0" />
+                  <h2 className="text-xl font-bold text-gray-900 m-0">5. Service Availability and Modifications</h2>
+                </div>
+                <p className="text-gray-600 mb-4">
+                  We strive to ensure that the Service is available at all times. However, we do not guarantee uninterrupted access 
+                  to the Service. The Service may be temporarily unavailable for scheduled maintenance, unscheduled maintenance, or 
+                  due to factors beyond our control.
+                </p>
+                <p className="text-gray-600 mb-4">
+                  We reserve the right to:
+                </p>
+                <ul className="list-disc pl-6 text-gray-600 space-y-2 mb-4">
+                  <li>Modify or discontinue, temporarily or permanently, any feature or aspect of the Service without notice</li>
+                  <li>Establish general practices and limits concerning the use of the Service</li>
+                  <li>Update the Service to improve functionality, address security issues, or comply with regulations</li>
+                </ul>
+                <p className="text-gray-600">
+                  We will make reasonable efforts to notify you of significant changes to the Service that may affect your use.
+                </p>
+              </div>
+
+              <div className="mb-10">
+                <div className="flex items-center gap-3 mb-4 pb-2 border-b border-gray-100">
+                  <FileText className="h-6 w-6 text-blue-600 flex-shrink-0" />
+                  <h2 className="text-xl font-bold text-gray-900 m-0">6. Intellectual Property Rights</h2>
+                </div>
+                <p className="text-gray-600 mb-4">
+                  The Service and its original content, features, and functionality are owned by Primordial Software and are protected 
+                  by international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.
+                </p>
+                <p className="text-gray-600 mb-4">
+                  You retain ownership of any data you submit to the Service. By using the Service, you grant us a worldwide, 
+                  non-exclusive, royalty-free license to use, reproduce, process, and display your data solely for the purpose 
+                  of providing and improving the Service.
+                </p>
+                <p className="text-gray-600">
+                  Nothing in these Terms transfers any of our intellectual property rights to you or grants you the right to use our 
+                  trademarks, logos, or other proprietary materials without our express written permission.
+                </p>
+              </div>
+
+              <div className="mb-10">
+                <div className="flex items-center gap-3 mb-4 pb-2 border-b border-gray-100">
+                  <AlertTriangle className="h-6 w-6 text-blue-600 flex-shrink-0" />
+                  <h2 className="text-xl font-bold text-gray-900 m-0">7. Limitation of Liability</h2>
+                </div>
+                <p className="text-gray-600 mb-4">
+                  To the maximum extent permitted by law, in no event shall Primordial Software, its directors, employees, 
+                  partners, agents, suppliers, or affiliates be liable for any indirect, incidental, special, consequential, 
+                  or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible 
+                  losses, resulting from:
+                </p>
+                <ul className="list-disc pl-6 text-gray-600 space-y-2 mb-4">
+                  <li>Your access to or use of or inability to access or use the Service</li>
+                  <li>Any conduct or content of any third party on the Service</li>
+                  <li>Any unauthorized access to or use of our servers and/or any personal information stored therein</li>
+                  <li>Any errors, mistakes, or inaccuracies in our content</li>
+                  <li>Financial decisions made based on information provided by the Service</li>
+                </ul>
+                <p className="text-gray-600">
+                  Budget Sidekick is a budgeting and financial planning tool, not a professional financial advisory service. 
+                  You are solely responsible for verifying any information provided by the Service before making financial decisions.
+                </p>
+              </div>
+
+              <div className="mb-10">
+                <div className="flex items-center gap-3 mb-4 pb-2 border-b border-gray-100">
+                  <FileText className="h-6 w-6 text-blue-600 flex-shrink-0" />
+                  <h2 className="text-xl font-bold text-gray-900 m-0">8. Termination</h2>
+                </div>
+                <p className="text-gray-600 mb-4">
+                  We reserve the right to suspend or terminate your account and access to the Service at our sole discretion, 
+                  without notice, for any violation of these Terms, or for any other reason we deem appropriate.
+                </p>
+                <p className="text-gray-600 mb-4">
+                  You may terminate your account at any time by following the instructions within the Service or by contacting us.
+                </p>
+                <p className="text-gray-600">
+                  Upon termination, your right to use the Service will cease immediately. All provisions of the Terms that by their 
+                  nature should survive termination shall survive, including ownership provisions, warranty disclaimers, indemnity, 
+                  and limitations of liability.
+                </p>
+              </div>
+
+              <div className="mb-6">
+                <div className="flex items-center gap-3 mb-4 pb-2 border-b border-gray-100">
+                  <FileText className="h-6 w-6 text-blue-600 flex-shrink-0" />
+                  <h2 className="text-xl font-bold text-gray-900 m-0">9. Contact Information</h2>
+                </div>
+                <p className="text-gray-600 mb-4">
+                  If you have any questions about these Terms, please contact us at:
+                </p>
+                <div className="bg-blue-50 p-5 rounded-lg border border-blue-100">
+                  <p className="text-gray-700 font-medium">Budget Sidekick Legal Team</p>
+                  <p className="text-gray-600">Email: legal@budgetsidekick.com</p>
+                  <p className="text-gray-600">Address: 123 Financial Street, Suite 400, San Francisco, CA 94107</p>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-200 pt-6 mt-10 text-center">
+                <p className="text-sm text-gray-500">
+                  © {currentYear} Primordial Software. All rights reserved.
+                </p>
+              </div>
+            </div>
           </div>
           
-          <div className="bg-white rounded-xl shadow-md overflow-hidden">
-            <div className="p-8 border-b border-gray-200">
-              <div className="flex items-center mb-6">
-                <Shield className="w-6 h-6 text-blue-600 mr-3" />
-                <h2 className="text-2xl font-bold text-gray-900">Budget Sidekick Terms of Service & EULA</h2>
+          {/* User Consent Section */}
+          <div className="bg-white p-8 rounded-xl shadow-md mb-8">
+            {loading ? (
+              <div className="text-center py-4">
+                <p className="text-gray-600">Loading...</p>
               </div>
-              <p className="text-gray-600 mb-4">
-                Last Updated: March 2025
-              </p>
-              <p className="text-gray-700 mb-6">
-                Please read these Terms of Service and End User License Agreement ("Agreement") carefully before using Budget Sidekick. This Agreement constitutes a legally binding contract between you and Primordial Software regarding your use of the Budget Sidekick software and services. By accessing or using our service, you agree to be bound by these terms.
-              </p>
-              
-              <div className="space-y-8">
-                <section>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-                    <File className="w-5 h-5 text-blue-600 mr-2" />
-                    End User License Agreement (EULA)
-                  </h3>
-                  <div className="pl-7 space-y-4">
-                    <p className="text-gray-700">
-                      This End User License Agreement ("EULA") is a legal agreement between you (either an individual or a single entity) and Primordial Software ("Licensor") for the Budget Sidekick software product, which includes computer software and may include associated media, printed materials, and "online" or electronic documentation ("Software").
-                    </p>
-                    
-                    <div className="bg-gray-50 p-6 rounded-md border border-gray-200 text-sm text-gray-800 space-y-4">
-                      <div>
-                        <h4 className="font-semibold">1. GRANT OF LICENSE</h4>
-                        <p>Licensor grants you a non-exclusive, non-transferable license to use the Software. You may install and use the Software on your devices for your personal or business use.</p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-semibold">2. COPYRIGHT</h4>
-                        <p>The Software is protected by copyright laws and international copyright treaties, as well as other intellectual property laws and treaties. Primordial Software retains all rights, title, and interest in the Software. You acknowledge that no title to the intellectual property in the Software is transferred to you.</p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-semibold">3. RESTRICTIONS</h4>
-                        <p>You may not:</p>
-                        <ol className="list-alpha pl-5 space-y-1">
-                          <li>Reverse engineer, decompile, or disassemble the Software</li>
-                          <li>Rent, lease, lend, sell, redistribute, sublicense or transfer the Software</li>
-                          <li>Modify, adapt, or create derivative works based on the Software</li>
-                          <li>Remove any proprietary notices or labels on the Software</li>
-                        </ol>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-semibold">4. TERMINATION</h4>
-                        <p>This Agreement is effective until terminated. Your rights under this Agreement will terminate automatically without notice if you fail to comply with any term of this Agreement. Upon termination, you shall cease all use of the Software and destroy all copies of the Software.</p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-semibold">5. USER RESPONSIBILITIES</h4>
-                        <p>By using the Software, you acknowledge and agree that:</p>
-                        <ol className="list-alpha pl-5 space-y-1">
-                          <li>You are using the service to track and organize what you believe to be factual information</li>
-                          <li>You are responsible for the accuracy of the data you enter into the system</li>
-                          <li>You will consult with qualified professionals for financial, tax, or legal advice</li>
-                          <li>You will not rely solely on the platform or educational resources for important financial decisions</li>
-                        </ol>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-semibold">6. DISCLAIMER OF WARRANTIES</h4>
-                        <p className="uppercase">THE SOFTWARE IS PROVIDED "AS IS" AND THE LICENSOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.</p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-semibold">7. LIMITATION OF LIABILITY</h4>
-                        <p className="uppercase">IN NO EVENT SHALL LICENSOR BE LIABLE FOR ANY DAMAGES (INCLUDING, WITHOUT LIMITATION, LOST PROFITS, BUSINESS INTERRUPTION, OR LOST INFORMATION) ARISING OUT OF THE USE OF OR INABILITY TO USE THE SOFTWARE, EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. IN NO EVENT WILL LICENSOR BE LIABLE FOR LOSS OF DATA OR FOR INDIRECT, SPECIAL, INCIDENTAL, CONSEQUENTIAL (INCLUDING LOST PROFIT), OR OTHER DAMAGES BASED IN CONTRACT, TORT OR OTHERWISE.</p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-semibold">8. GOVERNING LAW</h4>
-                        <p>This Agreement shall be governed by the laws of the jurisdiction in which Primordial Software operates.</p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-semibold">9. ENTIRE AGREEMENT</h4>
-                        <p>This Agreement constitutes the entire agreement between you and Licensor and supersedes any prior statements, representations, or agreements, whether oral or written.</p>
-                      </div>
-                      
-                      <p className="font-semibold mt-4">BY INSTALLING, COPYING, OR OTHERWISE USING THE SOFTWARE, YOU AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT.</p>
-                      
-                      <p>Copyright 2019 Primordial Software</p>
-                    </div>
-                  </div>
-                </section>
+            ) : hasConsented ? (
+              <div className="text-center py-4">
+                <div className="flex justify-center mb-4">
+                  <CheckCircle className="h-16 w-16 text-green-500" />
+                </div>
+                <h2 className="text-xl font-bold text-gray-900 mb-2">Thank You for Your Consent</h2>
+                <p className="text-gray-600 mb-6">
+                  You agreed to our Terms of Service (version {consentInfo?.version}) on {
+                    consentInfo?.date ? new Date(consentInfo.date).toLocaleDateString() : 'an unknown date'
+                  } at {
+                    consentInfo?.date ? new Date(consentInfo.date).toLocaleTimeString() : 'an unknown time'
+                  }.
+                </p>
                 
-                <section>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-                    <Copyright className="w-5 h-5 text-blue-600 mr-2" />
-                    Ownership and License
-                  </h3>
-                  <div className="pl-7 space-y-4">
-                    <p className="text-gray-700">
-                      Budget Sidekick is owned and operated by Primordial Software. The software, code, design, functionality, content, and all intellectual property rights therein are the exclusive property of Primordial Software. All rights not expressly granted herein are reserved.
-                    </p>
-                    <p className="text-gray-700">
-                      Subject to your compliance with this Agreement, Primordial Software grants you a limited, non-exclusive, non-transferable, revocable license to use Budget Sidekick solely for your personal or business bookkeeping and financial management purposes. This license does not allow you to copy, modify, distribute, sell, lease, or otherwise transfer any rights in the software beyond what is explicitly permitted by applicable law or this Agreement.
-                    </p>
+                {consentInfo?.device && (
+                  <div className="mb-6 text-sm text-gray-500">
+                    <p>Consent was provided from a {consentInfo.device.os} device</p>
+                    <p>using {consentInfo.device.browserName} {consentInfo.device.browserVersion}</p>
                   </div>
-                </section>
+                )}
                 
-                <section>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-                    <FileText className="w-5 h-5 text-blue-600 mr-2" />
-                    Nature of Service
-                  </h3>
-                  <div className="pl-7 space-y-4">
-                    <p className="text-gray-700">
-                      Budget Sidekick is a bookkeeping and financial management software application that provides ledgers and financial reporting tools. Our service:
-                    </p>
-                    <ul className="list-disc pl-5 text-gray-700 space-y-2">
-                      <li>Provides tools for recording, organizing, and visualizing financial transactions</li>
-                      <li>May integrate with banks or accounting systems through their APIs, following all applicable rules and requirements</li>
-                      <li>Is not itself a financial institution, bank, or professional financial advisory service</li>
-                      <li>Serves as bookkeeping software while leaving ultimate responsibility for data accuracy with users</li>
-                      <li>Is provided by Primordial Software acting in its capacity as a software provider and bookkeeper</li>
-                    </ul>
-                    <p className="text-gray-700">
-                      While we strive to provide reliable bookkeeping functionality, users remain responsible for ensuring their financial data is accurate, complete, and compliant with relevant regulations.
-                    </p>
-                  </div>
-                </section>
-                
-                <section>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-                    <FileCheck className="w-5 h-5 text-blue-600 mr-2" />
-                    Bookkeeping Services
-                  </h3>
-                  <div className="pl-7 space-y-4">
-                    <p className="text-gray-700">
-                      Primordial Software, as the provider of Budget Sidekick, is legally authorized to operate as a bookkeeper and provide bookkeeping functionality through its software. We commit to:
-                    </p>
-                    <ul className="list-disc pl-5 text-gray-700 space-y-2">
-                      <li>Providing accurate calculation and reporting tools to the best of our ability</li>
-                      <li>Acting in good faith when designing functionality for financial record-keeping</li>
-                      <li>Implementing reasonable measures to ensure the accuracy of financial calculations</li>
-                      <li>Making corrections to known software bugs that affect financial calculations in a timely manner</li>
-                    </ul>
-                    <p className="text-gray-700">
-                      Our role as a bookkeeper through software is limited to providing the tools and functionality for users to maintain their financial records. We do not directly manage users' finances nor do we make financial decisions on behalf of users.
-                    </p>
-                  </div>
-                </section>
-                
-                <section>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-                    <BookOpen className="w-5 h-5 text-blue-600 mr-2" />
-                    Educational Content
-                  </h3>
-                  <div className="pl-7 space-y-4">
-                    <p className="text-gray-700">
-                      The educational resources provided on Budget Sidekick are protected under free speech laws as we exercise our right to relay what we believe to be accurate information. Our educational content:
-                    </p>
-                    <ul className="list-disc pl-5 text-gray-700 space-y-2">
-                      <li>Represents our good faith effort to relay factual financial information, similar to a newspaper reporting market data</li>
-                      <li>May become outdated as regulations, best practices, or market conditions change</li>
-                      <li>Should not be considered financial, investment, legal, or tax advice</li>
-                      <li>Is provided "as is" without warranties of any kind</li>
-                    </ul>
-                  </div>
-                </section>
-                
-                <section>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-                    <AlertTriangle className="w-5 h-5 text-blue-600 mr-2" />
-                    Disclaimers and Limitations
-                  </h3>
-                  <div className="pl-7 space-y-4">
-                    <p className="text-gray-700">
-                      Budget Sidekick expressly disclaims:
-                    </p>
-                    <ul className="list-disc pl-5 text-gray-700 space-y-2">
-                      <li>Any responsibility for financial decisions made based on information tracked or displayed in our system</li>
-                      <li>Status as a financial institution, bank, or tax preparation service</li>
-                      <li>Guarantee that our bookkeeping software will ensure compliance with all tax laws, accounting standards, or regulatory requirements</li>
-                      <li>Any fiduciary relationship with users</li>
-                      <li>Any warranty regarding the accuracy of information entered by users or obtained through third-party integrations</li>
-                      <li>Any guarantee that the software will be error-free, uninterrupted, secure, or free of bugs or other harmful components</li>
-                    </ul>
-                    <p className="text-gray-700 mt-4">
-                      While we provide bookkeeping software functionality, users are ultimately responsible for verifying the accuracy of information in their accounts and for compliance with all applicable laws and regulations.
-                    </p>
-                  </div>
-                </section>
-                
-                <section>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-                    <Scale className="w-5 h-5 text-blue-600 mr-2" />
-                    Limitation of Liability and Indemnification
-                  </h3>
-                  <div className="pl-7 space-y-4">
-                    <p className="text-gray-700">
-                      To the maximum extent permitted by applicable law:
-                    </p>
-                    <ul className="list-disc pl-5 text-gray-700 space-y-2">
-                      <li>Primordial Software shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or business opportunities, resulting from or related to your use of the service</li>
-                      <li>Our total liability for any claims arising from or related to this Agreement shall not exceed the amount paid by you to Primordial Software (if any) for the service during the twelve (12) months preceding the claim</li>
-                      <li>We are not liable for software bugs or errors that may result in inaccurate calculations, provided we act in good faith to address such issues when they are discovered</li>
-                      <li>We are not liable for inaccurate information that we believed in good faith to be accurate when reported</li>
-                    </ul>
-                    <p className="text-gray-700 mt-4">
-                      You agree to indemnify, defend, and hold harmless Primordial Software and its officers, directors, employees, agents, and affiliates from and against any claims, disputes, demands, liabilities, damages, losses, costs, and expenses, including, without limitation, reasonable legal and accounting fees arising out of or in any way connected with your access to or use of the service or your violation of this Agreement.
-                    </p>
-                  </div>
-                </section>
-                
-                <section>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">User Responsibilities</h3>
-                  <div className="pl-7">
-                    <p className="text-gray-700 mb-3">
-                      By using Budget Sidekick, you acknowledge and agree that:
-                    </p>
-                    <ul className="list-disc pl-5 text-gray-700 space-y-2">
-                      <li>You are using the service to track and organize what you believe to be factual information</li>
-                      <li>You are responsible for the accuracy of the data you enter into the system</li>
-                      <li>You will consult with qualified professionals for financial, tax, or legal advice</li>
-                      <li>You acknowledge that software may contain bugs or errors and that the service is provided "as is" without warranties of any kind beyond what's applicable by law</li>
-                      <li>You will not rely solely on our platform or educational resources for important financial decisions</li>
-                      <li>You will comply with all applicable laws and regulations when using our service</li>
-                      <li>You will not use the service for any illegal, harmful, or fraudulent activities</li>
-                    </ul>
-                  </div>
-                </section>
-                
-                <section>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-                    <Code className="w-5 h-5 text-blue-600 mr-2" />
-                    Open Source Code and Design License
-                  </h3>
-                  <div className="pl-7 space-y-4">
-                    <p className="text-gray-700">
-                      Budget Sidekick's source code is made available under a dual licensing structure:
-                    </p>
-                    
-                    <div className="bg-gray-50 p-4 rounded-md border border-gray-200 text-sm text-gray-800">
-                      <h4 className="font-semibold mb-2">Functional Code License:</h4>
-                      <p className="mb-3">
-                        The functional source code of Budget Sidekick (excluding user interface design elements, branding, visual assets, color schemes, and layout arrangements) is licensed under the MIT License:
-                      </p>
-                      
-                      <div className="whitespace-pre-line font-mono text-xs bg-gray-100 p-3 rounded border border-gray-300 mb-4">
-                        Copyright 2019 Primordial Software
-                        
-                        Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-                        
-                        The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-                        
-                        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-                      </div>
-                      
-                      <h4 className="font-semibold mb-2">Visual Design and UI Elements License:</h4>
-                      <p className="mb-3">
-                        The visual design elements, including but not limited to the user interface, branding, visual assets, color schemes, layout arrangements, and overall look and feel of Budget Sidekick are licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0).
-                      </p>
-                      
-                      <p className="mb-3">
-                        Under this license, you may:
-                      </p>
-                      <ul className="list-disc pl-5 mb-3">
-                        <li>Share — copy and redistribute the design elements in any medium or format</li>
-                      </ul>
-                      
-                      <p className="mb-3">
-                        Under the following terms:
-                      </p>
-                      <ul className="list-disc pl-5 mb-3">
-                        <li>Attribution — You must give appropriate credit to Primordial Software, provide a link to the license, and indicate if changes were made.</li>
-                        <li>NonCommercial — You may not use the design elements for commercial purposes.</li>
-                        <li>NoDerivatives — If you remix, transform, or build upon the design elements, you may not distribute the modified material.</li>
-                      </ul>
-                      
-                      <p>
-                        For the full text of this license, please visit: <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode</a>
-                      </p>
-                    </div>
-                    
-                    <p className="text-gray-700">
-                      This dual licensing approach allows developers to freely use, modify, and build upon the functional code while protecting Primordial Software's visual design and branding elements. Any derivative works must maintain visual distinction from the original Budget Sidekick interface.
-                    </p>
-                    
-                    <p className="text-gray-700">
-                      To create derivative works with substantially different visual designs while using our functional code, you must:
-                    </p>
-                    <ul className="list-disc pl-5 text-gray-700 space-y-2">
-                      <li>Create your own unique visual design, layout, color scheme, and UI elements</li>
-                      <li>Not copy or closely mimic Budget Sidekick's distinctive visual appearance</li>
-                      <li>Include the original copyright notice and MIT license in any redistribution of the functional code</li>
-                      <li>Clearly distinguish your product from Budget Sidekick to avoid user confusion</li>
-                    </ul>
-                  </div>
-                </section>
-                
-                <section>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3 flex items-center">
-                    <Gavel className="w-5 h-5 text-blue-600 mr-2" />
-                    Governing Law
-                  </h3>
-                  <div className="pl-7 space-y-4">
-                    <p className="text-gray-700">
-                      This Agreement shall be governed by the laws of the jurisdiction in which Primordial Software operates, without regard to its conflict of law provisions. Any dispute arising from or relating to this Agreement shall be subject to the exclusive jurisdiction of the courts in that jurisdiction.
-                    </p>
-                  </div>
-                </section>
+                <button
+                  onClick={revokeConsent}
+                  className="px-4 py-2 text-red-600 bg-red-100 hover:bg-red-200 rounded-lg transition-colors"
+                >
+                  Revoke Consent
+                </button>
               </div>
-            </div>
-            
-            <div className="p-6 bg-gray-50">
-              <p className="text-gray-700 text-sm">
-                For questions about these Terms of Service & EULA, please contact us at <a href="mailto:support@primordial-software.com" className="text-blue-600 hover:underline">support@primordial-software.com</a>.
-              </p>
-            </div>
+            ) : (
+              <div className="text-center py-4">
+                <h2 className="text-xl font-bold text-gray-900 mb-6">Please Review and Consent</h2>
+                <div className="flex items-start mb-6">
+                  <div className="flex items-center h-5">
+                    <input
+                      id="terms-consent"
+                      type="checkbox"
+                      checked={isChecked}
+                      onChange={handleConsentChange}
+                      className="w-5 h-5 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+                      required
+                    />
+                  </div>
+                  <label htmlFor="terms-consent" className="ml-3 text-left text-gray-600">
+                    I have read and agree to the Terms of Service (version {TERMS_VERSION}), and I understand that my consent is required to use Budget Sidekick.
+                  </label>
+                </div>
+                <button
+                  onClick={handleSubmitConsent}
+                  disabled={!isChecked}
+                  className={`px-6 py-3 ${
+                    isChecked ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'
+                  } text-white font-semibold rounded-lg transition-colors`}
+                >
+                  I Agree
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </main>
@@ -341,4 +380,4 @@ function TermsOfServicePage() {
   );
 }
 
-export default TermsOfServicePage;
+export default TermsOfService;

@@ -1,0 +1,543 @@
+{
+  "articles": [
+    {
+      "id": "sec-filing-timelines",
+      "title": "SEC Filing Timelines",
+      "description": "Understanding when companies report their official numbers is essential for making informed investment decisions.",
+      "icon": "Calendar",
+      "date": "2024-03-15"
+    },
+    {
+      "id": "50-30-20-budget",
+      "title": "50/30/20 Budget Rule",
+      "description": "Divides after-tax income into needs (50%), wants (30%), and savings/debt (20%) for a balanced financial life.",
+      "icon": "PieChart",
+      "date": "2024-03-10"
+    },
+    {
+      "id": "retirement-account-limits",
+      "title": "Retirement Account Limits",
+      "description": "Comparison of Roth vs. 401(k) account limits, tax advantages, and why account ownership matters for your retirement.",
+      "icon": "PiggyBank",
+      "date": "2024-03-05"
+    },
+    {
+      "id": "retirement-account-strategies",
+      "title": "Retirement Account Strategies",
+      "description": "Discover how to strategically allocate different types of investments across your retirement accounts for maximum long-term advantage.",
+      "icon": "PiggyBank",
+      "date": "2024-03-20"
+    },
+    {
+      "id": "market-timing-myths",
+      "title": "Market Timing Myths",
+      "description": "Learn why trying to time the market is less effective than simply staying invested through market cycles.",
+      "icon": "TrendingUp",
+      "date": "2024-03-18"
+    },
+    {
+      "id": "compounding-advantage",
+      "title": "The Compounding Advantage",
+      "description": "Understand how consistent, long-term investing can turn small, regular contributions into significant wealth over time.",
+      "icon": "TrendingUp",
+      "date": "2024-03-22"
+    },
+    {
+      "id": "direct-treasury-investing",
+      "title": "Direct Treasury Investing",
+      "description": "Explore how holding government bonds directly in your name can provide advantages over traditional bond funds and ETFs.",
+      "icon": "Shield",
+      "date": "2024-03-25"
+    },
+    {
+      "id": "emergency-fund-basics",
+      "title": "Emergency Fund Basics",
+      "description": "Learn why an emergency fund is crucial for financial stability and how to build one that works for your situation.",
+      "icon": "LifeBuoy",
+      "date": "2024-03-28"
+    },
+    {
+      "id": "tax-efficient-investing",
+      "title": "Tax-Efficient Investing",
+      "description": "Discover strategies to minimize taxes on your investments and keep more of your returns working for you.",
+      "icon": "Calculator",
+      "date": "2024-03-30"
+    },
+    {
+      "id": "debt-snowball-vs-avalanche",
+      "title": "Debt Snowball vs. Avalanche",
+      "description": "Compare two popular debt repayment strategies and learn which one might work best for your financial situation.",
+      "icon": "LineChart",
+      "date": "2024-04-01"
+    },
+    {
+      "id": "credit-score-fundamentals",
+      "title": "Credit Score Fundamentals",
+      "description": "Understand how credit scores work, what factors influence them, and how to improve your credit health.",
+      "icon": "CreditCard",
+      "date": "2024-04-03"
+    },
+    {
+      "id": "investment-risk-tolerance",
+      "title": "Understanding Risk Tolerance",
+      "description": "Learn how to assess your risk tolerance and build an investment portfolio that matches your comfort level.",
+      "icon": "BarChart",
+      "date": "2024-04-05"
+    },
+    {
+      "id": "insurance-basics",
+      "title": "Insurance Basics",
+      "description": "Explore the different types of insurance you need and how to choose the right coverage for your situation.",
+      "icon": "Shield",
+      "date": "2024-04-08"
+    },
+    {
+      "id": "estate-planning-basics",
+      "title": "Estate Planning Basics",
+      "description": "Learn the fundamentals of estate planning, including wills, trusts, and how to protect your assets for future generations.",
+      "icon": "FileText",
+      "date": "2024-04-10"
+    },
+    {
+      "id": "college-savings-strategies",
+      "title": "College Savings Strategies",
+      "description": "Explore different ways to save for education, including 529 plans, Coverdell accounts, and other education savings options.",
+      "icon": "GraduationCap",
+      "date": "2024-04-12"
+    },
+    {
+      "id": "real-estate-investing-basics",
+      "title": "Real Estate Investing Basics",
+      "description": "Understand the fundamentals of real estate investing, from rental properties to REITs, and how to evaluate potential investments.",
+      "icon": "Home",
+      "date": "2024-04-15"
+    },
+    {
+      "id": "index-fund-investing",
+      "title": "Index Fund Investing",
+      "description": "Learn the benefits of passive investing through index funds and how to build a low-cost, diversified portfolio.",
+      "icon": "TrendingUp",
+      "date": "2024-04-18"
+    },
+    {
+      "id": "financial-goal-setting",
+      "title": "Financial Goal Setting",
+      "description": "Discover how to create SMART financial goals and develop a practical plan to achieve your short and long-term objectives.",
+      "icon": "Target",
+      "date": "2024-04-20"
+    },
+    {
+      "id": "dollar-cost-averaging",
+      "title": "Dollar-Cost Averaging",
+      "description": "Learn how investing consistent amounts at regular intervals can reduce the impact of market volatility on your portfolio.",
+      "icon": "Repeat",
+      "date": "2024-04-22"
+    },
+    {
+      "id": "sustainable-investing",
+      "title": "Sustainable Investing",
+      "description": "Explore how to align your investments with your values through ESG, socially responsible, and impact investing approaches.",
+      "icon": "Leaf",
+      "date": "2024-04-25"
+    },
+    {
+      "id": "asset-allocation-guide",
+      "title": "Asset Allocation Guide",
+      "description": "Learn how to properly distribute your investments across different asset classes to optimize returns and manage risk.",
+      "icon": "PieChart",
+      "date": "2024-04-28"
+    },
+    {
+      "id": "behavioral-finance-pitfalls",
+      "title": "Behavioral Finance Pitfalls",
+      "description": "Understand common psychological biases that can impact your investment decisions and how to overcome them.",
+      "icon": "Brain",
+      "date": "2024-04-30"
+    },
+    {
+      "id": "retirement-withdrawal-strategies",
+      "title": "Retirement Withdrawal Strategies",
+      "description": "Learn about sustainable withdrawal rates and tax-efficient methods to make your retirement savings last as long as possible.",
+      "icon": "Wallet",
+      "date": "2024-05-02"
+    },
+    {
+      "id": "financial-independence-basics",
+      "title": "Financial Independence Basics",
+      "description": "Explore the concept of FIRE (Financial Independence, Retire Early) and strategies to achieve financial freedom on your terms.",
+      "icon": "Zap",
+      "date": "2024-05-05"
+    },
+    {
+      "id": "mortgage-types-explained",
+      "title": "Mortgage Types Explained",
+      "description": "Compare different mortgage options like fixed-rate, adjustable-rate, FHA, and VA loans to find the best fit for your home purchase.",
+      "icon": "Home",
+      "date": "2024-05-08"
+    },
+    {
+      "id": "income-tax-basics",
+      "title": "Income Tax Basics",
+      "description": "Understand how income taxes work, including tax brackets, deductions, credits, and strategies to legally minimize your tax burden.",
+      "icon": "FileText",
+      "date": "2024-05-10"
+    },
+    {
+      "id": "stock-market-fundamentals",
+      "title": "Stock Market Fundamentals",
+      "description": "Learn the basics of how stock markets work, different types of securities, and key factors that influence stock prices.",
+      "icon": "TrendingUp",
+      "date": "2024-05-12"
+    },
+    {
+      "id": "high-yield-savings-accounts",
+      "title": "High-Yield Savings Accounts",
+      "description": "Discover how to maximize your short-term savings with high-yield accounts, including features to look for and potential pitfalls.",
+      "icon": "DollarSign",
+      "date": "2024-05-15"
+    },
+    {
+      "id": "negotiating-salary",
+      "title": "Negotiating Salary",
+      "description": "Master proven techniques for negotiating better compensation, from research and timing to counteroffers and non-salary benefits.",
+      "icon": "BarChart",
+      "date": "2024-05-18"
+    },
+    {
+      "id": "side-hustle-strategies",
+      "title": "Side Hustle Strategies",
+      "description": "Explore popular ways to earn additional income outside your main job, with tips for finding the right opportunity for your skills.",
+      "icon": "Briefcase",
+      "date": "2024-05-20"
+    },
+    {
+      "id": "charitable-giving-strategies",
+      "title": "Charitable Giving Strategies",
+      "description": "Learn tax-efficient ways to support causes you care about, including direct donations, donor-advised funds, and planned giving.",
+      "icon": "Heart",
+      "date": "2024-05-22"
+    },
+    {
+      "id": "health-savings-accounts",
+      "title": "Health Savings Accounts",
+      "description": "Discover how HSAs offer triple tax advantages and can be a powerful tool for both healthcare expenses and retirement planning.",
+      "icon": "Stethoscope",
+      "date": "2024-05-25"
+    },
+    {
+      "id": "bonds-investing-guide",
+      "title": "Bonds Investing Guide",
+      "description": "Understand different types of bonds, how they work, and their role in a diversified investment portfolio.",
+      "icon": "Link",
+      "date": "2024-05-28"
+    },
+    {
+      "id": "inheritance-planning",
+      "title": "Inheritance Planning",
+      "description": "Learn how to prepare for receiving an inheritance and strategies for managing it responsibly to honor the legacy.",
+      "icon": "Gift",
+      "date": "2024-05-30"
+    },
+    {
+      "id": "financial-safety-nets",
+      "title": "Financial Safety Nets",
+      "description": "Build a comprehensive system of protections including emergency funds, insurance, estate planning, and support networks.",
+      "icon": "Shield",
+      "date": "2024-06-02"
+    },
+    {
+      "id": "managing-financial-stress",
+      "title": "Managing Financial Stress",
+      "description": "Explore practical strategies for reducing money-related anxiety and building a healthier relationship with your finances.",
+      "icon": "Heart",
+      "date": "2024-06-05"
+    },
+    {
+      "id": "inflation-hedging-strategies",
+      "title": "Inflation Hedging Strategies",
+      "description": "Protect your purchasing power with investments and approaches designed to outpace inflation over the long term.",
+      "icon": "TrendingUp",
+      "date": "2024-06-08"
+    },
+    {
+      "id": "etf-vs-mutual-funds",
+      "title": "ETFs vs. Mutual Funds",
+      "description": "Compare the key differences between exchange-traded funds and mutual funds to determine which investment vehicle is right for you.",
+      "icon": "BarChart2",
+      "date": "2024-06-10"
+    },
+    {
+      "id": "understanding-annuities",
+      "title": "Understanding Annuities",
+      "description": "Learn about different types of annuities, their potential benefits as guaranteed income sources, and important considerations before purchasing.",
+      "icon": "Clock",
+      "date": "2024-06-12"
+    },
+    {
+      "id": "navigating-bear-markets",
+      "title": "Navigating Bear Markets",
+      "description": "Discover strategies for managing your investments during market downturns and how to position your portfolio to emerge stronger.",
+      "icon": "TrendingDown",
+      "date": "2024-06-15"
+    },
+    {
+      "id": "home-buying-process",
+      "title": "Home Buying Process",
+      "description": "A step-by-step guide to purchasing a home, from securing financing and finding the right property to closing the deal.",
+      "icon": "Home",
+      "date": "2024-06-18"
+    },
+    {
+      "id": "credit-card-optimization",
+      "title": "Credit Card Optimization",
+      "description": "Learn how to maximize rewards, minimize interest, and use credit cards as effective financial tools rather than debt traps.",
+      "icon": "CreditCard",
+      "date": "2024-06-20"
+    },
+    {
+      "id": "international-investing",
+      "title": "International Investing",
+      "description": "Explore the benefits of global diversification, methods for investing in foreign markets, and considerations for currency exposure.",
+      "icon": "Globe",
+      "date": "2024-06-22"
+    },
+    {
+      "id": "social-security-strategies",
+      "title": "Social Security Strategies",
+      "description": "Understand how to optimize your Social Security benefits through careful planning of when and how to claim.",
+      "icon": "Award",
+      "date": "2024-06-25"
+    },
+    {
+      "id": "crypto-investing-basics",
+      "title": "Cryptocurrency Investing Basics",
+      "description": "An objective introduction to blockchain technology, major cryptocurrencies, and how to approach this high-risk asset class responsibly.",
+      "icon": "Bitcoin",
+      "date": "2024-06-28"
+    },
+    {
+      "id": "roth-conversion-ladder",
+      "title": "Roth Conversion Ladder",
+      "description": "A strategic approach to converting traditional retirement funds to Roth accounts over time to minimize taxes and maximize growth.",
+      "icon": "GitMerge",
+      "date": "2024-07-01"
+    },
+    {
+      "id": "tax-loss-harvesting",
+      "title": "Tax-Loss Harvesting",
+      "description": "Learn how to strategically realize investment losses to offset gains and reduce your tax liability while maintaining your overall investment strategy.",
+      "icon": "Scissors",
+      "date": "2024-07-05"
+    },
+    {
+      "id": "portfolio-rebalancing",
+      "title": "Portfolio Rebalancing",
+      "description": "Learn how and why to regularly adjust your investments to maintain your target asset allocation and manage risk effectively.",
+      "icon": "RefreshCw",
+      "date": "2024-08-10"
+    },
+    {
+      "id": "risk-return-relationship",
+      "title": "Risk-Return Relationship",
+      "description": "Understanding the fundamental trade-off between investment risk and potential returns to build a portfolio aligned with your goals.",
+      "icon": "Activity",
+      "date": "2024-08-15"
+    },
+    {
+      "id": "passive-income-strategies",
+      "title": "Passive Income Strategies",
+      "description": "Explore various approaches to building income streams that require minimal ongoing effort, from dividends to digital products.",
+      "icon": "DollarSign",
+      "date": "2024-08-20"
+    },
+    {
+      "id": "modern-portfolio-theory",
+      "title": "Modern Portfolio Theory",
+      "description": "Learn about the investment framework that emphasizes portfolio diversification to optimize returns for a given level of risk.",
+      "icon": "LineChart",
+      "date": "2024-09-05"
+    },
+    {
+      "id": "money-market-funds",
+      "title": "Money Market Funds",
+      "description": "Understand how these low-risk investment vehicles work, their benefits for cash management, and potential limitations.",
+      "icon": "DollarSign",
+      "date": "2024-09-10"
+    },
+    {
+      "id": "value-vs-growth-investing",
+      "title": "Value vs. Growth Investing",
+      "description": "Compare these two fundamental investment styles, their historical performance patterns, and how they might fit in your portfolio.",
+      "icon": "BarChart",
+      "date": "2024-09-15"
+    },
+    {
+      "id": "alternative-investments",
+      "title": "Alternative Investments",
+      "description": "Explore non-traditional assets like private equity, hedge funds, real assets, and collectibles that can diversify your investment portfolio.",
+      "icon": "Briefcase",
+      "date": "2024-09-20"
+    },
+    {
+      "id": "factor-investing",
+      "title": "Factor Investing",
+      "description": "Learn about systematic investment approaches targeting specific factors like value, momentum, quality, and size to enhance returns.",
+      "icon": "BarChart2",
+      "date": "2024-09-25"
+    },
+    {
+      "id": "financial-advisor-selection",
+      "title": "Choosing a Financial Advisor",
+      "description": "Discover the different types of financial advisors, how they're compensated, and what questions to ask before hiring one.",
+      "icon": "UserCheck",
+      "date": "2024-10-01"
+    },
+    {
+      "id": "retirement-income-planning",
+      "title": "Retirement Income Planning",
+      "description": "Learn strategies for creating reliable income streams in retirement from various sources including investments, pensions, and annuities.",
+      "icon": "Wallet",
+      "date": "2024-10-05"
+    },
+    {
+      "id": "tax-advantaged-accounts",
+      "title": "Tax-Advantaged Accounts",
+      "description": "Compare various tax-advantaged account types beyond retirement accounts, including HSAs, 529 plans, and specialized savings vehicles.",
+      "icon": "Calculator",
+      "date": "2024-10-10"
+    },
+    {
+      "id": "personal-finance-for-freelancers",
+      "title": "Personal Finance for Freelancers",
+      "description": "Essential financial strategies for self-employed individuals, including tax planning, retirement options, and managing irregular income.",
+      "icon": "Briefcase",
+      "date": "2024-10-15"
+    },
+    {
+      "id": "long-term-care-planning",
+      "title": "Long-Term Care Planning",
+      "description": "Strategies for preparing financially for potential long-term care needs, including insurance options, savings approaches, and family considerations.",
+      "icon": "Heart",
+      "date": "2024-10-20"
+    },
+    {
+      "id": "socially-responsible-investing",
+      "title": "Socially Responsible Investing",
+      "description": "How to align your investment portfolio with your personal values while still pursuing competitive financial returns.",
+      "icon": "Globe",
+      "date": "2024-10-25"
+    },
+    {
+      "id": "financial-planning-for-digital-nomads",
+      "title": "Financial Planning for Digital Nomads",
+      "description": "Strategies for managing finances across borders, handling currency fluctuations, and optimizing taxes while working remotely around the world.",
+      "icon": "Laptop",
+      "date": "2024-10-30"
+    },
+    {
+      "id": "investing-during-recession",
+      "title": "Investing During Recession",
+      "description": "Strategies for managing investments during economic downturns, understanding market cycles, and positioning your portfolio for recovery.",
+      "icon": "TrendingDown",
+      "date": "2024-11-05"
+    },
+    {
+      "id": "financial-planning-for-entrepreneurs",
+      "title": "Financial Planning for Entrepreneurs",
+      "description": "Essential strategies for business owners to manage personal and business finances, optimize cash flow, and build long-term wealth.",
+      "icon": "Briefcase",
+      "date": "2024-11-10"
+    },
+    {
+      "id": "behavioral-finance-for-investors",
+      "title": "Behavioral Finance for Investors",
+      "description": "Understanding cognitive biases that affect investment decisions and practical strategies to overcome emotional investing patterns.",
+      "icon": "Brain",
+      "date": "2024-11-15"
+    },
+    {
+      "id": "preparing-for-market-volatility",
+      "title": "Preparing for Market Volatility",
+      "description": "Practical approaches to protect your portfolio during turbulent markets while maintaining long-term investment strategies.",
+      "icon": "Activity",
+      "date": "2024-11-20"
+    },
+    {
+      "id": "multi-generational-wealth-transfer",
+      "title": "Multi-Generational Wealth Transfer",
+      "description": "Strategies for effectively passing wealth to future generations while minimizing tax implications and preserving family values.",
+      "icon": "Gift",
+      "date": "2024-11-25"
+    },
+    {
+      "id": "cognitive-biases-in-financial-decisions",
+      "title": "Cognitive Biases in Financial Decisions",
+      "description": "Exploring how psychological biases affect everyday money choices and techniques to make more rational financial decisions.",
+      "icon": "Brain",
+      "date": "2024-11-30"
+    },
+    {
+      "id": "emergency-fund-alternatives",
+      "title": "Emergency Fund Alternatives",
+      "description": "Exploring strategic alternatives to traditional cash emergency funds that may provide better returns while maintaining appropriate financial security.",
+      "icon": "Wallet",
+      "date": "2024-12-15"
+    },
+    {
+      "id": "sustainable-retirement-withdrawal-rates",
+      "title": "Sustainable Retirement Withdrawal Rates",
+      "description": "Evidence-based approaches to determining how much you can safely withdraw from retirement savings to ensure your money lasts throughout retirement.",
+      "icon": "Calculator",
+      "date": "2024-12-30"
+    },
+    {
+      "id": "estate-planning-for-blended-families",
+      "title": "Estate Planning for Blended Families",
+      "description": "Special considerations and strategies for creating an estate plan that effectively balances the needs of your current spouse with children from previous relationships.",
+      "icon": "Users",
+      "date": "2025-01-15"
+    },
+    {
+      "id": "digital-assets-in-estate-planning",
+      "title": "Digital Assets in Estate Planning",
+      "description": "How to incorporate cryptocurrency, online accounts, and digital property into your estate plan to ensure these assets aren't lost or inaccessible to your heirs.",
+      "icon": "CloudLightning",
+      "date": "2025-01-30"
+    },
+    {
+      "id": "tax-efficient-investment-strategies",
+      "title": "Tax-Efficient Investment Strategies",
+      "description": "Practical approaches to minimize the tax burden on your investment portfolio, including asset location, tax-loss harvesting, and strategic investment vehicle selection.",
+      "icon": "Receipt",
+      "date": "2025-02-15"
+    },
+    {
+      "id": "managing-debt-in-retirement",
+      "title": "Managing Debt in Retirement",
+      "description": "Strategies for effectively balancing debt obligations during retirement, including approaches to mortgages, consumer debt, and determining when to pay off versus maintain strategic debts.",
+      "icon": "Wallet",
+      "date": "2025-02-28"
+    },
+    {
+      "id": "healthcare-planning-in-retirement",
+      "title": "Healthcare Planning in Retirement",
+      "description": "Comprehensive guide to understanding Medicare, supplemental insurance options, and financial strategies to prepare for healthcare costs in retirement.",
+      "icon": "Heart",
+      "date": "2025-03-15"
+    },
+    {
+      "id": "investing-in-small-cap-stocks",
+      "title": "Investing in Small-Cap Stocks",
+      "description": "Explore the opportunities and risks of small-cap stocks, including growth potential, volatility considerations, and strategies for incorporating these investments into a diversified portfolio.",
+      "icon": "BarChart",
+      "date": "2025-03-30"
+    },
+    {
+      "id": "strategic-income-planning-for-retirement",
+      "title": "Strategic Income Planning for Retirement",
+      "description": "Learn how to create reliable, tax-efficient income streams in retirement by coordinating various sources including Social Security, investments, and other assets to maximize financial security.",
+      "icon": "Wallet",
+      "date": "2025-04-06"
+    }
+  ]
+} 

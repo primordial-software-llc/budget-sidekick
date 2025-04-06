@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { saveLedger, getLedger, getAllLedgerNames, getTransactionsByLedger } from '@/utils/indexedDB';
+import { saveLedger, getLedger, getAllLedgerNames, getTransactionsByLedger, getLatestConsent, recordConsent } from '@/utils/indexedDB';
 import { DB_NAME, DB_VERSION, LEDGER_STORE, FEATURES } from '@/utils/constants';
 import Link from 'next/link';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
@@ -48,10 +48,58 @@ function Dashboard() {
 
   // Add new state for delete confirmation modal
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  
+  // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Add quick consent modal state
+  const [showQuickConsent, setShowQuickConsent] = useState(false);
+  const [consentChecked, setConsentChecked] = useState(false);
+  
+  // Current terms version
+  const TERMS_VERSION = '1.0';
+
+  // Check for terms consent before allowing access to dashboard
+  useEffect(() => {
+    const checkTermsConsent = async () => {
+      try {
+        const latestConsent = await getLatestConsent('terms');
+        if (!latestConsent || !latestConsent.consented) {
+          // User hasn't consented to terms, show the quick consent overlay
+          setShowQuickConsent(true);
+          setIsLoading(false);
+        } else {
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error('Error checking terms consent:', error);
+        // On error, assume we need consent to be safe
+        setShowQuickConsent(true);
+        setIsLoading(false);
+      }
+    };
+    
+    checkTermsConsent();
+  }, [router]);
+  
+  // Handle quick consent submission
+  const handleQuickConsent = async () => {
+    if (!consentChecked) return;
+    
+    try {
+      await recordConsent('terms', TERMS_VERSION, true);
+      setShowQuickConsent(false);
+    } catch (error) {
+      console.error('Error recording consent:', error);
+      alert('There was a problem saving your consent. Please try again.');
+    }
+  };
 
   // Load available ledgers on mount
   useEffect(() => {
     const loadLedgers = async () => {
+      if (isLoading || showQuickConsent) return; // Don't load ledgers until consent is verified
+      
       try {
         const ledgerNames = await getAllLedgerNames();
         setAvailableLedgers(ledgerNames);
@@ -76,7 +124,7 @@ function Dashboard() {
       }
     };
     loadLedgers();
-  }, []);
+  }, [isLoading, showQuickConsent]);
 
   // Update the localStorage useEffect
   useEffect(() => {
@@ -87,6 +135,8 @@ function Dashboard() {
 
   useEffect(() => {
     const loadEntries = async () => {
+      if (!currentLedger || isLoading || showQuickConsent) return; // Don't load entries if no ledger selected or still loading consent
+      
       try {
         const entries = await getLedger(currentLedger);
         setLedgerEntries(entries);
@@ -122,7 +172,7 @@ function Dashboard() {
       }
     };
     loadEntries();
-  }, [currentLedger]);
+  }, [currentLedger, isLoading, showQuickConsent]);
 
   const handleEdit = (entry) => {
     const key = `${entry.name}|${entry.day}`;
@@ -299,129 +349,143 @@ function Dashboard() {
     }
   };
 
-  return (
-    <DashboardLayout 
-      currentLedger={currentLedger}
-      availableLedgers={availableLedgers}
-      setCurrentLedger={setCurrentLedger}
-      activeTab="entries"
-    >
-      {/* Monthly Ledger Section */}
-      <div className="bg-white rounded-[0.375rem] shadow-[0_.125rem_.25rem_rgba(0,0,0,0.075)] overflow-hidden transition-all duration-300 border border-[rgba(0,0,0,0.175)]">
-        <div className="p-6">
-          <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold">Account Entries</h1>
-            <div className="flex gap-2">
-              <button
-                onClick={handleCreateLedger}
-                className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 flex items-center gap-2"
-              >
-                <PlusIcon className="w-4 h-4" />
-                New Account
-              </button>
-              <button
-                onClick={handleRenameLedger}
-                className="px-4 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 flex items-center gap-2"
-              >
-                <PencilIcon className="w-4 h-4" />
-                Rename
-              </button>
-              <button
-                onClick={() => setIsDeleteModalOpen(true)}
-                className="px-4 py-2 text-red-600 bg-red-100 rounded-lg hover:bg-red-200 flex items-center gap-2"
-              >
-                <TrashIcon className="w-4 h-4" />
-                Delete
-              </button>
-              <button
-                onClick={handleAdd}
-                className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 flex items-center gap-2"
-              >
-                <PlusIcon className="w-4 h-4" />
-                Add Entry
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Day
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Account Name
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Amount
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {ledgerEntries.length === 0 ? (
-                <tr>
-                  <td colSpan="4" className="px-6 py-4 text-center text-gray-500">
-                    No ledger entries found. Add your first entry to get started.
-                  </td>
-                </tr>
-              ) : (
-                [...ledgerEntries]
-                  .sort((a, b) => {
-                    // First by day
-                    if (a.day !== b.day) return a.day - b.day;
-                    // Then by name
-                    return a.name.localeCompare(b.name);
-                  })
-                  .map((entry, index) => {
-                    const key = `${entry.name}|${entry.day}`;
-                    const hasTransactions = entrySourceMap[key]?.hasTransactions;
-                    const transactionCount = entrySourceMap[key]?.count || 0;
-                    
-                    return (
-                      <tr key={index} className={`hover:bg-gray-50 ${hasTransactions ? 'bg-blue-50' : ''}`}>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          {entry.day}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            {hasTransactions && (
-                              <div className="mr-2 flex items-center" title={`Aggregated from ${transactionCount} transactions`}>
-                                <LayersIcon className="w-4 h-4 text-blue-500" />
-                                <span className="ml-1 text-xs text-blue-500">{transactionCount}</span>
-                              </div>
-                            )}
-                            {entry.name}
-                          </div>
-                        </td>
-                        <td className={`px-6 py-4 whitespace-nowrap text-right ${entry.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                          {new Decimal(entry.amount).toFixed(2)}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <button
-                            onClick={() => handleEdit(entry)}
-                            className="text-indigo-600 hover:text-indigo-900 mr-3"
-                          >
-                            <PencilIcon className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(entry)}
-                            className="text-red-600 hover:text-red-900"
-                          >
-                            <TrashIcon className="w-4 h-4" />
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })
-              )}
-            </tbody>
-          </table>
+  // Show loading screen while checking for consent
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">Loading...</h2>
+          <p className="text-gray-600">Please wait while we set up your dashboard</p>
         </div>
       </div>
+    );
+  }
+
+  return (
+    <>
+      <DashboardLayout 
+        currentLedger={currentLedger}
+        availableLedgers={availableLedgers}
+        setCurrentLedger={setCurrentLedger}
+        activeTab="entries"
+      >
+        {/* Monthly Ledger Section */}
+        <div className="bg-white rounded-[0.375rem] shadow-[0_.125rem_.25rem_rgba(0,0,0,0.075)] overflow-hidden transition-all duration-300 border border-[rgba(0,0,0,0.175)]">
+          <div className="p-6">
+            <div className="flex justify-between items-center">
+              <h1 className="text-3xl font-bold">Account Entries</h1>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleCreateLedger}
+                  className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 flex items-center gap-2"
+                >
+                  <PlusIcon className="w-4 h-4" />
+                  New Account
+                </button>
+                <button
+                  onClick={handleRenameLedger}
+                  className="px-4 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 flex items-center gap-2"
+                >
+                  <PencilIcon className="w-4 h-4" />
+                  Rename
+                </button>
+                <button
+                  onClick={() => setIsDeleteModalOpen(true)}
+                  className="px-4 py-2 text-red-600 bg-red-100 rounded-lg hover:bg-red-200 flex items-center gap-2"
+                >
+                  <TrashIcon className="w-4 h-4" />
+                  Delete
+                </button>
+                <button
+                  onClick={handleAdd}
+                  className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 flex items-center gap-2"
+                >
+                  <PlusIcon className="w-4 h-4" />
+                  Add Entry
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Day
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Account Name
+                  </th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Amount
+                  </th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {ledgerEntries.length === 0 ? (
+                  <tr>
+                    <td colSpan="4" className="px-6 py-4 text-center text-gray-500">
+                      No ledger entries found. Add your first entry to get started.
+                    </td>
+                  </tr>
+                ) : (
+                  [...ledgerEntries]
+                    .sort((a, b) => {
+                      // First by day
+                      if (a.day !== b.day) return a.day - b.day;
+                      // Then by name
+                      return a.name.localeCompare(b.name);
+                    })
+                    .map((entry, index) => {
+                      const key = `${entry.name}|${entry.day}`;
+                      const hasTransactions = entrySourceMap[key]?.hasTransactions;
+                      const transactionCount = entrySourceMap[key]?.count || 0;
+                      
+                      return (
+                        <tr key={index} className={`hover:bg-gray-50 ${hasTransactions ? 'bg-blue-50' : ''}`}>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {entry.day}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center">
+                              {hasTransactions && (
+                                <div className="mr-2 flex items-center" title={`Aggregated from ${transactionCount} transactions`}>
+                                  <LayersIcon className="w-4 h-4 text-blue-500" />
+                                  <span className="ml-1 text-xs text-blue-500">{transactionCount}</span>
+                                </div>
+                              )}
+                              {entry.name}
+                            </div>
+                          </td>
+                          <td className={`px-6 py-4 whitespace-nowrap text-right ${entry.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            {new Decimal(entry.amount).toFixed(2)}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button
+                              onClick={() => handleEdit(entry)}
+                              className="text-indigo-600 hover:text-indigo-900 mr-3"
+                            >
+                              <PencilIcon className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(entry)}
+                              className="text-red-600 hover:text-red-900"
+                            >
+                              <TrashIcon className="w-4 h-4" />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </DashboardLayout>
 
       {/* Modal */}
       {isModalOpen && (
@@ -555,7 +619,7 @@ function Dashboard() {
         </div>
       )}
 
-      {/* Add Delete Confirmation Modal */}
+      {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
@@ -590,7 +654,56 @@ function Dashboard() {
           </div>
         </div>
       )}
-    </DashboardLayout>
+      
+      {/* Quick Consent Modal */}
+      {showQuickConsent && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
+            <div className="text-center mb-4">
+              <h3 className="text-xl font-semibold text-gray-800">One quick step before you start</h3>
+              <p className="text-gray-600 mt-2">We need your consent to continue using Budget Sidekick.</p>
+            </div>
+            
+            <div className="bg-blue-50 p-4 rounded-lg mb-4 text-sm text-gray-700">
+              <p>By using Budget Sidekick, you agree to our Terms of Service. Your financial data remains on your device.</p>
+            </div>
+            
+            <div className="flex items-start mb-6 mt-4">
+              <div className="flex items-center h-5">
+                <input
+                  id="quick-consent"
+                  type="checkbox"
+                  checked={consentChecked}
+                  onChange={(e) => setConsentChecked(e.target.checked)}
+                  className="w-5 h-5 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
+                  required
+                />
+              </div>
+              <label htmlFor="quick-consent" className="ml-3 text-gray-700">
+                I agree to the <Link href="/terms" className="text-blue-600 hover:underline" target="_blank">Terms of Service</Link>
+              </label>
+            </div>
+            
+            <div className="flex justify-between items-center">
+              <Link href="/terms" className="text-sm text-blue-600 hover:underline" target="_blank">
+                Read full terms
+              </Link>
+              <button
+                onClick={handleQuickConsent}
+                disabled={!consentChecked}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  consentChecked 
+                    ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+              >
+                Continue to Dashboard
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

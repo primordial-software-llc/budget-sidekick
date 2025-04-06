@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { PieChart, DollarSign, AlertTriangle, Percentage, BadgePercent, BarChart3 } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Disclaimer from '@/components/Disclaimer';
 
 const BudgetGuide = () => {
 	return (
@@ -350,6 +351,10 @@ function BudgetRulePage() {
 					<div className="grid grid-cols-1 gap-8">
 						{/* Featured Article */}
 						<BudgetGuide />
+						<Disclaimer 
+							articleId="50-30-20-budget"
+							message="This content is educational in nature and updated as of {{year}}. The 50/30/20 budgeting rule is a general guideline that may need to be adjusted based on your income level, cost of living in your area, stage of life, and specific financial goals. Budgeting percentages should be personalized to your unique circumstances. Please consult with a financial professional for advice tailored to your situation."
+						/>
 					</div>
 				</div>
 			</main>

@@ -4,6 +4,7 @@ import { BookOpen, CheckCircle, AlertTriangle, Clock, Calendar, TrendingUp } fro
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import Disclaimer from '@/components/Disclaimer';
 
 const Timeline = () => {
 	return (
@@ -177,13 +178,6 @@ const Timeline = () => {
                     This timeline reflects our commitment to providing our clients with objective, fact-based financial intelligence. 
                     As a carrier of information, we relay what we believe to be accurate financial data, while users maintain responsibility for their financial decisions.
                 </p>
-                <div className="flex items-start gap-2 text-gray-700 text-sm italic border-t border-blue-100 pt-4">
-                    <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
-                    <p>
-                        This educational resource presents factual information about SEC filing requirements as of March 2025, similar to how a newspaper would report financial deadlines.
-                        While we strive for accuracy, regulations may change over time. See our <Link href="/terms" className="text-blue-600 hover:underline">Terms of Service</Link> for more information.
-                    </p>
-                </div>
             </div>
 		</div>
 	);
@@ -206,6 +200,10 @@ function SECFilingTimelinesPage() {
 					
 					<div className="grid grid-cols-1 gap-8">
 						<Timeline />
+						<Disclaimer 
+							articleId="sec-filing-timelines"
+							message="This educational resource presents factual information about SEC filing requirements as of {{year}}, similar to how a newspaper would report financial deadlines. While we strive for accuracy, regulations may change over time. For more information, see our Terms of Service."
+						/>
 					</div>
 				</div>
 			</main>
