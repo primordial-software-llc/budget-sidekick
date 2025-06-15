@@ -5,6 +5,15 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Disclaimer from '@/components/Disclaimer';
+import Article from '@/components/Article';
+import { getArticleData } from '@/utils/getArticleData';
+import { getArticleMetadata } from '@/utils/getArticleMetadata';
+
+const ARTICLE_ID = 'estate-planning-basics';
+
+const articleData = getArticleData(ARTICLE_ID);
+
+export const metadata = getArticleMetadata(articleData, ARTICLE_ID);
 
 function EstatePlanningBasics() {
   return (
@@ -197,10 +206,15 @@ function EstatePlanningBasics() {
               </div>
             </div>
 
-            <Disclaimer 
-              articleId="estate-planning-basics"
-              message="This content is educational in nature and updated as of {{year}}. Estate laws vary by state and change over time. Federal and state tax laws may impact estate planning strategies. This information is not legal, tax, or accounting advice. Please consult with qualified legal and financial professionals for personalized guidance."
-            />
+            <Article
+              title={articleData.title}
+              icon={FileText}
+              articleId={ARTICLE_ID}
+              accentColor="blue"
+              disclaimerMessage="This content is educational in nature and updated as of {{year}}. We aim to relay factual financial information, similar to how a newspaper would report market data. For complete information about our services, please review our Terms of Service."
+            >
+              {/* Existing content */}
+            </Article>
           </div>
         </div>
       </main>

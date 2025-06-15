@@ -5,6 +5,15 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Disclaimer from '@/components/Disclaimer';
+import Article from '@/components/Article';
+import { getArticleData } from '@/utils/getArticleData';
+import { getArticleMetadata } from '@/utils/getArticleMetadata';
+
+const ARTICLE_ID = 'debt-snowball-vs-avalanche';
+
+const articleData = getArticleData(ARTICLE_ID);
+
+export const metadata = getArticleMetadata(articleData, ARTICLE_ID);
 
 function DebtSnowballVsAvalanche() {
   return (
@@ -208,10 +217,15 @@ function DebtSnowballVsAvalanche() {
               </div>
             </div>
 
-            <Disclaimer 
-              articleId="debt-snowball-vs-avalanche"
-              message="This content is educational in nature and updated as of {{year}}. The effectiveness of any debt repayment strategy depends on individual circumstances, discipline, and financial situation. Consider consulting with a financial professional for personalized advice."
-            />
+            <Article
+              title={articleData.title}
+              icon={LineChart}
+              articleId={ARTICLE_ID}
+              accentColor="blue"
+              disclaimerMessage="This content is educational in nature and updated as of {{year}}. We aim to relay factual financial information, similar to how a newspaper would report market data. For complete information about our services, please review our Terms of Service."
+            >
+              {/* Existing content */}
+            </Article>
           </div>
         </div>
       </main>

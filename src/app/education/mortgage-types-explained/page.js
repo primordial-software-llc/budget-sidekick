@@ -2,18 +2,15 @@ import React from 'react';
 import Link from 'next/link';
 import { Home, AlertTriangle, ArrowRight, Percent, Clock, Landmark, Shield } from 'lucide-react';
 import Article from '@/components/Article';
+import { getArticleData } from '@/utils/getArticleData';
+import { getArticleMetadata } from '@/utils/getArticleMetadata';
+
+const ARTICLE_ID = 'mortgage-types-explained';
+
+const articleData = getArticleData(ARTICLE_ID);
 
 // Generate metadata for the page
-export const metadata = {
-  title: "7 Mortgage Types That Could Save You $50K+ (2025 Guide) - Budget Sidekick",
-  description: "Compare all 7 mortgage types side-by-side. See which saves you the most money based on your credit score, down payment, and timeline. Free mortgage calculator included.",
-  openGraph: {
-    title: "7 Mortgage Types That Could Save You $50K+ (2025 Guide)",
-    description: "Compare all 7 mortgage types side-by-side. See which saves you the most money based on your credit score and down payment.",
-    type: "article",
-    url: "https://www.budgetsidekick.com/education/mortgage-types-explained"
-  }
-};
+export const metadata = getArticleMetadata(articleData, ARTICLE_ID);
 
 // Generate JSON-LD structured data
 const generateStructuredData = () => {
@@ -57,9 +54,9 @@ function MortgageTypesExplained() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateStructuredData()) }}
       />
       <Article
-        title="Mortgage Types Explained"
+        title={articleData.title}
         icon={Home}
-        articleId="mortgage-types-explained"
+        articleId={ARTICLE_ID}
         accentColor="blue"
         disclaimerMessage="This content is educational in nature and updated as of {{year}}. We aim to relay factual financial information, similar to how a newspaper would report market data. For complete information about our services, please review our Terms of Service."
       >

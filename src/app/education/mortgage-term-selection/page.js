@@ -2,18 +2,14 @@ import React from 'react';
 import Link from 'next/link';
 import { Clock, AlertTriangle, Calculator, ArrowRight, TrendingUp, Shield } from 'lucide-react';
 import Article from '@/components/Article';
+import { getArticleData } from '@/utils/getArticleData';
+import { getArticleMetadata } from '@/utils/getArticleMetadata';
 
-// Generate metadata for the page
-export const metadata = {
-  title: "Mortgage Term Selection: Why 30-Year Loans Often Make More Sense (2025 Guide) - Budget Sidekick",
-  description: "Learn why 30-year mortgages offer better flexibility than shorter terms. See real cost comparisons and discover how to pay off your mortgage early without the risk of higher required payments.",
-  openGraph: {
-    title: "Mortgage Term Selection: Why 30-Year Loans Often Make More Sense",
-    description: "Learn why 30-year mortgages offer better flexibility than shorter terms. See real cost comparisons and discover how to pay off your mortgage early without the risk of higher required payments.",
-    type: "article",
-    url: "https://www.budgetsidekick.com/education/mortgage-term-selection"
-  }
-};
+const ARTICLE_ID = 'mortgage-term-selection';
+
+const articleData = getArticleData(ARTICLE_ID);
+
+export const metadata = getArticleMetadata(articleData, ARTICLE_ID);
 
 // Generate JSON-LD structured data
 const generateStructuredData = () => {
@@ -57,9 +53,9 @@ function MortgageTermSelection() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateStructuredData()) }}
       />
       <Article
-        title="Mortgage Term Selection: Why 30-Year Loans Often Make More Sense"
+        title={articleData.title}
         icon={Clock}
-        articleId="mortgage-term-selection"
+        articleId={ARTICLE_ID}
         accentColor="blue"
         disclaimerMessage="This content is educational in nature and updated as of {{year}}. We aim to relay factual financial information, similar to how a newspaper would report market data. For complete information about our services, please review our Terms of Service."
       >

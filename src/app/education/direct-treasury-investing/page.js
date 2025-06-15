@@ -5,6 +5,15 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Disclaimer from '@/components/Disclaimer';
+import Article from '@/components/Article';
+import { getArticleData } from '@/utils/getArticleData';
+import { getArticleMetadata } from '@/utils/getArticleMetadata';
+
+const ARTICLE_ID = 'direct-treasury-investing';
+
+const articleData = getArticleData(ARTICLE_ID);
+
+export const metadata = getArticleMetadata(articleData, ARTICLE_ID);
 
 function DirectTreasuryInvesting() {
   return (
@@ -101,10 +110,15 @@ function DirectTreasuryInvesting() {
               </ol>
             </div>
 
-            <Disclaimer 
-              articleId="direct-treasury-investing"
-              message="This content is educational in nature and updated as of {{year}}. Treasury product offerings and regulations may change over time. For complete information about government securities, visit TreasuryDirect.gov."
-            />
+            <Article
+              title={articleData.title}
+              icon={Shield}
+              articleId={ARTICLE_ID}
+              accentColor="teal"
+              disclaimerMessage="This content is educational in nature and updated as of {{year}}. We aim to relay factual financial information, similar to how a newspaper would report market data. For complete information about our services, please review our Terms of Service."
+            >
+              {/* Existing content */}
+            </Article>
           </div>
         </div>
       </main>

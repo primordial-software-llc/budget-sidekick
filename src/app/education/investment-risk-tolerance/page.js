@@ -4,6 +4,15 @@ import { LineChart, AlertTriangle, BarChart, ArrowRight, Calculator, TrendingUp,
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import Article from '@/components/Article';
+import { getArticleData } from '@/utils/getArticleData';
+import { getArticleMetadata } from '@/utils/getArticleMetadata';
+
+const ARTICLE_ID = 'investment-risk-tolerance';
+
+const articleData = getArticleData(ARTICLE_ID);
+
+export const metadata = getArticleMetadata(articleData, ARTICLE_ID);
 
 function InvestmentRiskTolerance() {
   return (
@@ -203,6 +212,15 @@ function InvestmentRiskTolerance() {
         </div>
       </main>
       <Footer />
+      <Article
+        title={articleData.title}
+        icon={BarChart}
+        articleId={ARTICLE_ID}
+        accentColor="blue"
+        disclaimerMessage="This content is educational in nature and updated as of {{year}}. We aim to relay factual financial information, similar to how a newspaper would report market data. For complete information about our services, please review our Terms of Service."
+      >
+        {/* Article content */}
+      </Article>
     </>
   );
 }

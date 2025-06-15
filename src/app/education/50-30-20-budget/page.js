@@ -4,6 +4,15 @@ import { PieChart, DollarSign, AlertTriangle, Percentage, BadgePercent, BarChart
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Disclaimer from '@/components/Disclaimer';
+import Article from '@/components/Article';
+import { getArticleData } from '@/utils/getArticleData';
+import { getArticleMetadata } from '@/utils/getArticleMetadata';
+
+const ARTICLE_ID = '50-30-20-budget';
+
+const articleData = getArticleData(ARTICLE_ID);
+
+export const metadata = getArticleMetadata(articleData, ARTICLE_ID);
 
 const BudgetGuide = () => {
 	return (
@@ -350,7 +359,15 @@ function BudgetRulePage() {
 					
 					<div className="grid grid-cols-1 gap-8">
 						{/* Featured Article */}
-						<BudgetGuide />
+						<Article
+							title={articleData.title}
+							icon={PieChart}
+							articleId={ARTICLE_ID}
+							accentColor="blue"
+							disclaimerMessage="This content is educational in nature and updated as of {{year}}. We aim to relay factual financial information, similar to how a newspaper would report market data. For complete information about our services, please review our Terms of Service."
+						>
+							<BudgetGuide />
+						</Article>
 						<Disclaimer 
 							articleId="50-30-20-budget"
 							message="This content is educational in nature and updated as of {{year}}. The 50/30/20 budgeting rule is a general guideline that may need to be adjusted based on your income level, cost of living in your area, stage of life, and specific financial goals. Budgeting percentages should be personalized to your unique circumstances. Please consult with a financial professional for advice tailored to your situation."

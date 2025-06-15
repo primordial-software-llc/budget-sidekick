@@ -2,18 +2,14 @@ import React from 'react';
 import Link from 'next/link';
 import { PiggyBank, Home, Percent, Calculator, ArrowRight, Shield } from 'lucide-react';
 import Article from '@/components/Article';
+import { getArticleData } from '@/utils/getArticleData';
+import { getArticleMetadata } from '@/utils/getArticleMetadata';
 
-// Generate metadata for the page
-export const metadata = {
-  title: "Mortgage Down Payment Strategies: Save Faster & Buy Sooner (2025 Guide) - Budget Sidekick",
-  description: "Learn minimum down payment requirements by loan type, discover down payment assistance programs, and master strategies to save for your home purchase faster.",
-  openGraph: {
-    title: "Mortgage Down Payment Strategies: Save Faster & Buy Sooner (2025 Guide)",
-    description: "Learn minimum down payment requirements by loan type, discover down payment assistance programs, and master strategies to save for your home purchase faster.",
-    type: "article",
-    url: "https://www.budgetsidekick.com/education/mortgage-down-payment-strategies"
-  }
-};
+const ARTICLE_ID = 'mortgage-down-payment-strategies';
+
+const articleData = getArticleData(ARTICLE_ID);
+
+export const metadata = getArticleMetadata(articleData, ARTICLE_ID);
 
 // Generate JSON-LD structured data
 const generateStructuredData = () => {
@@ -57,9 +53,9 @@ function MortgageDownPaymentStrategies() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateStructuredData()) }}
       />
       <Article
-        title="Mortgage Down Payment Strategies"
+        title={articleData.title}
         icon={PiggyBank}
-        articleId="mortgage-down-payment-strategies"
+        articleId={ARTICLE_ID}
         accentColor="emerald"
         disclaimerMessage="This content is educational in nature and updated as of {{year}}. We aim to relay factual financial information, similar to how a newspaper would report market data. For complete information about our services, please review our Terms of Service."
       >

@@ -1,18 +1,14 @@
 import React from 'react';
 import { Shield, AlertTriangle, DollarSign, Calculator, ArrowRight, TrendingUp, TrendingDown } from 'lucide-react';
 import Article from '@/components/Article';
+import { getArticleData } from '@/utils/getArticleData';
+import { getArticleMetadata } from '@/utils/getArticleMetadata';
 
-// Generate metadata for the page
-export const metadata = {
-  title: "Mortgage Insurance Premium (MIP) Explained: The Safety Net Behind FHA Loans",
-  description: "Learn how MIP makes low down payment FHA loans possible while protecting the financial system. Understand the costs, requirements, and why it's different from subprime lending.",
-  openGraph: {
-    title: "Mortgage Insurance Premium (MIP) Explained: The Safety Net Behind FHA Loans",
-    description: "Learn how MIP makes low down payment FHA loans possible while protecting the financial system. Understand the costs, requirements, and why it's different from subprime lending.",
-    type: "article",
-    url: "https://www.budgetsidekick.com/education/mortgage-insurance-premium-explained"
-  }
-};
+const ARTICLE_ID = 'mortgage-insurance-premium-explained';
+
+const articleData = getArticleData(ARTICLE_ID);
+
+export const metadata = getArticleMetadata(articleData, ARTICLE_ID);
 
 // Generate JSON-LD structured data
 const generateStructuredData = () => {
@@ -56,9 +52,9 @@ function MortgageInsurancePremiumExplained() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateStructuredData()) }}
       />
       <Article
-        title="Mortgage Insurance Premium (MIP) Explained"
+        title={articleData.title}
         icon={Shield}
-        articleId="mortgage-insurance-premium-explained"
+        articleId={ARTICLE_ID}
         accentColor="teal"
         disclaimerMessage="This content is educational in nature and updated as of {{year}}. We aim to relay factual financial information, similar to how a newspaper would report market data. For complete information about our services, please review our Terms of Service."
       >

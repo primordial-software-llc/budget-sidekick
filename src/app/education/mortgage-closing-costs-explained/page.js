@@ -2,18 +2,14 @@ import React from 'react';
 import Link from 'next/link';
 import { Calculator, Receipt, DollarSign, ArrowRight, Shield, Percent } from 'lucide-react';
 import Article from '@/components/Article';
+import { getArticleData } from '@/utils/getArticleData';
+import { getArticleMetadata } from '@/utils/getArticleMetadata';
 
-// Generate metadata for the page
-export const metadata = {
-  title: "Mortgage Closing Costs Explained: Complete 2025 Guide - Budget Sidekick",
-  description: "Get a detailed breakdown of all mortgage closing costs, learn which fees are negotiable, and discover strategies to reduce your closing costs. Includes a comprehensive closing cost calculator.",
-  openGraph: {
-    title: "Mortgage Closing Costs Explained: Complete 2025 Guide",
-    description: "Get a detailed breakdown of all mortgage closing costs, learn which fees are negotiable, and discover strategies to reduce your closing costs. Includes a comprehensive closing cost calculator.",
-    type: "article",
-    url: "https://www.budgetsidekick.com/education/mortgage-closing-costs-explained"
-  }
-};
+const ARTICLE_ID = 'mortgage-closing-costs-explained';
+
+const articleData = getArticleData(ARTICLE_ID);
+
+export const metadata = getArticleMetadata(articleData, ARTICLE_ID);
 
 // Generate JSON-LD structured data
 const generateStructuredData = () => {
@@ -57,9 +53,9 @@ function MortgageClosingCostsExplained() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(generateStructuredData()) }}
       />
       <Article
-        title="Mortgage Closing Costs Explained"
+        title={articleData.title}
         icon={Calculator}
-        articleId="mortgage-closing-costs-explained"
+        articleId={ARTICLE_ID}
         accentColor="indigo"
         disclaimerMessage="This content is educational in nature and updated as of {{year}}. We aim to relay factual financial information, similar to how a newspaper would report market data. For complete information about our services, please review our Terms of Service."
       >

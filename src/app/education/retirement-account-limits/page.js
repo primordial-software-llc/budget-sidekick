@@ -4,6 +4,15 @@ import { PieChart, DollarSign, AlertTriangle, BarChart3, Wallet, BadgeCheck, Per
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Disclaimer from '@/components/Disclaimer';
+import Article from '@/components/Article';
+import { getArticleData } from '@/utils/getArticleData';
+import { getArticleMetadata } from '@/utils/getArticleMetadata';
+
+const ARTICLE_ID = 'retirement-account-limits';
+
+const articleData = getArticleData(ARTICLE_ID);
+
+export const metadata = getArticleMetadata(articleData, ARTICLE_ID);
 
 const RetirementAccountGuide = () => {
 	return (
@@ -441,7 +450,15 @@ function RetirementAccountLimitsPage() {
 					
 					<div className="grid grid-cols-1 gap-8">
 						{/* Featured Article */}
-						<RetirementAccountGuide />
+						<Article
+							title={articleData.title}
+							icon={PieChart}
+							articleId={ARTICLE_ID}
+							accentColor="blue"
+							disclaimerMessage="This content is educational in nature and updated as of {{year}}. We aim to relay factual financial information, similar to how a newspaper would report market data. For complete information about our services, please review our Terms of Service."
+						>
+							<RetirementAccountGuide />
+						</Article>
 						<Disclaimer 
 							articleId="retirement-account-limits"
 							message="This content is educational in nature and updated as of {{year}}. Retirement account rules and limits are subject to change. For personalized advice, consult with a qualified financial professional."
