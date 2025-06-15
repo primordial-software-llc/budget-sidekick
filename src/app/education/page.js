@@ -16,8 +16,10 @@ function EducationPage() {
 
 	// Format date for display
 	const formatDate = (dateString) => {
+		const [year, month, day] = dateString.split('-').map(Number);
+		const date = new Date(year, month - 1, day);
 		const options = { year: 'numeric', month: 'long', day: 'numeric' };
-		return new Date(dateString).toLocaleDateString('en-US', options);
+		return date.toLocaleDateString('en-US', options);
 	};
 
 	return (

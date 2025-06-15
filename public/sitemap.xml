@@ -2,427 +2,447 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.budgetsidekick.com/</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
     <priority>1</priority>
   </url>
   <url>
     <loc>https://www.budgetsidekick.com/dashboard</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/investing-in-small-cap-stocks</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/mortgage-term-selection</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/strategic-income-planning-for-retirement</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/mortgage-down-payment-strategies</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/healthcare-planning-in-retirement</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/mortgage-insurance-premium-explained</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.budgetsidekick.com/education</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/terms</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/privacy</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.budgetsidekick.com/education/50-30-20-budget</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.budgetsidekick.com/education/sec-filing-timelines</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/asset-allocation-guide</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
+    <loc>https://www.budgetsidekick.com/terms</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/investment-risk-tolerance</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
+    <loc>https://www.budgetsidekick.com/privacy</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/dollar-cost-averaging</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/tax-efficient-investment-strategies</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/sustainable-retirement-withdrawal-rates</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/portfolio-rebalancing</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/social-security-strategies</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/retirement-income-planning</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/health-savings-accounts</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/digital-assets-in-estate-planning</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/emergency-fund-alternatives</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/managing-debt-in-retirement</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/estate-planning-for-blended-families</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/cognitive-biases-in-financial-decisions</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/preparing-for-market-volatility</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/financial-planning-for-entrepreneurs</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/multi-generational-wealth-transfer</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/investing-during-recession</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/behavioral-finance-for-investors</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/socially-responsible-investing</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/long-term-care-planning</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/personal-finance-for-freelancers</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/financial-planning-for-digital-nomads</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/tax-advantaged-accounts</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/alternative-investments</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/factor-investing</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/value-vs-growth-investing</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/financial-advisor-selection</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/money-market-funds</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/passive-income-strategies</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/risk-return-relationship</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/tax-loss-harvesting</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/modern-portfolio-theory</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/roth-conversion-ladder</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/credit-card-optimization</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/navigating-bear-markets</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/home-buying-process</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/international-investing</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/crypto-investing-basics</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/inflation-hedging-strategies</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/etf-vs-mutual-funds</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/financial-safety-nets</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/understanding-annuities</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/managing-financial-stress</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/side-hustle-strategies</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/charitable-giving-strategies</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/bonds-investing-guide</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/negotiating-salary</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/inheritance-planning</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/income-tax-basics</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/high-yield-savings-accounts</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/stock-market-fundamentals</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/financial-independence-basics</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/mortgage-closing-costs-explained</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.budgetsidekick.com/education/mortgage-types-explained</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/index-fund-investing</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/strategic-income-planning-for-retirement</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/behavioral-finance-pitfalls</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/investing-in-small-cap-stocks</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/sustainable-investing</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/tax-efficient-investment-strategies</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/financial-goal-setting</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/managing-debt-in-retirement</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/digital-assets-in-estate-planning</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/healthcare-planning-in-retirement</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/estate-planning-for-blended-families</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/preparing-for-market-volatility</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/emergency-fund-alternatives</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/sustainable-retirement-withdrawal-rates</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/cognitive-biases-in-financial-decisions</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/multi-generational-wealth-transfer</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/socially-responsible-investing</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/financial-planning-for-digital-nomads</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/behavioral-finance-for-investors</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/financial-planning-for-entrepreneurs</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/investing-during-recession</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/personal-finance-for-freelancers</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/long-term-care-planning</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/financial-advisor-selection</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/tax-advantaged-accounts</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/retirement-income-planning</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/alternative-investments</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/modern-portfolio-theory</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/factor-investing</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/money-market-funds</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/value-vs-growth-investing</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/risk-return-relationship</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/tax-loss-harvesting</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/portfolio-rebalancing</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/roth-conversion-ladder</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/passive-income-strategies</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/credit-card-optimization</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/crypto-investing-basics</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/international-investing</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/social-security-strategies</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/home-buying-process</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/inflation-hedging-strategies</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/navigating-bear-markets</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/understanding-annuities</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/etf-vs-mutual-funds</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/managing-financial-stress</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/charitable-giving-strategies</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/financial-safety-nets</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/bonds-investing-guide</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/inheritance-planning</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/health-savings-accounts</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/side-hustle-strategies</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/income-tax-basics</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/high-yield-savings-accounts</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/stock-market-fundamentals</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/negotiating-salary</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.budgetsidekick.com/education/retirement-withdrawal-strategies</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/insurance-basics</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/sustainable-investing</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/credit-score-fundamentals</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/financial-independence-basics</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/behavioral-finance-pitfalls</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/asset-allocation-guide</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/index-fund-investing</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.budgetsidekick.com/education/college-savings-strategies</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/estate-planning-basics</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/financial-goal-setting</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/dollar-cost-averaging</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.budgetsidekick.com/education/real-estate-investing-basics</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/tax-efficient-investing</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/emergency-fund-basics</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/compounding-advantage</loc>
-    <lastmod>2025-04-06</lastmod>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.budgetsidekick.com/education/direct-treasury-investing</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/insurance-basics</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.budgetsidekick.com/education/debt-snowball-vs-avalanche</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/market-timing-myths</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/credit-score-fundamentals</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/investment-risk-tolerance</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/estate-planning-basics</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/compounding-advantage</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/tax-efficient-investing</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/direct-treasury-investing</loc>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/emergency-fund-basics</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.budgetsidekick.com/education/retirement-account-strategies</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.budgetsidekick.com/education/market-timing-myths</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.budgetsidekick.com/education/investment-planning-basics</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/retirement-account-types</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/housing-decisions-in-retirement</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://www.budgetsidekick.com/education/retirement-account-limits</loc>
-    <lastmod>2025-04-06</lastmod>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.budgetsidekick.com/education/housing-decisions-in-retirement</loc>
-    <lastmod>2025-04-06</lastmod>
+    <loc>https://www.budgetsidekick.com/education/retirement-account-types</loc>
+    <lastmod>2025-06-14</lastmod>
     <priority>0.4</priority>
   </url>
 </urlset>

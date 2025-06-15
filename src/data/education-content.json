@@ -1,6 +1,41 @@
 {
   "articles": [
     {
+      "id": "mortgage-insurance-premium-explained",
+      "title": "Mortgage Insurance Premium (MIP) Explained",
+      "description": "Learn how MIP adds thousands to your FHA loan costs. See exact calculations for upfront and monthly premiums, and discover when refinancing to remove MIP makes financial sense.",
+      "icon": "Shield",
+      "date": "2025-06-14"
+    },
+    {
+      "id": "mortgage-term-selection",
+      "title": "Mortgage Term Selection: Why 30-Year Loans Often Make More Sense",
+      "description": "Discover why 30-year mortgages offer better flexibility than shorter terms. Learn when shorter terms make sense and how to effectively pay off your mortgage early without the risk of higher required payments.",
+      "icon": "Clock",
+      "date": "2025-06-14"
+    },
+    {
+      "id": "mortgage-down-payment-strategies",
+      "title": "Mortgage Down Payment Strategies",
+      "description": "Learn how to save for your down payment efficiently, understand minimum requirements by loan type, and discover down payment assistance programs that could help you buy a home sooner.",
+      "icon": "PiggyBank",
+      "date": "2025-06-14"
+    },
+    {
+      "id": "mortgage-closing-costs-explained",
+      "title": "Mortgage Closing Costs Explained",
+      "description": "Get a detailed breakdown of all closing costs, learn which fees are negotiable, and discover strategies to reduce your closing costs. Includes a comprehensive closing cost calculator.",
+      "icon": "Calculator",
+      "date": "2025-06-14"
+    },
+    {
+      "id": "mortgage-payment-calculators",
+      "title": "Mortgage Payment Calculators & Tools",
+      "description": "Use our suite of mortgage calculators to estimate payments, compare loan options, and plan your home purchase. Includes principal and interest, extra payment, and refinancing calculators.",
+      "icon": "Calculator",
+      "date": "2025-06-14"
+    },
+    {
       "id": "sec-filing-timelines",
       "title": "SEC Filing Timelines",
       "description": "Understanding when companies report their official numbers is essential for making informed investment decisions.",
@@ -173,7 +208,7 @@
       "title": "Mortgage Types Explained",
       "description": "Compare different mortgage options like fixed-rate, adjustable-rate, FHA, and VA loans to find the best fit for your home purchase.",
       "icon": "Home",
-      "date": "2024-05-08"
+      "date": "2025-06-15"
     },
     {
       "id": "income-tax-basics",

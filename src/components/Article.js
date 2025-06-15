@@ -22,8 +22,10 @@ function Article({
   // Format date for display
   const formatDate = (dateString) => {
     if (!dateString) return null;
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, month - 1, day); // month is 0-based in JavaScript
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('en-US', options);
+    return date.toLocaleDateString('en-US', options);
   };
 
   // Map color names to tailwind classes
