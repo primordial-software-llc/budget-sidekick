@@ -511,16 +511,15 @@ function CreditCardOptimization() {
           <div className="bg-teal-100 p-4 rounded-t-xl">
             <h4 className="font-bold text-gray-900 flex items-center">
               <ExternalLink className="w-5 h-5 mr-2 text-teal-700" />
-              Additional Resources
+              Government Resources & Consumer Protection
             </h4>
           </div>
           <div className="p-5">
-            <div className="space-y-3">
+            <div className="space-y-4">
               <div className="bg-teal-50 p-3 rounded-lg">
-                <h5 className="font-semibold text-gray-900 mb-2">Government Resources</h5>
+                <h5 className="font-semibold text-gray-900 mb-2">Consumer Financial Protection Bureau (CFPB)</h5>
                 <p className="text-sm text-gray-700 mb-2">
-                  Several government agencies provide comprehensive educational materials about credit cards, 
-                  including guides on understanding terms, managing debt, and protecting your rights as a consumer.
+                  The CFPB provides comprehensive resources for understanding credit cards, managing debt, and protecting your rights as a consumer:
                 </p>
                 <ul className="space-y-2">
                   <li>
@@ -530,9 +529,38 @@ function CreditCardOptimization() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Consumer Financial Protection Bureau (CFPB) Credit Card Resources →
+                      Credit Card Resources & Guides →
                     </Link>
                   </li>
+                  <li>
+                    <Link 
+                      href="https://www.consumerfinance.gov/consumer-tools/credit-reports-and-scores/" 
+                      className="text-teal-600 hover:text-teal-700 text-sm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Understanding Credit Reports & Scores →
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="https://www.consumerfinance.gov/consumer-tools/credit-cards/manage-debt/" 
+                      className="text-teal-600 hover:text-teal-700 text-sm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Managing Credit Card Debt →
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-teal-50 p-3 rounded-lg">
+                <h5 className="font-semibold text-gray-900 mb-2">Federal Trade Commission (FTC)</h5>
+                <p className="text-sm text-gray-700 mb-2">
+                  The FTC offers valuable information about credit card rules, fraud protection, and consumer rights:
+                </p>
+                <ul className="space-y-2">
                   <li>
                     <Link 
                       href="https://consumer.ftc.gov/articles/credit-card-rules" 
@@ -540,9 +568,28 @@ function CreditCardOptimization() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Federal Trade Commission (FTC) Credit Card Rules →
+                      Credit Card Rules & Regulations →
                     </Link>
                   </li>
+                  <li>
+                    <Link 
+                      href="https://consumer.ftc.gov/articles/credit-card-fraud-alerts" 
+                      className="text-teal-600 hover:text-teal-700 text-sm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Credit Card Fraud Protection →
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-teal-50 p-3 rounded-lg">
+                <h5 className="font-semibold text-gray-900 mb-2">Federal Reserve</h5>
+                <p className="text-sm text-gray-700 mb-2">
+                  The Federal Reserve provides detailed information about credit card terms, interest rates, and consumer protections:
+                </p>
+                <ul className="space-y-2">
                   <li>
                     <Link 
                       href="https://www.federalreserve.gov/creditcard/" 
@@ -550,33 +597,101 @@ function CreditCardOptimization() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Federal Reserve Credit Card Information →
+                      Credit Card Terms & Conditions →
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="https://www.federalreserve.gov/consumerscommunities/consumer-protection.htm" 
+                      className="text-teal-600 hover:text-teal-700 text-sm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Consumer Protection Resources →
                     </Link>
                   </li>
                 </ul>
               </div>
+
               <div className="bg-teal-50 p-3 rounded-lg">
-                <h5 className="font-semibold text-gray-900 mb-2">Credit Counseling</h5>
-                <p className="text-sm text-gray-700">
-                  If you're struggling with credit card debt, consider reaching out to a nonprofit credit counseling agency. 
-                  They can help you create a debt management plan and provide financial education. Look for agencies that are 
-                  members of the National Foundation for Credit Counseling (NFCC) or the Financial Counseling Association of America (FCAA).
+                <h5 className="font-semibold text-gray-900 mb-2">Official Government Resources</h5>
+                <p className="text-sm text-gray-700 mb-2">
+                  Additional government resources for financial education and consumer protection:
                 </p>
+                <ul className="space-y-2">
+                  <li>
+                    <Link 
+                      href="https://www.usa.gov/credit-cards" 
+                      className="text-teal-600 hover:text-teal-700 text-sm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      USA.gov Credit Card Information →
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      href="https://www.mymoney.gov/" 
+                      className="text-teal-600 hover:text-teal-700 text-sm"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      MyMoney.gov Financial Education →
+                    </Link>
+                  </li>
+                </ul>
               </div>
+
               <div className="bg-teal-50 p-3 rounded-lg">
-                <h5 className="font-semibold text-gray-900 mb-2">Educational Materials</h5>
+                <h5 className="font-semibold text-gray-900 mb-2">Consumer Protection Agencies</h5>
                 <p className="text-sm text-gray-700">
-                  Many financial education websites offer free resources about credit card management, including:
+                  If you encounter issues with your credit card company, these agencies can help:
                 </p>
                 <ul className="mt-2 space-y-1 text-sm text-gray-700">
-                  <li>• Credit score education and monitoring</li>
-                  <li>• Debt management strategies</li>
-                  <li>• Budgeting tools and templates</li>
-                  <li>• Financial literacy courses</li>
+                  <li>• File a complaint with the CFPB</li>
+                  <li>• Report fraud to the FTC</li>
+                  <li>• Contact your state's consumer protection office</li>
+                  <li>• Reach out to your state's attorney general</li>
                 </ul>
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-8">
+          <h5 className="font-semibold text-gray-900 mb-2">Important Consumer Protections</h5>
+          <p className="text-sm text-gray-700 mb-2">
+            Under the Credit Card Accountability Responsibility and Disclosure (CARD) Act of 2009, you have several important rights:
+          </p>
+          <ul className="space-y-2 text-sm text-gray-700">
+            <li className="flex items-start">
+              <ArrowRight className="w-3 h-3 mr-2 text-blue-600 flex-shrink-0 mt-1" />
+              <span>Credit card companies must give 45 days' notice before increasing your interest rate</span>
+            </li>
+            <li className="flex items-start">
+              <ArrowRight className="w-3 h-3 mr-2 text-blue-600 flex-shrink-0 mt-1" />
+              <span>Payments must be due on the same day each month</span>
+            </li>
+            <li className="flex items-start">
+              <ArrowRight className="w-3 h-3 mr-2 text-blue-600 flex-shrink-0 mt-1" />
+              <span>Companies must clearly disclose how long it will take to pay off your balance if you make only minimum payments</span>
+            </li>
+            <li className="flex items-start">
+              <ArrowRight className="w-3 h-3 mr-2 text-blue-600 flex-shrink-0 mt-1" />
+              <span>Over-limit fees can only be charged if you opt-in to allow transactions that exceed your credit limit</span>
+            </li>
+          </ul>
+          <p className="text-sm text-gray-700 mt-2">
+            For more information about your rights under the CARD Act, visit the 
+            <Link 
+              href="https://www.consumerfinance.gov/consumer-tools/credit-cards/rules/credit-card-rules/" 
+              className="text-blue-600 hover:text-blue-700 ml-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              CFPB's Credit Card Rules page →
+            </Link>
+          </p>
         </div>
       </Article>
     </>
