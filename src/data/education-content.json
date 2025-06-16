@@ -573,6 +573,27 @@
       "description": "Learn how to create reliable, tax-efficient income streams in retirement by coordinating various sources including Social Security, investments, and other assets to maximize financial security.",
       "icon": "Wallet",
       "date": "2025-04-06"
+    },
+    {
+      "id": "one-year-homebuying-guide",
+      "title": "One-Year Guide to Saving For and Buying a Home",
+      "description": "A month-by-month, step-by-step roadmap to help you save, plan, and purchase your first home. Includes checklists, milestones, and links to all key resources.",
+      "icon": "Calendar",
+      "date": "2025-06-16"
+    },
+    {
+      "id": "mortgage-type-comparison-tool",
+      "title": "Mortgage Type Comparison Tool",
+      "description": "Compare all major mortgage types side-by-side, see pros and cons, and use our quick quiz to find your best fit. Includes a visual table and decision helper.",
+      "icon": "Percent",
+      "date": "2025-06-15"
+    },
+    {
+      "id": "usda-loan-explained",
+      "title": "USDA Loan Explained: Zero Down Payment Home Buying",
+      "description": "Discover how USDA loans make homeownership possible with no down payment, low fees, and flexible eligibility. Includes official resources, eligibility map, and step-by-step application guide.",
+      "icon": "Leaf",
+      "date": "2025-06-13"
     }
   ]
 } 

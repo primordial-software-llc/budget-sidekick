@@ -67,6 +67,11 @@ function MortgageTypesExplained() {
           Understanding the different types of mortgages available will help you make the best decision 
           for your financial situation and homeownership goals.
         </p>
+        <div className="text-center mb-8">
+          <Link href="/education/mortgage-type-comparison-tool" className="inline-block px-5 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition">
+            Try the Mortgage Type Comparison Tool
+          </Link>
+        </div>
 
         <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-8">
           <h3 className="flex items-center text-blue-800 font-semibold text-lg mb-2">
