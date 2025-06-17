@@ -1,24 +1,24 @@
 export const reviews = [
   {
     name: "Sarah Johnson",
-    role: "Small Business Owner",
-    content: "Budget Sidekick has transformed how I manage my business finances. The nested account structure makes it incredibly easy to track different revenue streams and expenses.",
+    role: "First-Time Homebuyer",
+    content: "Budget Sidekick's one-year homebuying guide and mortgage comparison tools were invaluable in my journey to homeownership.",
     rating: 5,
-    date: "2024-03-15"
+    date: "2025-03-15"
   },
   {
     name: "Michael Chen",
-    role: "Freelance Developer",
-    content: "As someone who juggles multiple clients and projects, this tool has been a game-changer. The ability to maintain separate ledgers for each client is invaluable.",
+    role: "Small Business Owner",
+    content: "The nested account structure helps me keep extremely detailed projections that I can compare directly against my Quickbooks online profit and loss report.",
     rating: 5,
-    date: "2024-03-10"
+    date: "2025-03-10"
   },
   {
     name: "Emma Rodriguez",
     role: "Personal Finance Enthusiast",
-    content: "The free version is incredibly powerful! I love how intuitive the interface is and how easy it is to import/export data. Perfect for tracking personal and business finances.",
+    content: "Budget Sidekick's overview report helps me consolidate my entire financial view across multiple financial institutions into one clear picture.",
     rating: 5,
-    date: "2024-03-05"
+    date: "2025-03-05"
   }
 ];
 
