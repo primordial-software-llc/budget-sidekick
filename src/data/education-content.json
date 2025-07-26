@@ -594,6 +594,13 @@
       "description": "Discover how USDA loans make homeownership possible with no down payment, low fees, and flexible eligibility. Includes official resources, eligibility map, and step-by-step application guide.",
       "icon": "Leaf",
       "date": "2025-06-13"
+    },
+    {
+      "id": "sba-loans-for-first-time-business-owners",
+      "title": "SBA Loans for First-Time Business Owners",
+      "description": "Learn how SBA loans provide government-backed financing with lower down payments and flexible terms for new entrepreneurs.",
+      "icon": "Briefcase",
+      "date": "2025-06-16"
     }
   ]
 } 
