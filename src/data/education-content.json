@@ -600,7 +600,14 @@
       "title": "SBA Loans for First-Time Business Owners",
       "description": "Learn how SBA loans provide government-backed financing with lower down payments and flexible terms for new entrepreneurs.",
       "icon": "Briefcase",
-      "date": "2025-06-16"
+      "date": "2025-07-26"
+    },
+    {
+      "id": "sba-7a-loans-vs-business-credit-lines",
+      "title": "SBA 7(a) Loans vs. Business Credit Lines: Which Is Right for You?",
+      "description": "Compare government-backed SBA financing with conventional business credit lines from major lenders. Understand terms, eligibility, and costs to make the best choice for your business.",
+      "icon": "Scale",
+      "date": "2025-07-26"
     }
   ]
 } 

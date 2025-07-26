@@ -95,99 +95,6 @@ function SimpleLedgerDemo() {
   );
 }
 
-function TransactionDemo() {
-  return (
-    <div className="">
-      <div className="mb-4">
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-          <div className="flex flex-col space-y-3 mb-4">
-            <div className="flex items-center">
-              <div className="w-40 font-medium text-gray-700">Transaction List:</div>
-              <div className="text-gray-900">Cost of Living:Groceries</div>
-            </div>
-            <div className="flex items-center">
-              <div className="w-40 font-medium text-gray-700">List Date:</div>
-              <div className="text-gray-900">1st of the month</div>
-            </div>
-          </div>
-          
-          <div className="overflow-hidden rounded-lg border border-gray-200">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-700">Description</th>
-                  <th className="px-4 py-2 text-right text-xs font-medium text-gray-700 whitespace-nowrap">Amount</th>
-                  <th className="px-4 py-2 text-left text-xs font-medium text-gray-700">Override Account</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                <tr>
-                  <td className="px-4 py-2 text-sm text-gray-900">Bread</td>
-                  <td className="px-4 py-2 text-sm text-red-600 text-right whitespace-nowrap">-$5.00</td>
-                  <td className="px-4 py-2 text-sm text-gray-500"></td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-2 text-sm text-gray-900">Milk</td>
-                  <td className="px-4 py-2 text-sm text-red-600 text-right whitespace-nowrap">-$5.00</td>
-                  <td className="px-4 py-2 text-sm text-gray-500"></td>
-                </tr>
-                <tr className="bg-yellow-50">
-                  <td className="px-4 py-2 text-sm text-gray-900">Candy</td>
-                  <td className="px-4 py-2 text-sm text-red-600 text-right whitespace-nowrap">-$15.00</td>
-                  <td className="px-4 py-2 text-sm text-yellow-700 truncate max-w-[120px] md:max-w-none">
-                    <span className="block truncate" title="Discretionary:Personal">Discretionary:Personal</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          
-          <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-100">
-            <h4 className="text-sm font-medium text-blue-800 mb-2">Posting Summary</h4>
-            <div className="space-y-1">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-700">Cost of Living:Groceries</span>
-                <span className="text-red-600 font-medium">-$10.00</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-700">Discretionary:Personal</span>
-                <span className="text-red-600 font-medium">-$15.00</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div className="flex items-center justify-center mt-6">
-        <div className="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl max-w-lg shadow-sm">
-          <div className="flex items-center justify-center mb-3">
-            <LayersIcon className="w-6 h-6 text-blue-600 mr-2" />
-            <h4 className="text-lg font-semibold text-blue-800">Transaction Lists & Posting</h4>
-          </div>
-          <p className="text-gray-700 mb-3">Create transaction lists for specific categories, then post them to your accounts as line items</p>
-          <div className="flex items-center justify-center gap-4 text-sm text-gray-600 flex-wrap mb-4">
-            <div className="flex items-center">
-              <svg className="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Category-specific lists</span>
-            </div>
-            <div className="flex items-center">
-              <svg className="w-4 h-4 text-green-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-              <span>Post as account line items</span>
-            </div>
-          </div>
-          <Link 
-            href="/dashboard" 
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 shadow-sm transition-colors text-sm"
-          >
-            <span>Try it now</span>
-            <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function Home() {
   return (
     <>
@@ -257,14 +164,6 @@ function Home() {
             </div>
           </div>
 
-          <div className="max-w-6xl mx-auto px-6 pb-16">
-            <h2 className="text-3xl font-bold text-center mb-4">Transaction Tracking and Ledger Posting</h2>
-            <p className="text-gray-600 text-center mb-8 max-w-2xl mx-auto">
-              Record individual transactions with dates and descriptions, then post to your ledger accounts when you're ready to update your books.
-            </p>
-            <TransactionDemo />
-          </div>
-
           {/* Financial Education Section */}
           <div className="max-w-6xl mx-auto px-6 pb-16 bg-gradient-to-r from-blue-50 to-indigo-50 py-12 rounded-xl">
             <div className="text-center mb-8">
@@ -279,9 +178,9 @@ function Home() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {educationContent.articles
-                .sort((a, b) => new Date(b.date) - new Date(a.date))
-                .slice(0, 3)
+              {['one-year-homebuying-guide', 'mortgage-type-comparison-tool', 'sba-loans-for-first-time-business-owners']
+                .map(id => educationContent.articles.find(article => article.id === id))
+                .filter(Boolean)
                 .map((article) => {
                   const IconComponent = iconMap[article.icon];
                   return (

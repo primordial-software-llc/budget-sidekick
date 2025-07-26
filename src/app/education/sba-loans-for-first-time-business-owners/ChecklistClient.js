@@ -94,20 +94,20 @@ export default function ChecklistClient() {
         </div>
         
         <div className="mt-6 text-center">
-          <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-            <p className="text-sm text-gray-700 mb-3">
-              <strong>Need help with working capital for orders?</strong><br/>
-              Consider SBA CAPLines for short-term financing to fulfill contracts and manage seasonal cash flow.
-            </p>
-            <a 
-              href="https://www.sba.gov/funding-programs/loans/sba-loan-programs/caplines"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 font-medium text-sm"
-            >
-              Learn about SBA CAPLines →
-            </a>
-          </div>
+                      <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+              <p className="text-sm text-gray-700 mb-3">
+                <strong>Need help with working capital for orders?</strong><br/>
+                Consider SBA's Working Capital Pilot Program for short-term financing to fulfill contracts and manage seasonal cash flow.
+              </p>
+              <a 
+                href="https://www.sba.gov/funding-programs/loans/7a-loans"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800 font-medium text-sm"
+              >
+                Learn about SBA 7(a) Working Capital Options →
+              </a>
+            </div>
         </div>
       </div>
     </div>
