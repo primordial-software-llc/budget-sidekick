@@ -25,8 +25,8 @@ function EducationPage() {
 	return (
 		<>
 			<Header />
-			<main className="min-h-screen bg-gray-50 py-12">
-				<div className="max-w-6xl mx-auto px-6">
+			<main className="min-h-screen bg-gray-50">
+				<div className="max-w-6xl mx-auto px-6 py-12">
 					<div className="mb-8">
 						<Breadcrumbs items={[
 							{ label: 'Home', href: '/' },

@@ -1,4 +1,4 @@
-import { Calendar, PieChart, PiggyBank, BookOpen, TrendingUp, Shield, LifeBuoy, Calculator, LineChart, CreditCard, BarChart, FileText, GraduationCap, Home, Target, Repeat, Leaf, Brain, Wallet, Zap, DollarSign, Briefcase, Heart, Stethoscope, Link, Gift, BarChart2, Clock, TrendingDown, Globe, Award, Bitcoin, GitMerge, Scissors, RefreshCw, Activity, Scale, ShieldCheck, Search, BriefcaseMedical, UserCheck, Palette, Gem, Laptop, Landmark, Users, CloudLightning } from 'lucide-react';
+import { Calendar, PieChart, PiggyBank, BookOpen, TrendingUp, Shield, LifeBuoy, Calculator, LineChart, CreditCard, BarChart, FileText, GraduationCap, Home, Target, Repeat, Leaf, Brain, Wallet, Zap, DollarSign, Briefcase, Heart, Stethoscope, Link, Gift, BarChart2, Clock, TrendingDown, Globe, Award, Bitcoin, GitMerge, Scissors, RefreshCw, Activity, Scale, ShieldCheck, Search, BriefcaseMedical, UserCheck, Palette, Gem, Laptop, Landmark, Users, CloudLightning, Percent } from 'lucide-react';
 
 export const iconMap = {
   Calendar,
@@ -47,5 +47,6 @@ export const iconMap = {
   Laptop,
   Landmark,
   Users,
-  CloudLightning
+  CloudLightning,
+  Percent
 }; 
