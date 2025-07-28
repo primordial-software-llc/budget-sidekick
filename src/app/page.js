@@ -1,9 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
 import {
-  BookIcon,
-  LayersIcon,
-  BarChart3Icon,
   BookOpenIcon
 } from 'lucide-react';
 import Header from '@/components/Header';
@@ -16,79 +13,91 @@ import { iconMap } from '@/utils/icons';
 function SimpleLedgerDemo() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-        <h3 className="text-gray-900 font-semibold text-base text-center mb-3">Pay Stub</h3>
+      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+        <div className="flex items-center justify-center mb-3">
+          <h3 className="text-gray-900 font-semibold text-base">Pay Stub</h3>
+        </div>
         <div className="space-y-1.5">
           <div className="flex justify-between text-sm">
             <span className="text-gray-700">Income:Salary:Gross</span>
-            <span className="text-green-600 font-medium">+$35k</span>
+            <span className="text-green-600 font-medium">+$3,500</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-700">Expenses:Tax:Federal</span>
-            <span className="text-red-600 font-medium">-$8.75k</span>
+            <span className="text-red-600 font-medium">-$875</span>
           </div>
           <div className="flex justify-between text-sm pt-1.5 mt-1.5 border-t border-gray-200">
             <span className="text-gray-900 font-medium">Net:</span>
-            <span className="text-green-600 font-medium">$26.25k</span>
+            <span className="text-green-600 font-medium">$2,625</span>
           </div>
+
         </div>
       </div>
 
-      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-        <h3 className="text-gray-900 font-semibold text-base text-center mb-3">S-Corp Income</h3>
+      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+        <div className="flex items-center justify-center mb-3">
+          <h3 className="text-gray-900 font-semibold text-base">S-Corp Income</h3>
+        </div>
         <div className="space-y-1.5">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700">Income:Consulting</span>
-            <span className="text-green-600 font-medium">+$18k</span>
+            <span className="text-gray-700">Income:Consulting:Project</span>
+            <span className="text-green-600 font-medium">+$4,200</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700">Expenses:Software</span>
-            <span className="text-red-600 font-medium">-$20.5k</span>
+            <span className="text-gray-700">Expenses:Software:SaaS</span>
+            <span className="text-red-600 font-medium">-$189</span>
           </div>
           <div className="flex justify-between text-sm pt-1.5 mt-1.5 border-t border-gray-200">
             <span className="text-gray-900 font-medium">Net:</span>
-            <span className="text-red-600 font-medium">-$2.5k</span>
+            <span className="text-green-600 font-medium">$4,011</span>
           </div>
+
         </div>
       </div>
 
-      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-        <h3 className="text-gray-900 font-semibold text-base text-center mb-3">Budget</h3>
+      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+        <div className="flex items-center justify-center mb-3">
+          <h3 className="text-gray-900 font-semibold text-base">Budget</h3>
+        </div>
         <div className="space-y-1.5">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700">Income:Freelance</span>
-            <span className="text-green-600 font-medium">+$6.5k</span>
+            <span className="text-gray-700">Income:Freelance:Design</span>
+            <span className="text-green-600 font-medium">+$1,850</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700">Expenses:Food:Dining</span>
-            <span className="text-red-600 font-medium">-$800</span>
+            <span className="text-gray-700">Expenses:Meals:Client</span>
+            <span className="text-red-600 font-medium">-$156</span>
           </div>
           <div className="flex justify-between text-sm pt-1.5 mt-1.5 border-t border-gray-200">
             <span className="text-gray-900 font-medium">Net:</span>
-            <span className="text-green-600 font-medium">$5.7k</span>
+            <span className="text-green-600 font-medium">$1,694</span>
           </div>
+
         </div>
       </div>
 
-      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-        <h3 className="text-gray-900 font-semibold text-base text-center mb-3">Balance Sheet</h3>
+      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group">
+        <div className="flex items-center justify-center mb-3">
+          <h3 className="text-gray-900 font-semibold text-base">Rental Property</h3>
+        </div>
         <div className="space-y-1.5">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700 truncate pr-2">Assets:Property:Land</span>
-            <span className="text-green-600 font-medium tabular-nums">+$175k</span>
+            <span className="text-gray-700 truncate pr-2">Income:Rental:Monthly</span>
+            <span className="text-green-600 font-medium tabular-nums">+$2,400</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700 truncate pr-2">Assets:Property:Building</span>
-            <span className="text-green-600 font-medium tabular-nums">+$125k</span>
+            <span className="text-gray-700 truncate pr-2">Expenses:Maintenance</span>
+            <span className="text-red-600 font-medium tabular-nums">-$350</span>
           </div>
           <div className="flex justify-between text-sm">
-            <span className="text-gray-700 truncate pr-2">Liabilities:Mortgage</span>
-            <span className="text-red-600 font-medium tabular-nums">-$250k</span>
+            <span className="text-gray-700 truncate pr-2">Expenses:Property:Tax</span>
+            <span className="text-red-600 font-medium tabular-nums">-$425</span>
           </div>
           <div className="flex justify-between text-sm pt-1.5 mt-1.5 border-t border-gray-200">
-            <span className="text-gray-900 font-medium">Net Worth:</span>
-            <span className="text-green-600 font-medium tabular-nums">$50k</span>
+            <span className="text-gray-900 font-medium">Net:</span>
+            <span className="text-green-600 font-medium tabular-nums">$1,625</span>
           </div>
+
         </div>
       </div>
     </div>
@@ -163,7 +172,7 @@ function Home() {
           </header>
 
           <div className="max-w-7xl mx-auto px-6 pb-16 relative z-10">
-            <div className="text-center mb-12 relative">
+            <div className="text-center relative">
               {/* Subtle content backdrop */}
               <div className="absolute inset-0 bg-white/30 backdrop-blur-sm rounded-3xl -m-8"></div>
               <div className="relative z-10 p-8">
@@ -173,9 +182,9 @@ function Home() {
               <p className="text-2xl md:text-3xl font-semibold text-gray-700 mb-6 leading-tight">
                 Financial Clarity Without Compromise
               </p>
-              <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto leading-relaxed">
-                Track multiple income streams and expense budgets across entities in one place. 
-                See your complete financial picture in one view.
+              <p className="text-lg md:text-xl opacity-90 max-w-3xl mx-auto leading-relaxed">
+                Stop drowning in scattered income streams and expense categories. 
+                Bring order to your financial chaos with clear organization that actually makes sense.
               </p>
               </div>
             </div>
@@ -187,44 +196,52 @@ function Home() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Image with floating features */}
               <div className="relative order-2 lg:order-1">
-                <div className="relative overflow-hidden rounded-3xl shadow-2xl">
-                  <img 
-                    src="/images/professional-woman-working-at-clean-modern-desk.jpg" 
-                    alt="Professional woman managing finances at a clean, organized workspace" 
-                    className="w-full h-auto object-cover"
-                  />
+                {/* Layered workspace scene */}
+                <div className="relative">
+                  {/* Main image with enhanced styling */}
+                  <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-gradient-to-br from-white to-gray-50">
+                    <img 
+                      src="/images/professional-woman-working-at-clean-modern-desk.jpg" 
+                      alt="Professional woman managing finances at a clean, organized workspace" 
+                      className="w-full h-auto object-cover"
+                    />
+                    {/* Subtle overlay for depth */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent"></div>
+                  </div>
+                  
+
                 </div>
                 
                 {/* Floating feature cards */}
-                <div className="absolute -top-4 -left-4 bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-gray-100">
+                <div className="absolute -top-4 -left-4 bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-gray-200">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
                       <span className="text-green-600 text-sm font-bold">∞</span>
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900 text-sm">Unlimited Ledgers</div>
-                      <div className="text-xs text-gray-600">Track any number of entities</div>
+                      <div className="font-semibold text-gray-900 text-sm">Multiple Ledgers</div>
+                      <div className="text-xs text-gray-600">Unlimited nested accounts</div>
                     </div>
                   </div>
                 </div>
                 
-                <div className="absolute -bottom-6 -right-6 bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-gray-100">
+                <div className="absolute -bottom-6 -right-6 bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-gray-200">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                       <img src="/icons/import-export.svg" alt="Privacy" className="w-6 h-6" />
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900 text-sm">Your Data, Your Way</div>
-                      <div className="text-xs text-gray-600">Export/import easily</div>
+                      <div className="font-semibold text-gray-900 text-sm">Import/Export Data</div>
+                      <div className="text-xs text-gray-600">Your data, your way</div>
                     </div>
                   </div>
                 </div>
               </div>
               
-                {/* CTA and key features */}
+              {/* CTA and key features */}
                <div className="text-center lg:text-left order-1 lg:order-2">
                  <div className="space-y-4 mb-8">
-                  <div className="flex items-center justify-center lg:justify-start gap-3 p-3 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-sm">
+                  <div className="flex items-center justify-center lg:justify-start gap-3 p-3 bg-white/95 backdrop-blur-sm rounded-xl border border-gray-200 shadow-xl">
                      <div className="w-10 h-10 rounded-full flex items-center justify-center">
                        <img src="/icons/shield-privacy.svg" alt="Privacy" className="w-6 h-6" />
                      </div>
@@ -233,7 +250,7 @@ function Home() {
                        <div className="text-gray-600 text-sm">All data stored locally</div>
                      </div>
                    </div>
-                   <div className="flex items-center justify-center lg:justify-start gap-3 p-3 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-sm">
+                   <div className="flex items-center justify-center lg:justify-start gap-3 p-3 bg-white/95 backdrop-blur-sm rounded-xl border border-gray-200 shadow-xl">
                      <div className="w-10 h-10 rounded-full flex items-center justify-center">
                       <img src="/icons/always-free.svg" alt="Privacy" className="w-6 h-6" />
                      </div>
@@ -242,7 +259,7 @@ function Home() {
                        <div className="text-gray-600 text-sm">No subscriptions or limits</div>
                      </div>
                    </div>
-                   <div className="flex items-center justify-center lg:justify-start gap-3 p-3 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-sm">
+                   <div className="flex items-center justify-center lg:justify-start gap-3 p-3 bg-white/95 backdrop-blur-sm rounded-xl border border-gray-200 shadow-xl">
                      <div className="w-10 h-10 rounded-full flex items-center justify-center">
                       <img src="/icons/instant-setup.svg" alt="Privacy" className="w-6 h-6" />
                      </div>
@@ -295,10 +312,10 @@ function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-100/60 to-emerald-200/40 rounded-3xl blur-sm group-hover:blur-none transition-all duration-300"></div>
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-emerald-200/50 hover:bg-white/90 transition-all duration-300">
+                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-emerald-200/50 hover:bg-white/90 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
                   <div className="flex items-center mb-6">
                     <div className="bg-emerald-100 p-3 rounded-2xl mr-4 group-hover:bg-emerald-200 transition-colors">
-                      <BookIcon className="w-8 h-8 text-emerald-600" />
+                      <img src="/icons/nested-accounts.svg" alt="Nested Accounts" className="w-8 h-8" />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900">Nested Accounts</h3>
                   </div>
@@ -310,10 +327,10 @@ function Home() {
 
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-100/60 to-purple-200/40 rounded-3xl blur-sm group-hover:blur-none transition-all duration-300"></div>
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-purple-200/50 hover:bg-white/90 transition-all duration-300">
+                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-purple-200/50 hover:bg-white/90 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
                   <div className="flex items-center mb-6">
                     <div className="bg-purple-100 p-3 rounded-2xl mr-4 group-hover:bg-purple-200 transition-colors">
-                      <LayersIcon className="w-8 h-8 text-purple-600" />
+                      <img src="/icons/detailed-transactions.svg" alt="Detailed Transactions" className="w-8 h-8" />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900">Detailed Transactions</h3>
                   </div>
@@ -325,10 +342,10 @@ function Home() {
 
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-100/60 to-cyan-200/40 rounded-3xl blur-sm group-hover:blur-none transition-all duration-300"></div>
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-blue-200/50 hover:bg-white/90 transition-all duration-300">
+                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-blue-200/50 hover:bg-white/90 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
                   <div className="flex items-center mb-6">
                     <div className="bg-blue-100 p-3 rounded-2xl mr-4 group-hover:bg-blue-200 transition-colors">
-                      <BarChart3Icon className="w-8 h-8 text-blue-600" />
+                      <img src="/icons/flexible-reporting.svg" alt="Flexible Reporting" className="w-8 h-8" />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900">Flexible Reporting</h3>
                   </div>
@@ -363,8 +380,8 @@ function Home() {
                         Complete Financial & Month-End Clarity
                       </h2>
                       <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                        See how Budget Sidekick's nested account structure provides clear insights across different financial entities and scenarios. 
-                        This is exactly how your reports will look.
+                        This is how your Overview page aggregates data across multiple ledgers. 
+                        Each card shows the account hierarchy from a different ledger - S-Corp, personal, freelance, and investment accounts.
                       </p>
                     </div>
                   </div>

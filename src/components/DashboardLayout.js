@@ -139,12 +139,6 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
               Account Entries
             </Link>
             <Link 
-              href="/dashboard/transactions" 
-              className={`px-4 py-3 text-white ${activeTab === 'transactions' ? 'bg-blue-800' : 'hover:bg-blue-800'}`}
-            >
-              Transactions
-            </Link>
-            <Link 
               href="/dashboard/account-summary-report" 
               className={`px-4 py-3 text-white ${activeTab === 'report' ? 'bg-blue-800' : 'hover:bg-blue-800'}`}
             >

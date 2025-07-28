@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Home, Calendar, CheckCircle, DollarSign, TrendingUp, PiggyBank, FileText, Calculator, Shield, ArrowRight  } from 'lucide-react';
 import Article from '@/components/Article';
 import { getArticleData } from '@/utils/getArticleData';
@@ -35,10 +36,25 @@ function OneYearHomebuyingGuide() {
         accentColor="rose"
         disclaimerMessage="This content is educational in nature and updated as of {{year}}. We aim to relay factual financial information, similar to how a newspaper would report market data. For complete information about our services, please review our Terms of Service."
       >
-        <h2 className="text-lg text-center text-gray-700 mb-6">A Month-by-Month Roadmap to Homeownership</h2>
-        <p className="text-gray-600 text-center mb-8 max-w-3xl mx-auto">
-          Ready to buy your first home? This one-year guide breaks down the process into manageable monthly steps—so you can save, plan, and purchase with confidence.
-        </p>
+        <div className="mb-8 grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h2 className="text-lg text-gray-700 mb-4">A Month-by-Month Roadmap to Homeownership</h2>
+            <p className="text-gray-600">
+              Ready to buy your first home? This one-year guide breaks down the process into manageable monthly steps—so you can save, plan, and purchase with confidence.
+            </p>
+          </div>
+          <div className="rounded-lg overflow-hidden shadow-lg">
+            <Image
+              src="/images/Firefly_Picture of home to be used for new home buying guide. Make it seem budget friendly. T 49682.jpg"
+              alt="Professional woman working at a modern desk planning her home buying journey"
+              width={800}
+              height={400}
+              className="w-full h-auto object-cover"
+              priority
+            />
+          </div>
+        </div>
+        
         <div className="bg-rose-50 p-4 rounded-lg border border-rose-100 mb-8">
           <h3 className="flex items-center text-rose-800 font-semibold text-lg mb-2">
             <CheckCircle className="w-5 h-5 mr-2" />
