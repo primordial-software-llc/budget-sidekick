@@ -32,6 +32,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <meta name='impact-site-verification' content='88dd2e47-6162-4fe7-a523-9ab68efbe177' />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
