@@ -107,9 +107,10 @@ function SimpleLedgerDemo() {
 function Home() {
   return (
     <>
-      <main className="min-h-screen">
+      <p style={{display: 'none'}}>Impact-Site-Verification: 16cbfc71-8040-45c7-86ca-473d8644df52</p>
+      <main className="min-h-full bg-gradient-to-br from-emerald-50 via-blue-50 to-indigo-100">
         {/* Fresh, Approachable Header with Integrated Nav */}
-        <div className="bg-gradient-to-br from-emerald-50 via-blue-50 to-indigo-100 text-gray-900 relative overflow-hidden">
+        <div className="text-gray-900 relative overflow-hidden">
           {/* Organic flowing shapes */}
           <div className="absolute inset-0 opacity-40">
             <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-emerald-200/30 to-blue-200/30 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
@@ -216,11 +217,13 @@ function Home() {
                 <div className="absolute -top-4 -left-4 bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-gray-200">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                      <span className="text-green-600 text-sm font-bold">∞</span>
+                      <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                      </svg>
                     </div>
                     <div>
-                      <div className="font-semibold text-gray-900 text-sm">Multiple Ledgers</div>
-                      <div className="text-xs text-gray-600">Unlimited nested accounts</div>
+                      <div className="font-semibold text-gray-900 text-sm">Beautiful Reports</div>
+                      <div className="text-xs text-gray-600">You can share</div>
                     </div>
                   </div>
                 </div>
@@ -287,7 +290,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="relative bg-gradient-to-br from-blue-50/30 via-emerald-50/30 to-purple-50/30 overflow-hidden">
+        <div className="relative overflow-hidden">
           {/* Enhanced accent colors for Features section */}
           <div className="absolute inset-0 opacity-25">
             <div className="absolute top-16 left-1/6 w-48 h-48 bg-gradient-to-br from-emerald-300/40 to-emerald-400/30 rounded-full blur-3xl"></div>
@@ -310,46 +313,46 @@ function Home() {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="relative group">
+              <div className="relative group h-full">
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-100/60 to-emerald-200/40 rounded-3xl blur-sm group-hover:blur-none transition-all duration-300"></div>
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-emerald-200/50 hover:bg-white/90 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-emerald-200/50 hover:bg-white/90 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
                   <div className="flex items-center mb-6">
                     <div className="bg-emerald-100 p-3 rounded-2xl mr-4 group-hover:bg-emerald-200 transition-colors">
                       <img src="/icons/nested-accounts.svg" alt="Nested Accounts" className="w-8 h-8" />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900">Nested Accounts</h3>
                   </div>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-gray-600 leading-relaxed flex-grow">
                     Use intuitive colon-separated hierarchies like Expenses:Food:Groceries or Income:Salary:Gross for powerful organization.
                   </p>
                 </div>
               </div>
 
-              <div className="relative group">
+              <div className="relative group h-full">
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-100/60 to-purple-200/40 rounded-3xl blur-sm group-hover:blur-none transition-all duration-300"></div>
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-purple-200/50 hover:bg-white/90 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-purple-200/50 hover:bg-white/90 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
                   <div className="flex items-center mb-6">
                     <div className="bg-purple-100 p-3 rounded-2xl mr-4 group-hover:bg-purple-200 transition-colors">
                       <img src="/icons/detailed-transactions.svg" alt="Detailed Transactions" className="w-8 h-8" />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900">Detailed Transactions</h3>
                   </div>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-gray-600 leading-relaxed flex-grow">
                     Record individual transactions with dates and descriptions, then post them to your ledger accounts when ready.
                   </p>
                 </div>
               </div>
 
-              <div className="relative group">
+              <div className="relative group h-full">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-100/60 to-cyan-200/40 rounded-3xl blur-sm group-hover:blur-none transition-all duration-300"></div>
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-blue-200/50 hover:bg-white/90 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-blue-200/50 hover:bg-white/90 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 h-full flex flex-col">
                   <div className="flex items-center mb-6">
                     <div className="bg-blue-100 p-3 rounded-2xl mr-4 group-hover:bg-blue-200 transition-colors">
                       <img src="/icons/flexible-reporting.svg" alt="Flexible Reporting" className="w-8 h-8" />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900">Flexible Reporting</h3>
                   </div>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-gray-600 leading-relaxed flex-grow">
                     Generate custom reports across your entities and account hierarchies to gain insights into your financial health.
                   </p>
                 </div>
@@ -360,7 +363,6 @@ function Home() {
           {/* Ledger Demo Section - The Showcase */}
           <div className="demo-section relative pb-20 overflow-hidden">
             {/* Clean, organic showcase background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/40 via-blue-50/30 to-purple-50/20"></div>
             <div className="max-w-7xl mx-auto px-6 relative z-10">
               <div className="relative">
                 {/* Premium content container */}
