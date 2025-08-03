@@ -42,9 +42,6 @@ function Dashboard() {
   // Add new state for delete confirmation modal
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   
-  // Add loading state
-  const [isLoading, setIsLoading] = useState(true);
-  
   // Add quick consent modal state
   const [showQuickConsent, setShowQuickConsent] = useState(false);
   const [consentChecked, setConsentChecked] = useState(false);
@@ -60,15 +57,10 @@ function Dashboard() {
         if (!latestConsent || !latestConsent.consented) {
           // User hasn't consented to terms, show the quick consent overlay
           setShowQuickConsent(true);
-          setIsLoading(false);
-        } else {
-          setIsLoading(false);
         }
       } catch (error) {
         console.error('Error checking terms consent:', error);
-        // On error, assume we need consent to be safe
         setShowQuickConsent(true);
-        setIsLoading(false);
       }
     };
     
@@ -91,7 +83,7 @@ function Dashboard() {
   // Load available ledgers on mount
   useEffect(() => {
     const loadLedgers = async () => {
-      if (isLoading || showQuickConsent) return; // Don't load ledgers until consent is verified
+      if (showQuickConsent) return; // Don't load ledgers until consent is verified
       
       try {
         const ledgerNames = await getAllLedgerNames();
@@ -117,7 +109,7 @@ function Dashboard() {
       }
     };
     loadLedgers();
-  }, [isLoading, showQuickConsent]);
+  }, [showQuickConsent]);
 
   // Update the localStorage useEffect
   useEffect(() => {
@@ -128,7 +120,7 @@ function Dashboard() {
 
   useEffect(() => {
     const loadEntries = async () => {
-      if (!currentLedger || isLoading || showQuickConsent) return; // Don't load entries if no ledger selected or still loading consent
+      if (!currentLedger || showQuickConsent) return; // Don't load entries if no ledger selected or still loading consent
       
       try {
         const entries = await getLedger(currentLedger);
@@ -138,7 +130,7 @@ function Dashboard() {
       }
     };
     loadEntries();
-  }, [currentLedger, isLoading, showQuickConsent]);
+  }, [currentLedger, showQuickConsent]);
 
   const handleEdit = (entry) => {
     const key = `${entry.name}|${entry.day}`;
@@ -299,18 +291,6 @@ function Dashboard() {
       alert('Error deleting ledger');
     }
   };
-
-  // Show loading screen while checking for consent
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="text-center">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-2">Loading...</h2>
-          <p className="text-gray-600">Please wait while we set up your dashboard</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>

@@ -2,12 +2,16 @@
 
 import Link from 'next/link';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
-import { UploadIcon, DownloadIcon } from 'lucide-react';
+import { UploadIcon, DownloadIcon, ClockIcon, CalendarIcon, InfoIcon } from 'lucide-react';
 import { exportLedgerData, importLedgerData, recordLastExport, getLastExportFormatted } from '@/utils/indexedDB';
 import { useState, useEffect } from 'react';
 
 export default function DashboardLayout({ children, currentLedger, availableLedgers, setCurrentLedger, activeTab }) {
   const [lastExportText, setLastExportText] = useState('');
+  const [isExportOld, setIsExportOld] = useState(false);
+  const [neverExported, setNeverExported] = useState(false);
+  const [showExportTooltip, setShowExportTooltip] = useState(false);
+  const [exportStatusLoaded, setExportStatusLoaded] = useState(false);
 
   // Load last export time on component mount
   useEffect(() => {
@@ -15,8 +19,28 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
       try {
         const formattedTime = await getLastExportFormatted();
         setLastExportText(formattedTime);
+        
+        // Check if export is old or never done
+        const { getLastExport } = await import('@/utils/indexedDB');
+        const lastExport = await getLastExport();
+        
+        if (!lastExport) {
+          setNeverExported(true);
+          setIsExportOld(false);
+        } else {
+          setNeverExported(false);
+          const exportDate = new Date(lastExport.timestamp);
+          const now = new Date();
+          const diffInDays = Math.floor((now.getTime() - exportDate.getTime()) / (1000 * 60 * 60 * 24));
+          setIsExportOld(diffInDays > 7);
+        }
+        
+        // Mark status as loaded
+        setExportStatusLoaded(true);
       } catch (error) {
         console.error('Error loading last export time:', error);
+        // Still mark as loaded even on error to prevent indefinite loading
+        setExportStatusLoaded(true);
       }
     };
     loadLastExportTime();
@@ -41,6 +65,12 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
       // Update the display with the new export time
       const updatedTime = await getLastExportFormatted();
       setLastExportText(updatedTime);
+      
+      // Reset export status since we just exported
+      setIsExportOld(false);
+      setNeverExported(false);
+      // Status is still loaded, just updated
+      setExportStatusLoaded(true);
     } catch (error) {
       console.error('Export failed:', error);
       alert('Failed to export data');
@@ -133,18 +163,57 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
                 <UploadIcon className="w-4 h-4" />
                 Import
               </button>
-              <div className="flex flex-col items-end">
+              
+              <div className="relative">
                 <button
                   onClick={handleExport}
-                  className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                  onMouseEnter={() => setShowExportTooltip(true)}
+                  onMouseLeave={() => setShowExportTooltip(false)}
+                  className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center gap-2"
                 >
                   <DownloadIcon className="w-4 h-4" />
                   Export
+                  {exportStatusLoaded ? (
+                    neverExported ? (
+                      <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+                    ) : isExportOld ? (
+                      <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                    ) : (
+                      <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                    )
+                  ) : (
+                    <div className="w-2 h-2 bg-blue-600/30 rounded-full"></div>
+                  )}
                 </button>
-                {lastExportText && (
-                  <span className="text-xs text-blue-300 mt-1">
-                    Last: {lastExportText}
-                  </span>
+                
+                {/* Export Status Overlay */}
+                {showExportTooltip && exportStatusLoaded && (
+                  <div className="absolute top-full right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-3 z-50">
+                    <div className="flex items-start gap-2">
+                      {neverExported ? (
+                        <InfoIcon className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                      ) : isExportOld ? (
+                        <CalendarIcon className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                      ) : (
+                        <ClockIcon className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                      )}
+                      <div className="text-sm">
+                        <div className={`font-medium ${
+                          neverExported ? 'text-red-700' : isExportOld ? 'text-yellow-700' : 'text-green-700'
+                        }`}>
+                          {neverExported ? 'No backup created' : isExportOld ? 'Backup recommended' : 'Backup is current'}
+                        </div>
+                        <div className="text-gray-600 mt-1">
+                          {neverExported 
+                            ? 'Your data is not backed up yet. Create your first export to protect against data loss.' 
+                            : isExportOld 
+                              ? `Last backup: ${lastExportText}. A fresh backup would preserve your recent changes.`
+                              : `Last backup: ${lastExportText}`
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>

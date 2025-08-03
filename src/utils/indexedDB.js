@@ -111,7 +111,7 @@ export const exportLedgerData = async () => {
     const ledgerRequest = ledgerStore.getAll();
     const settingsRequest = settingsStore.getAll();
     
-    let ledgers, transactions, userSettings;
+    let ledgers, userSettings;
     
     ledgerRequest.onsuccess = () => {
       ledgers = ledgerRequest.result;
@@ -124,16 +124,14 @@ export const exportLedgerData = async () => {
     };
     
     ledgerRequest.onerror = () => reject(ledgerRequest.error);
-    transactionRequest.onerror = () => reject(transactionRequest.error);
     settingsRequest.onerror = () => reject(settingsRequest.error);
     
     function checkComplete() {
-      if (ledgers !== undefined && transactions !== undefined && userSettings !== undefined) {
+      if (ledgers !== undefined && userSettings !== undefined) {
         const data = {
           version: DB_VERSION,
           timestamp: new Date().toISOString(),
           ledgers: ledgers,
-          transactions: transactions,
           userSettings: userSettings
         };
         resolve(data);
@@ -333,7 +331,7 @@ export const getLastExportFormatted = async () => {
   try {
     const lastExport = await getLastExport();
     if (!lastExport) {
-      return 'Never exported';
+      return 'No backup yet';
     }
     
     const exportDate = new Date(lastExport.timestamp);
@@ -342,13 +340,16 @@ export const getLastExportFormatted = async () => {
     const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
     
     if (diffInDays === 0) {
-      return `Today at ${exportDate.toLocaleTimeString()}`;
+      return `Today ${exportDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
     } else if (diffInDays === 1) {
-      return `Yesterday at ${exportDate.toLocaleTimeString()}`;
+      return `Yesterday ${exportDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
     } else if (diffInDays < 7) {
       return `${diffInDays} days ago`;
+    } else if (diffInDays < 30) {
+      const weeks = Math.floor(diffInDays / 7);
+      return weeks === 1 ? '1 week ago' : `${weeks} weeks ago`;
     } else {
-      return exportDate.toLocaleDateString();
+      return exportDate.toLocaleDateString([], { month: 'short', day: 'numeric' });
     }
   } catch (error) {
     console.error('Error formatting last export:', error);
