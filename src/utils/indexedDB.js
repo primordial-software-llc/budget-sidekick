@@ -1,4 +1,4 @@
-import { DB_NAME, DB_VERSION, LEDGER_STORE, TRANSACTION_STORE, TRANSACTION_GROUP_STORE, TRANSACTION_LIST_STORE, USER_SETTINGS_STORE } from '@/utils/constants';
+import { DB_NAME, DB_VERSION, LEDGER_STORE, TRANSACTION_STORE, USER_SETTINGS_STORE } from '@/utils/constants';
 
 export const initDB = () => {
   return new Promise((resolve, reject) => {
@@ -16,37 +16,14 @@ export const initDB = () => {
         store.createIndex('name', 'name', { unique: true });
       }
 
-      if (oldVersion < 2 && !db.objectStoreNames.contains(TRANSACTION_STORE)) {
+      if (!db.objectStoreNames.contains(TRANSACTION_STORE)) {
         const transactionStore = db.createObjectStore(TRANSACTION_STORE, { keyPath: 'id', autoIncrement: true });
         transactionStore.createIndex('ledgerName', 'ledgerName', { unique: false });
         transactionStore.createIndex('accountName', 'accountName', { unique: false });
         transactionStore.createIndex('date', 'date', { unique: false });
       }
       
-      if (oldVersion < 3 && !db.objectStoreNames.contains(TRANSACTION_GROUP_STORE)) {
-        const groupStore = db.createObjectStore(TRANSACTION_GROUP_STORE, { keyPath: 'id', autoIncrement: true });
-        groupStore.createIndex('ledgerName', 'ledgerName', { unique: false });
-        groupStore.createIndex('name', 'name', { unique: false });
-        groupStore.createIndex('accountName', 'accountName', { unique: false });
-      }
-      
-      if (oldVersion < 4 && !db.objectStoreNames.contains(TRANSACTION_LIST_STORE)) {
-        const listStore = db.createObjectStore(TRANSACTION_LIST_STORE, { keyPath: 'id', autoIncrement: true });
-        listStore.createIndex('ledgerName', 'ledgerName', { unique: false });
-        listStore.createIndex('name', 'name', { unique: false });
-        listStore.createIndex('accountName', 'accountName', { unique: false });
-        
-        // Additional index for the modified transaction store if it exists
-        if (db.objectStoreNames.contains(TRANSACTION_STORE)) {
-          const transactionStore = event.target.transaction.objectStore(TRANSACTION_STORE);
-          if (!transactionStore.indexNames.contains('listId')) {
-            transactionStore.createIndex('listId', 'listId', { unique: false });
-          }
-        }
-      }
-      
-      // Migrate to USER_SETTINGS_STORE in version 6
-      if (oldVersion < 6 && !db.objectStoreNames.contains(USER_SETTINGS_STORE)) {
+      if (!db.objectStoreNames.contains(USER_SETTINGS_STORE)) {
         const settingsStore = db.createObjectStore(USER_SETTINGS_STORE, { keyPath: 'key' });
         settingsStore.createIndex('type', 'type', { unique: false });
         settingsStore.createIndex('updatedAt', 'updatedAt', { unique: false });
@@ -196,280 +173,52 @@ export const getTransactionsByLedger = async (ledgerName) => {
   });
 };
 
-export const getTransactionsByAccount = async (ledgerName, accountName) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_STORE], 'readonly');
-    const store = tx.objectStore(TRANSACTION_STORE);
-    
-    const index = store.index('ledgerName');
-    const request = index.getAll(ledgerName);
-    
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => {
-      const transactions = request.result || [];
-      const filteredTransactions = transactions.filter(
-        t => t.accountName === accountName
-      );
-      resolve(filteredTransactions);
-    };
-  });
-};
-
-export const getTransactionsByList = async (listId) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_STORE], 'readonly');
-    const store = tx.objectStore(TRANSACTION_STORE);
-    const index = store.index('listId');
-    
-    const request = index.getAll(listId);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result || []);
-  });
-};
-
-export const addTransactionToGroup = async (transaction, groupId) => {
-  if (!transaction.ledgerName || !transaction.accountName || !transaction.amount) {
-    throw new Error('Transaction must include ledgerName, accountName, and amount');
-  }
-
-  if (!(transaction.date instanceof Date)) {
-    transaction.date = new Date(transaction.date || Date.now());
-  }
-
-  // Add groupId to transaction
-  const transactionWithGroup = { ...transaction, groupId };
-
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_STORE], 'readwrite');
-    const store = tx.objectStore(TRANSACTION_STORE);
-    
-    const request = store.add(transactionWithGroup);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result);
-  });
-};
-
-export const getTransactionsByGroup = async (groupId) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_STORE], 'readonly');
-    const store = tx.objectStore(TRANSACTION_STORE);
-    
-    const request = store.getAll();
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => {
-      const transactions = request.result || [];
-      const groupTransactions = transactions.filter(t => t.groupId === groupId);
-      resolve(groupTransactions);
-    };
-  });
-};
-
-export const aggregateTransactionsToLedger = async (ledgerName) => {
-  try {
-    const transactions = await getTransactionsByLedger(ledgerName);
-    const existingEntries = await getLedger(ledgerName);
-    
-    const aggregatedEntries = new Map();
-    
-    // Get account overrides if any exist
-    const overrideMap = new Map();
-    transactions.forEach(transaction => {
-      if (transaction.accountOverride) {
-        overrideMap.set(transaction.id, transaction.accountOverride);
-      }
-    });
-    
-    transactions.forEach(transaction => {
-      const day = new Date(transaction.date).getDate();
-      // Use override account if available, otherwise use the normal account
-      const accountName = overrideMap.get(transaction.id) || transaction.accountName;
-      const key = `${accountName}|${day}`;
-      
-      if (!aggregatedEntries.has(key)) {
-        aggregatedEntries.set(key, {
-          name: accountName,
-          day,
-          amount: 0
-        });
-      }
-      
-      const entry = aggregatedEntries.get(key);
-      entry.amount += parseFloat(transaction.amount);
-    });
-    
-    const newEntries = Array.from(aggregatedEntries.values());
-    
-    existingEntries.forEach(existingEntry => {
-      const key = `${existingEntry.name}|${existingEntry.day}`;
-      if (!aggregatedEntries.has(key)) {
-        newEntries.push(existingEntry);
-      }
-    });
-    
-    await saveLedger(ledgerName, newEntries);
-    
-    return newEntries;
-  } catch (error) {
-    console.error('Error aggregating transactions:', error);
-    throw error;
-  }
-};
-
-// --- Transaction Group Functions ---
-
-export const saveTransactionGroup = async (group) => {
-  if (!group.ledgerName || !group.name || !group.accountName) {
-    throw new Error('Transaction group must include ledgerName, name, and accountName');
-  }
-
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_GROUP_STORE], 'readwrite');
-    const store = tx.objectStore(TRANSACTION_GROUP_STORE);
-    
-    const request = group.id ? store.put(group) : store.add(group);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result);
-  });
-};
-
-export const getTransactionGroups = async (ledgerName) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_GROUP_STORE], 'readonly');
-    const store = tx.objectStore(TRANSACTION_GROUP_STORE);
-    const index = store.index('ledgerName');
-    
-    const request = index.getAll(ledgerName);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result || []);
-  });
-};
-
-export const getTransactionGroup = async (id) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_GROUP_STORE], 'readonly');
-    const store = tx.objectStore(TRANSACTION_GROUP_STORE);
-    
-    const request = store.get(id);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result);
-  });
-};
-
-export const deleteTransactionGroup = async (id) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_GROUP_STORE], 'readwrite');
-    const store = tx.objectStore(TRANSACTION_GROUP_STORE);
-    
-    const request = store.delete(id);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve();
-  });
-};
-
-// --- Transaction List Functions ---
-
-export const saveTransactionList = async (list) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_LIST_STORE], 'readwrite');
-    const store = tx.objectStore(TRANSACTION_LIST_STORE);
-    
-    let request;
-    if (list.id) {
-      request = store.put(list);
-    } else {
-      request = store.add(list);
-    }
-    
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result);
-  });
-};
-
-export const getTransactionLists = async (ledgerName) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_LIST_STORE], 'readonly');
-    const store = tx.objectStore(TRANSACTION_LIST_STORE);
-    const index = store.index('ledgerName');
-    
-    const request = index.getAll(ledgerName);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result || []);
-  });
-};
-
-export const getTransactionList = async (id) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_LIST_STORE], 'readonly');
-    const store = tx.objectStore(TRANSACTION_LIST_STORE);
-    
-    const request = store.get(id);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result);
-  });
-};
-
-export const deleteTransactionList = async (id) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_LIST_STORE], 'readwrite');
-    const store = tx.objectStore(TRANSACTION_LIST_STORE);
-    
-    const request = store.delete(id);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve();
-  });
-};
-
 // --- Import/Export Functions ---
 
 export const exportLedgerData = async () => {
   const db = await initDB();
   return new Promise((resolve, reject) => {
-    const transaction = db.transaction([LEDGER_STORE, TRANSACTION_STORE], 'readonly');
+    const transaction = db.transaction([LEDGER_STORE, TRANSACTION_STORE, USER_SETTINGS_STORE], 'readonly');
     const ledgerStore = transaction.objectStore(LEDGER_STORE);
     const transactionStore = transaction.objectStore(TRANSACTION_STORE);
+    const settingsStore = transaction.objectStore(USER_SETTINGS_STORE);
     
     const ledgerRequest = ledgerStore.getAll();
     const transactionRequest = transactionStore.getAll();
+    const settingsRequest = settingsStore.getAll();
     
-    let ledgers, transactions;
+    let ledgers, transactions, userSettings;
     
     ledgerRequest.onsuccess = () => {
       ledgers = ledgerRequest.result;
-      if (transactions !== undefined) {
-        completeExport();
-      }
+      checkComplete();
     };
     
     transactionRequest.onsuccess = () => {
       transactions = transactionRequest.result;
-      if (ledgers !== undefined) {
-        completeExport();
-      }
+      checkComplete();
+    };
+    
+    settingsRequest.onsuccess = () => {
+      userSettings = settingsRequest.result;
+      checkComplete();
     };
     
     ledgerRequest.onerror = () => reject(ledgerRequest.error);
     transactionRequest.onerror = () => reject(transactionRequest.error);
+    settingsRequest.onerror = () => reject(settingsRequest.error);
     
-    function completeExport() {
-      const data = {
-        version: DB_VERSION,
-        timestamp: new Date().toISOString(),
-        ledgers: ledgers,
-        transactions: transactions
-      };
-      resolve(data);
+    function checkComplete() {
+      if (ledgers !== undefined && transactions !== undefined && userSettings !== undefined) {
+        const data = {
+          version: DB_VERSION,
+          timestamp: new Date().toISOString(),
+          ledgers: ledgers,
+          transactions: transactions,
+          userSettings: userSettings
+        };
+        resolve(data);
+      }
     }
   });
 };
