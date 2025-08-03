@@ -286,21 +286,6 @@ function TermsOfService() {
                 </p>
               </div>
 
-              <div className="mb-6">
-                <div className="flex items-center gap-3 mb-4 pb-2 border-b border-gray-100">
-                  <FileText className="h-6 w-6 text-blue-600 flex-shrink-0" />
-                  <h2 className="text-xl font-bold text-gray-900 m-0">9. Contact Information</h2>
-                </div>
-                <p className="text-gray-600 mb-4">
-                  If you have any questions about these Terms, please contact us at:
-                </p>
-                <div className="bg-blue-50 p-5 rounded-lg border border-blue-100">
-                  <p className="text-gray-700 font-medium">Budget Sidekick Legal Team</p>
-                  <p className="text-gray-600">Email: legal@budgetsidekick.com</p>
-                  <p className="text-gray-600">Address: 123 Financial Street, Suite 400, San Francisco, CA 94107</p>
-                </div>
-              </div>
-
               <div className="border-t border-gray-200 pt-6 mt-10 text-center">
                 <p className="text-sm text-gray-500">
                   © {currentYear} Primordial Software. All rights reserved.
