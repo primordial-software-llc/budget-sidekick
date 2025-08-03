@@ -9,8 +9,7 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { saveLedger, getLedger, getAllLedgerNames, getLatestConsent, recordConsent } from '@/utils/indexedDB';
-import { DB_NAME, DB_VERSION, LEDGER_STORE } from '@/utils/constants';
+import { getLedger, getAllLedgerNames, getLatestConsent, recordConsent } from '@/utils/indexedDB';
 import Link from 'next/link';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 import DashboardLayout from '@/components/DashboardLayout';
@@ -35,12 +34,7 @@ function Dashboard() {
   const [currentLedger, setCurrentLedger] = useState('');
   const [availableLedgers, setAvailableLedgers] = useState([]);
 
-  const [isLedgerModalOpen, setIsLedgerModalOpen] = useState(false);
-  const [ledgerModalMode, setLedgerModalMode] = useState('create');
-  const [newLedgerName, setNewLedgerName] = useState('');
 
-  // Add new state for delete confirmation modal
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   
   // Add quick consent modal state
   const [showQuickConsent, setShowQuickConsent] = useState(false);
@@ -208,89 +202,7 @@ function Dashboard() {
       });
   };
 
-  const handleCreateLedger = () => {
-    setLedgerModalMode('create');
-    setNewLedgerName('');
-    setIsLedgerModalOpen(true);
-  };
 
-  const handleRenameLedger = () => {
-    setLedgerModalMode('rename');
-    setNewLedgerName(currentLedger);
-    setIsLedgerModalOpen(true);
-  };
-
-  const handleLedgerSubmit = async (e) => {
-    e.preventDefault();
-    if (ledgerModalMode === 'create') {
-      if (availableLedgers.includes(newLedgerName)) {
-        alert('Ledger name already exists');
-        return;
-      }
-      console.log(newLedgerName);
-      await saveLedger(newLedgerName, []);
-      setAvailableLedgers([...availableLedgers, newLedgerName]);
-      setCurrentLedger(newLedgerName);
-    } else {
-      const entries = await getLedger(currentLedger);
-      await saveLedger(newLedgerName, entries);
-      setAvailableLedgers(availableLedgers.map(name => 
-        name === currentLedger ? newLedgerName : name
-      ));
-      setCurrentLedger(newLedgerName);
-    }
-    setIsLedgerModalOpen(false);
-  };
-
-  // Add delete handler function after handleLedgerSubmit
-  const handleDeleteLedger = async () => {
-    try {
-      if (availableLedgers.length <= 1) {
-        alert('Cannot delete the last ledger');
-        return;
-      }
-
-      // Remove from IndexedDB
-      const request = indexedDB.open(DB_NAME, DB_VERSION);
-      
-      request.onerror = (event) => {
-        console.error('Database error:', event.target.error);
-        throw new Error('Failed to open database');
-      };
-
-      request.onupgradeneeded = (event) => {
-        const db = event.target.result;
-        if (!db.objectStoreNames.contains(LEDGER_STORE)) {
-          db.createObjectStore(LEDGER_STORE);
-        }
-      };
-
-      request.onsuccess = (event) => {
-        const db = event.target.result;
-        try {
-          const transaction = db.transaction([LEDGER_STORE], 'readwrite');
-          const store = transaction.objectStore(LEDGER_STORE);
-          
-          store.delete(currentLedger);
-          
-          transaction.oncomplete = () => {
-            const newLedgers = availableLedgers.filter(name => name !== currentLedger);
-            setAvailableLedgers(newLedgers);
-            setCurrentLedger(newLedgers[0]);
-            setIsDeleteModalOpen(false);
-          };
-
-        } catch (error) {
-          console.error('Transaction error:', error);
-          alert('Error during transaction');
-        }
-      };
-
-    } catch (error) {
-      console.error('Error deleting ledger:', error);
-      alert('Error deleting ledger');
-    }
-  };
 
   return (
     <>
@@ -300,39 +212,19 @@ function Dashboard() {
         setCurrentLedger={setCurrentLedger}
         activeTab="entries"
       >
-        {/* Monthly Ledger Section */}
-        <div className="bg-white rounded-[0.375rem] shadow-[0_.125rem_.25rem_rgba(0,0,0,0.075)] overflow-hidden transition-all duration-300 border border-[rgba(0,0,0,0.175)]">
-          <div className="p-6">
-            <div className="flex justify-between items-center">
-              <h1 className="text-3xl font-bold">Account Entries</h1>
-              <div className="flex gap-2">
-                <button
-                  onClick={handleCreateLedger}
-                  className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 flex items-center gap-2"
-                >
-                  <PlusIcon className="w-4 h-4" />
-                  New Account
-                </button>
-                <button
-                  onClick={handleRenameLedger}
-                  className="px-4 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 flex items-center gap-2"
-                >
-                  <PencilIcon className="w-4 h-4" />
-                  Rename
-                </button>
-                <button
-                  onClick={() => setIsDeleteModalOpen(true)}
-                  className="px-4 py-2 text-red-600 bg-red-100 rounded-lg hover:bg-red-200 flex items-center gap-2"
-                >
-                  <TrashIcon className="w-4 h-4" />
-                  Delete
-                </button>
+        {/* Account Entries */}
+        <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200">
+          <div className="p-4 sm:p-6">
+            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
+              <h1 className="text-2xl lg:text-3xl font-bold">Account Entries</h1>
+              <div className="flex flex-wrap gap-2">
                 <button
                   onClick={handleAdd}
-                  className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 flex items-center gap-2"
+                  className="px-3 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow hover:shadow-lg transition-all duration-200 flex items-center gap-1.5 text-sm font-medium"
                 >
                   <PlusIcon className="w-4 h-4" />
-                  Add Entry
+                  <span className="hidden sm:inline">Add Entry</span>
+                  <span className="sm:hidden">Add</span>
                 </button>
               </div>
             </div>
@@ -403,13 +295,13 @@ function Dashboard() {
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                             <button
                               onClick={() => handleEdit(entry)}
-                              className="text-indigo-600 hover:text-indigo-900 mr-3"
+                              className="p-2 text-blue-600 hover:text-white hover:bg-blue-600 rounded-lg transition-all duration-200 mr-2"
                             >
                               <PencilIcon className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => handleDelete(entry)}
-                              className="text-red-600 hover:text-red-900"
+                              className="p-2 text-red-600 hover:text-white hover:bg-red-600 rounded-lg transition-all duration-200"
                             >
                               <TrashIcon className="w-4 h-4" />
                             </button>
@@ -426,7 +318,7 @@ function Dashboard() {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-semibold">
@@ -434,7 +326,7 @@ function Dashboard() {
               </h3>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-2 hover:bg-gray-100 rounded-full"
+                className="p-2 hover:bg-gray-100 rounded-full text-gray-400 hover:text-gray-600 transition-colors"
               >
                 <XIcon className="w-5 h-5" />
               </button>
@@ -506,13 +398,13 @@ function Dashboard() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200"
+                  className="px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-all duration-200 font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+                  className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow hover:shadow-lg transition-all duration-200 font-medium"
                 >
                   {modalMode === 'add' ? 'Add Entry' : 'Save Changes'}
                 </button>
@@ -522,91 +414,7 @@ function Dashboard() {
         </div>
       )}
 
-      {isLedgerModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-semibold">
-                {ledgerModalMode === 'create' ? 'Create New Ledger' : 'Rename Ledger'}
-              </h3>
-              <button
-                onClick={() => setIsLedgerModalOpen(false)}
-                className="p-2 hover:bg-gray-100 rounded-full"
-              >
-                <XIcon className="w-5 h-5" />
-              </button>
-            </div>
 
-            <form onSubmit={handleLedgerSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Ledger Name 
-                </label>
-                <input
-                  type="text"
-                  value={newLedgerName}
-                  onChange={(e) => setNewLedgerName(e.target.value)}
-                  className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Enter ledger name"
-                  required
-                />
-              </div>
-
-              <div className="flex justify-end gap-2 mt-6">
-                <button
-                  type="button"
-                  onClick={() => setIsLedgerModalOpen(false)}
-                  className="px-4 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
-                >
-                  {ledgerModalMode === 'create' ? 'Create' : 'Rename'}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Delete Confirmation Modal */}
-      {isDeleteModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-semibold text-red-600">Delete Ledger</h3>
-              <button
-                onClick={() => setIsDeleteModalOpen(false)}
-                className="p-2 hover:bg-gray-100 rounded-full"
-              >
-                <XIcon className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="mb-6">
-              <p className="text-gray-700">Are you sure you want to delete the ledger "{currentLedger}"? This action cannot be undone.</p>
-            </div>
-
-            <div className="flex justify-end gap-2">
-              <button
-                onClick={() => setIsDeleteModalOpen(false)}
-                className="px-4 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDeleteLedger}
-                className="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
       
       {/* Quick Consent Modal */}
       {showQuickConsent && (
@@ -649,9 +457,9 @@ function Dashboard() {
               <button
                 onClick={handleQuickConsent}
                 disabled={!consentChecked}
-                className={`px-4 py-2 rounded-lg transition-colors ${
+                className={`px-4 py-2 rounded-lg transition-all duration-200 font-medium ${
                   consentChecked 
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow hover:shadow-lg' 
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
               >

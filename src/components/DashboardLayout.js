@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
-import { UploadIcon, DownloadIcon, ClockIcon, CalendarIcon, InfoIcon } from 'lucide-react';
+import { UploadIcon, DownloadIcon, ClockIcon, CalendarIcon, InfoIcon, SettingsIcon } from 'lucide-react';
 import { exportLedgerData, importLedgerData, recordLastExport, getLastExportFormatted } from '@/utils/indexedDB';
 import { useState, useEffect } from 'react';
 
@@ -110,14 +110,21 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-blue-50 to-indigo-100 relative overflow-hidden">
+      {/* Organic flowing background shapes */}
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-emerald-200/20 to-blue-200/20 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-blue-200/20 to-purple-200/20 rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3"></div>
+        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-gradient-to-r from-cyan-200/15 to-emerald-200/15 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2"></div>
+      </div>
+      
       {/* Header/Navigation Bar */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center">
+      <nav className="bg-white/80 backdrop-blur-sm shadow-lg border-b border-white/20 relative z-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
           {/* Logo Section */}
           <div className="flex items-center">
-            <Link href="/dashboard">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" className="h-12">
+            <Link href="/dashboard/overview">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" className="h-10 sm:h-12">
                 <style>
                   {`.logo-text { font-family: Arial, sans-serif; font-weight: bold; }
                     .budget { fill: #1e3a5f; }
@@ -138,16 +145,17 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
           </div>
 
           {/* Right side buttons */}
-          <div className="flex items-center gap-4">
-            {/* Ledger Selection Group */}
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            {/* Account Selection Group */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+              <label className="text-sm text-gray-600 font-medium hidden sm:block">Account:</label>
               <select
                 value={currentLedger}
                 onChange={(e) => {
                   setCurrentLedger(e.target.value);
                   localStorage.setItem(LOCAL_STORAGE_KEY_LEDGER, e.target.value);
                 }}
-                className="px-4 py-3 text-white bg-blue-900 rounded hover:bg-blue-800 cursor-pointer [&>option]:text-white [&>option]:bg-blue-900 [&>option]:px-4 [&>option]:py-2 [&>option]:cursor-pointer [&>option]:hover:bg-blue-800"
+                className="px-3 py-2 text-white bg-emerald-600 rounded-lg hover:bg-emerald-700 cursor-pointer shadow hover:shadow-lg transition-all duration-200 font-medium text-sm [&>option]:text-white [&>option]:bg-emerald-700 [&>option]:px-4 [&>option]:py-2 [&>option]:cursor-pointer [&>option]:hover:bg-emerald-800"
               >
                 {availableLedgers.map(name => (
                   <option key={name} value={name}>{name}</option>
@@ -155,106 +163,130 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
               </select>
             </div>
 
-            <div className="flex items-center gap-2">
+            <button
+              onClick={handleImport}
+              className="px-3 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow hover:shadow-lg transition-all duration-200 flex items-center gap-1.5 font-medium text-sm"
+            >
+              <UploadIcon className="w-4 h-4" />
+              <span className="hidden sm:inline">Import</span>
+            </button>
+              
+            <div className="relative">
               <button
-                onClick={handleImport}
-                className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                onClick={handleExport}
+                onMouseEnter={() => setShowExportTooltip(true)}
+                onMouseLeave={() => setShowExportTooltip(false)}
+                className="px-3 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow hover:shadow-lg transition-all duration-200 flex items-center gap-1.5 font-medium text-sm"
               >
-                <UploadIcon className="w-4 h-4" />
-                Import
+                <DownloadIcon className="w-4 h-4" />
+                <span className="hidden sm:inline">Export</span>
+                {exportStatusLoaded ? (
+                  neverExported ? (
+                    <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse shadow-sm"></div>
+                  ) : isExportOld ? (
+                    <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse shadow-sm"></div>
+                  ) : (
+                    <div className="w-2 h-2 bg-green-400 rounded-full shadow-sm"></div>
+                  )
+                ) : (
+                  <div className="w-2 h-2 bg-white/30 rounded-full"></div>
+                )}
               </button>
               
-              <div className="relative">
-                <button
-                  onClick={handleExport}
-                  onMouseEnter={() => setShowExportTooltip(true)}
-                  onMouseLeave={() => setShowExportTooltip(false)}
-                  className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center gap-2"
-                >
-                  <DownloadIcon className="w-4 h-4" />
-                  Export
-                  {exportStatusLoaded ? (
-                    neverExported ? (
-                      <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+              {/* Export Status Overlay */}
+              {showExportTooltip && exportStatusLoaded && (
+                <div className="absolute top-full right-0 mt-3 w-72 bg-white/95 backdrop-blur-sm border border-gray-200/50 rounded-2xl shadow-2xl p-4 z-50">
+                  <div className="flex items-start gap-3">
+                    {neverExported ? (
+                      <InfoIcon className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
                     ) : isExportOld ? (
-                      <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                      <CalendarIcon className="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" />
                     ) : (
-                      <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                    )
-                  ) : (
-                    <div className="w-2 h-2 bg-blue-600/30 rounded-full"></div>
-                  )}
-                </button>
-                
-                {/* Export Status Overlay */}
-                {showExportTooltip && exportStatusLoaded && (
-                  <div className="absolute top-full right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg p-3 z-50">
-                    <div className="flex items-start gap-2">
-                      {neverExported ? (
-                        <InfoIcon className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
-                      ) : isExportOld ? (
-                        <CalendarIcon className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
-                      ) : (
-                        <ClockIcon className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                      )}
-                      <div className="text-sm">
-                        <div className={`font-medium ${
-                          neverExported ? 'text-red-700' : isExportOld ? 'text-yellow-700' : 'text-green-700'
-                        }`}>
-                          {neverExported ? 'No backup created' : isExportOld ? 'Backup recommended' : 'Backup is current'}
-                        </div>
-                        <div className="text-gray-600 mt-1">
-                          {neverExported 
-                            ? 'Your data is not backed up yet. Create your first export to protect against data loss.' 
-                            : isExportOld 
-                              ? `Last backup: ${lastExportText}. A fresh backup would preserve your recent changes.`
-                              : `Last backup: ${lastExportText}`
-                          }
-                        </div>
+                      <ClockIcon className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                    )}
+                    <div className="text-sm">
+                      <div className={`font-semibold ${
+                        neverExported ? 'text-red-700' : isExportOld ? 'text-yellow-700' : 'text-green-700'
+                      }`}>
+                        {neverExported ? 'No backup created' : isExportOld ? 'Backup recommended' : 'Backup is current'}
+                      </div>
+                      <div className="text-gray-600 mt-1.5 leading-relaxed">
+                        {neverExported 
+                          ? 'Your data is not backed up yet. Create your first export to protect against data loss.' 
+                          : isExportOld 
+                            ? `Last backup: ${lastExportText}. A fresh backup would preserve your recent changes.`
+                            : `Last backup: ${lastExportText}`
+                        }
                       </div>
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </nav>
 
       {/* Sub Navigation */}
-      <div className="bg-blue-900">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex space-x-6">
+      <div className="bg-white/60 backdrop-blur-sm border-b border-white/20 relative z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2">
+          <div className="flex space-x-1 overflow-x-auto">
             <Link 
               href="/dashboard/overview" 
-              className={`px-4 py-3 text-white ${activeTab === 'overview' ? 'bg-blue-800' : 'hover:bg-blue-800'}`}
+              className={`px-3 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap text-sm ${
+                activeTab === 'overview' 
+                  ? 'bg-emerald-600 text-white shadow' 
+                  : 'text-gray-700 hover:bg-white/80 hover:shadow'
+              }`}
             >
               Overview
             </Link>
             <Link 
-              href="/dashboard" 
-              className={`px-4 py-3 text-white ${activeTab === 'entries' ? 'bg-blue-800' : 'hover:bg-blue-800'}`}
+              href="/dashboard/account-management" 
+              className={`px-3 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap text-sm ${
+                activeTab === 'account-management' 
+                  ? 'bg-emerald-600 text-white shadow' 
+                  : 'text-gray-700 hover:bg-white/80 hover:shadow'
+              }`}
             >
-              Account Entries
+              Accounts
+            </Link>
+            <Link 
+              href="/dashboard" 
+              className={`px-3 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap text-sm ${
+                activeTab === 'entries' 
+                  ? 'bg-emerald-600 text-white shadow' 
+                  : 'text-gray-700 hover:bg-white/80 hover:shadow'
+              }`}
+            >
+              <span className="hidden sm:inline">Account </span>Entries
             </Link>
             <Link 
               href="/dashboard/account-summary-report" 
-              className={`px-4 py-3 text-white ${activeTab === 'report' ? 'bg-blue-800' : 'hover:bg-blue-800'}`}
+              className={`px-3 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap text-sm ${
+                activeTab === 'report' 
+                  ? 'bg-emerald-600 text-white shadow' 
+                  : 'text-gray-700 hover:bg-white/80 hover:shadow'
+              }`}
             >
-              Account Summary Report
+              <span className="hidden sm:inline">Account </span>Summary<span className="hidden sm:inline"> Report</span>
             </Link>
             <Link 
               href="/dashboard/category-report" 
-              className={`px-4 py-3 text-white ${activeTab === 'category-report' ? 'bg-blue-800' : 'hover:bg-blue-800'}`}
+              className={`px-3 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap text-sm ${
+                activeTab === 'category-report' 
+                  ? 'bg-emerald-600 text-white shadow' 
+                  : 'text-gray-700 hover:bg-white/80 hover:shadow'
+              }`}
             >
-              Category Report
+              Category<span className="hidden sm:inline"> Report</span>
             </Link>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 relative z-10">
         {children}
       </div>
     </div>
