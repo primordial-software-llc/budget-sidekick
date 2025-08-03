@@ -661,11 +661,16 @@ function Dashboard() {
           <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
             <div className="text-center mb-4">
               <h3 className="text-xl font-semibold text-gray-800">One quick step before you start</h3>
-              <p className="text-gray-600 mt-2">We need your consent to continue using Budget Sidekick.</p>
+              <p className="text-gray-600 mt-2">We need your consent to continue.</p>
             </div>
             
             <div className="bg-blue-50 p-4 rounded-lg mb-4 text-sm text-gray-700">
-              <p>By using Budget Sidekick, you agree to our Terms of Service. Your financial data remains on your device.</p>
+              <p>
+                By using Budget Sidekick, you agree to our Terms of Service.
+                Your data remains on your device.
+                Regular exports downloaded to your computer are essential to prevent data loss.
+                <strong>Clearing your browser data will permanently remove ALL your information</strong> to protect your privacy.
+              </p>
             </div>
             
             <div className="flex items-start mb-6 mt-4">
