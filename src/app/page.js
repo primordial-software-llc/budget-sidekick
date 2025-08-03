@@ -97,7 +97,6 @@ function SimpleLedgerDemo() {
             <span className="text-gray-900 font-medium">Net:</span>
             <span className="text-green-600 font-medium tabular-nums">$1,625</span>
           </div>
-
         </div>
       </div>
     </div>

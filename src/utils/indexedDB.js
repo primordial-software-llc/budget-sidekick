@@ -15,13 +15,6 @@ export const initDB = () => {
         const store = db.createObjectStore(LEDGER_STORE, { keyPath: 'name' });
         store.createIndex('name', 'name', { unique: true });
       }
-
-      if (!db.objectStoreNames.contains(TRANSACTION_STORE)) {
-        const transactionStore = db.createObjectStore(TRANSACTION_STORE, { keyPath: 'id', autoIncrement: true });
-        transactionStore.createIndex('ledgerName', 'ledgerName', { unique: false });
-        transactionStore.createIndex('accountName', 'accountName', { unique: false });
-        transactionStore.createIndex('date', 'date', { unique: false });
-      }
       
       if (!db.objectStoreNames.contains(USER_SETTINGS_STORE)) {
         const settingsStore = db.createObjectStore(USER_SETTINGS_STORE, { keyPath: 'key' });
@@ -106,101 +99,22 @@ export const updateLedgerEntry = async (ledgerName, accountName, day, amount, ca
   }
 };
 
-// --- Transaction Functions ---
-
-export const addTransaction = async (transaction) => {
-  if (!transaction.ledgerName || !transaction.accountName || !transaction.amount) {
-    throw new Error('Transaction must include ledgerName, accountName, and amount');
-  }
-
-  if (!(transaction.date instanceof Date)) {
-    transaction.date = new Date(transaction.date || Date.now());
-  }
-
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_STORE], 'readwrite');
-    const store = tx.objectStore(TRANSACTION_STORE);
-    
-    const request = store.add(transaction);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result);
-  });
-};
-
-export const updateTransaction = async (id, updatedTransaction) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_STORE], 'readwrite');
-    const store = tx.objectStore(TRANSACTION_STORE);
-    
-    const getRequest = store.get(id);
-    getRequest.onerror = () => reject(getRequest.error);
-    
-    getRequest.onsuccess = () => {
-      const existingTransaction = getRequest.result;
-      if (!existingTransaction) {
-        reject(new Error('Transaction not found'));
-        return;
-      }
-      
-      const transaction = { ...existingTransaction, ...updatedTransaction, id };
-      
-      const putRequest = store.put(transaction);
-      putRequest.onerror = () => reject(putRequest.error);
-      putRequest.onsuccess = () => resolve(putRequest.result);
-    };
-  });
-};
-
-export const deleteTransaction = async (id) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_STORE], 'readwrite');
-    const store = tx.objectStore(TRANSACTION_STORE);
-    
-    const request = store.delete(id);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve();
-  });
-};
-
-export const getTransactionsByLedger = async (ledgerName) => {
-  const db = await initDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction([TRANSACTION_STORE], 'readonly');
-    const store = tx.objectStore(TRANSACTION_STORE);
-    const index = store.index('ledgerName');
-    
-    const request = index.getAll(ledgerName);
-    request.onerror = () => reject(request.error);
-    request.onsuccess = () => resolve(request.result || []);
-  });
-};
-
 // --- Import/Export Functions ---
 
 export const exportLedgerData = async () => {
   const db = await initDB();
   return new Promise((resolve, reject) => {
-    const transaction = db.transaction([LEDGER_STORE, TRANSACTION_STORE, USER_SETTINGS_STORE], 'readonly');
+    const transaction = db.transaction([LEDGER_STORE, USER_SETTINGS_STORE], 'readonly');
     const ledgerStore = transaction.objectStore(LEDGER_STORE);
-    const transactionStore = transaction.objectStore(TRANSACTION_STORE);
     const settingsStore = transaction.objectStore(USER_SETTINGS_STORE);
     
     const ledgerRequest = ledgerStore.getAll();
-    const transactionRequest = transactionStore.getAll();
     const settingsRequest = settingsStore.getAll();
     
     let ledgers, transactions, userSettings;
     
     ledgerRequest.onsuccess = () => {
       ledgers = ledgerRequest.result;
-      checkComplete();
-    };
-    
-    transactionRequest.onsuccess = () => {
-      transactions = transactionRequest.result;
       checkComplete();
     };
     
@@ -234,37 +148,14 @@ export const importLedgerData = async (importData) => {
   }
 
   const db = await initDB();
-  const transaction = db.transaction([LEDGER_STORE, TRANSACTION_STORE], 'readwrite');
+  const transaction = db.transaction([LEDGER_STORE], 'readwrite');
   const ledgerStore = transaction.objectStore(LEDGER_STORE);
-  const transactionStore = transaction.objectStore(TRANSACTION_STORE);
 
   return new Promise((resolve, reject) => {
     let completedLedgers = 0;
     let failedLedgers = 0;
     let completedTransactions = 0;
-    let failedTransactions = 0;
     let totalOperations = importData.ledgers.length;
-    
-    if (importData.transactions && Array.isArray(importData.transactions)) {
-      totalOperations += importData.transactions.length;
-      
-      importData.transactions.forEach(transaction => {
-        const { id, ...transactionData } = transaction;
-        
-        const request = transactionStore.add(transactionData);
-        
-        request.onsuccess = () => {
-          completedTransactions++;
-          checkCompletion();
-        };
-
-        request.onerror = () => {
-          failedTransactions++;
-          console.error(`Failed to import transaction:`, request.error);
-          checkCompletion();
-        };
-      });
-    }
 
     importData.ledgers.forEach((ledger) => {
       const request = ledgerStore.put(ledger);
@@ -282,10 +173,10 @@ export const importLedgerData = async (importData) => {
     });
 
     function checkCompletion() {
-      if (completedLedgers + failedLedgers + completedTransactions + failedTransactions === totalOperations) {
+      if (completedLedgers + failedLedgers === totalOperations) {
         resolve({
-          success: completedLedgers + completedTransactions,
-          failed: failedLedgers + failedTransactions
+          success: completedLedgers,
+          failed: failedLedgers
         });
       }
     }
@@ -414,6 +305,54 @@ export const getLatestConsent = async (type) => {
   } catch (error) {
     console.error(`Error getting latest ${type} consent:`, error);
     throw error;
+  }
+};
+
+// Record last export timestamp
+export const recordLastExport = async () => {
+  const setting = {
+    type: 'export',
+    timestamp: new Date().toISOString()
+  };
+  
+  return saveSetting('last_export', setting);
+};
+
+// Get last export timestamp
+export const getLastExport = async () => {
+  try {
+    return await getSetting('last_export');
+  } catch (error) {
+    console.error('Error getting last export:', error);
+    return null;
+  }
+};
+
+// Get formatted last export time for display
+export const getLastExportFormatted = async () => {
+  try {
+    const lastExport = await getLastExport();
+    if (!lastExport) {
+      return 'Never exported';
+    }
+    
+    const exportDate = new Date(lastExport.timestamp);
+    const now = new Date();
+    const diffInMs = now.getTime() - exportDate.getTime();
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    
+    if (diffInDays === 0) {
+      return `Today at ${exportDate.toLocaleTimeString()}`;
+    } else if (diffInDays === 1) {
+      return `Yesterday at ${exportDate.toLocaleTimeString()}`;
+    } else if (diffInDays < 7) {
+      return `${diffInDays} days ago`;
+    } else {
+      return exportDate.toLocaleDateString();
+    }
+  } catch (error) {
+    console.error('Error formatting last export:', error);
+    return 'Unknown';
   }
 };
 

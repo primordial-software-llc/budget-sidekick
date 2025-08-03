@@ -3,9 +3,25 @@
 import Link from 'next/link';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 import { UploadIcon, DownloadIcon } from 'lucide-react';
-import { exportLedgerData, importLedgerData  } from '@/utils/indexedDB';
+import { exportLedgerData, importLedgerData, recordLastExport, getLastExportFormatted } from '@/utils/indexedDB';
+import { useState, useEffect } from 'react';
 
 export default function DashboardLayout({ children, currentLedger, availableLedgers, setCurrentLedger, activeTab }) {
+  const [lastExportText, setLastExportText] = useState('');
+
+  // Load last export time on component mount
+  useEffect(() => {
+    const loadLastExportTime = async () => {
+      try {
+        const formattedTime = await getLastExportFormatted();
+        setLastExportText(formattedTime);
+      } catch (error) {
+        console.error('Error loading last export time:', error);
+      }
+    };
+    loadLastExportTime();
+  }, []);
+
   const handleExport = async () => {
     try {
       const data = await exportLedgerData();
@@ -18,6 +34,13 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
+      
+      // Record the export timestamp
+      await recordLastExport();
+      
+      // Update the display with the new export time
+      const updatedTime = await getLastExportFormatted();
+      setLastExportText(updatedTime);
     } catch (error) {
       console.error('Export failed:', error);
       alert('Failed to export data');
@@ -110,13 +133,20 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
                 <UploadIcon className="w-4 h-4" />
                 Import
               </button>
-              <button
-                onClick={handleExport}
-                className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-              >
-                <DownloadIcon className="w-4 h-4" />
-                Export
-              </button>
+              <div className="flex flex-col items-end">
+                <button
+                  onClick={handleExport}
+                  className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                >
+                  <DownloadIcon className="w-4 h-4" />
+                  Export
+                </button>
+                {lastExportText && (
+                  <span className="text-xs text-blue-300 mt-1">
+                    Last: {lastExportText}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </div>

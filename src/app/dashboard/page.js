@@ -1,24 +1,16 @@
 'use client';
 
 import {
-  PieChartIcon,
-  TrendingUpIcon,
-  ArrowDownIcon,
-  LightbulbIcon,
-  BarChart3Icon,
-  CircleDollarSignIcon,
   PencilIcon,
   TrashIcon,
   XIcon,
-  SearchIcon,
-  DownloadIcon,
   PlusIcon,
   LayersIcon
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { saveLedger, getLedger, getAllLedgerNames, getTransactionsByLedger, getLatestConsent, recordConsent } from '@/utils/indexedDB';
-import { DB_NAME, DB_VERSION, LEDGER_STORE, FEATURES } from '@/utils/constants';
+import { saveLedger, getLedger, getAllLedgerNames, getLatestConsent, recordConsent } from '@/utils/indexedDB';
+import { DB_NAME, DB_VERSION, LEDGER_STORE } from '@/utils/constants';
 import Link from 'next/link';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 import DashboardLayout from '@/components/DashboardLayout';
@@ -141,33 +133,6 @@ function Dashboard() {
       try {
         const entries = await getLedger(currentLedger);
         setLedgerEntries(entries);
-        
-        // If transactions feature is enabled, check for entries with transaction sources
-        if (FEATURES.ENABLE_TRANSACTIONS) {
-          const transactions = await getTransactionsByLedger(currentLedger);
-          
-          // Create a map of account+day to transaction count
-          const transactionMap = {};
-          transactions.forEach(transaction => {
-            const day = new Date(transaction.date).getDate();
-            const key = `${transaction.accountName}|${day}`;
-            transactionMap[key] = (transactionMap[key] || 0) + 1;
-          });
-          
-          // Mark entries that have associated transactions
-          const sourceMap = {};
-          entries.forEach(entry => {
-            const key = `${entry.name}|${entry.day}`;
-            if (transactionMap[key] && transactionMap[key] > 0) {
-              sourceMap[key] = {
-                hasTransactions: true,
-                count: transactionMap[key]
-              };
-            }
-          });
-          
-          setEntrySourceMap(sourceMap);
-        }
       } catch (error) {
         console.error('Error loading ledger entries:', error);
       }
@@ -177,15 +142,6 @@ function Dashboard() {
 
   const handleEdit = (entry) => {
     const key = `${entry.name}|${entry.day}`;
-    
-    // If this entry is from transactions, redirect to the transactions page
-    if (FEATURES.ENABLE_TRANSACTIONS && entrySourceMap[key]?.hasTransactions) {
-      // Notify user they should edit this via transactions
-      if (confirm("This entry is aggregated from transactions. Would you like to view the transactions page instead?")) {
-        router.push('/dashboard/transactions');
-        return;
-      }
-    }
     
     setModalMode('edit');
     setEditingEntry(entry);
@@ -199,15 +155,6 @@ function Dashboard() {
   };
 
   const handleDelete = (entryToDelete) => {
-    const key = `${entryToDelete.name}|${entryToDelete.day}`;
-    
-    // If this entry is from transactions, warn the user
-    if (FEATURES.ENABLE_TRANSACTIONS && entrySourceMap[key]?.hasTransactions) {
-      if (!confirm("This entry is aggregated from transactions. Deleting it directly may cause inconsistencies. Continue anyway?")) {
-        return;
-      }
-    }
-    
     const updatedEntries = ledgerEntries.filter(entry => 
       entry.day !== entryToDelete.day || 
       entry.amount !== entryToDelete.amount || 
