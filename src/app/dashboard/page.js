@@ -36,7 +36,8 @@ function Dashboard() {
   const [formData, setFormData] = useState({
     amount: '',
     day: '',
-    name: ''
+    name: '',
+    category: ''
   });
 
   const [currentLedger, setCurrentLedger] = useState('');
@@ -191,7 +192,8 @@ function Dashboard() {
     setFormData({
       amount: entry.amount.toString(),
       day: entry.day.toString(),
-      name: entry.name
+      name: entry.name,
+      category: entry.category || ''
     });
     setIsModalOpen(true);
   };
@@ -227,7 +229,8 @@ function Dashboard() {
     setFormData({
       amount: '',
       day: '',
-      name: ''
+      name: '',
+      category: ''
     });
     setIsModalOpen(true);
   };
@@ -237,7 +240,8 @@ function Dashboard() {
     const newEntry = {
       amount: parseFloat(formData.amount),
       day: parseInt(formData.day),
-      name: formData.name
+      name: formData.name,
+      category: formData.category
     };
 
     let updatedEntries;
@@ -416,6 +420,9 @@ function Dashboard() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Account Name
                   </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Category
+                  </th>
                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Amount
                   </th>
@@ -427,7 +434,7 @@ function Dashboard() {
               <tbody className="bg-white divide-y divide-gray-200">
                 {ledgerEntries.length === 0 ? (
                   <tr>
-                    <td colSpan="4" className="px-6 py-4 text-center text-gray-500">
+                    <td colSpan="5" className="px-6 py-4 text-center text-gray-500">
                       No ledger entries found. Add your first entry to get started.
                     </td>
                   </tr>
@@ -459,6 +466,9 @@ function Dashboard() {
                               )}
                               {entry.name}
                             </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-gray-600">
+                            {entry.category || '-'}
                           </td>
                           <td className={`px-6 py-4 whitespace-nowrap text-right ${entry.amount >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                             {new Decimal(entry.amount).toFixed(2)}
@@ -547,6 +557,22 @@ function Dashboard() {
                   placeholder="Enter entry name"
                   required
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Category
+                </label>
+                <input
+                  type="text"
+                  value={formData.category}
+                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                  className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter category (e.g., Food:Restaurants or Income:Salary)"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Use colons (:) to create subcategories like "Expenses:Food:Groceries"
+                </p>
               </div>
 
               <div className="flex justify-end gap-2 mt-6">

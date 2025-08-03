@@ -145,10 +145,10 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
               Account Summary Report
             </Link>
             <Link 
-              href="/dashboard/account-servicers-report" 
-              className={`px-4 py-3 text-white ${activeTab === 'debit-report' ? 'bg-blue-800' : 'hover:bg-blue-800'}`}
+              href="/dashboard/category-report" 
+              className={`px-4 py-3 text-white ${activeTab === 'category-report' ? 'bg-blue-800' : 'hover:bg-blue-800'}`}
             >
-              Account Servicers Report
+              Category Report
             </Link>
           </div>
         </div>

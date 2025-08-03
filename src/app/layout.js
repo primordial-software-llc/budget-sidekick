@@ -62,7 +62,7 @@ export default function RootLayout({ children }) {
                 "Import/Export functionality",
                 "Detailed financial reports",
                 "Account summary reports",
-                "Account servicers tracking"
+                "Category-based transaction tracking"
               ],
               "screenshot": [
                 {

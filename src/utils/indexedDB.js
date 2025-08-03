@@ -71,7 +71,7 @@ export const getAllLedgerNames = async () => {
   });
 };
 
-export const updateLedgerEntry = async (ledgerName, accountName, day, amount) => {
+export const updateLedgerEntry = async (ledgerName, accountName, day, amount, category = '') => {
   try {
     const entries = await getLedger(ledgerName);
     
@@ -83,12 +83,17 @@ export const updateLedgerEntry = async (ledgerName, accountName, day, amount) =>
     if (entryIndex >= 0) {
       // Update existing entry
       entries[entryIndex].amount = amount;
+      // Update category if provided
+      if (category) {
+        entries[entryIndex].category = category;
+      }
     } else {
       // Add new entry
       entries.push({
         name: accountName,
         day,
-        amount
+        amount,
+        category: category || ''
       });
     }
     
