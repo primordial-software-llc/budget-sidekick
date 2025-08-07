@@ -5,6 +5,7 @@ import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 import { UploadIcon, DownloadIcon, ClockIcon, CalendarIcon, InfoIcon, SettingsIcon } from 'lucide-react';
 import { exportLedgerData, importLedgerData, recordLastExport, getLastExportFormatted } from '@/utils/indexedDB';
 import { useState, useEffect } from 'react';
+import SettingsMenu from '@/components/SettingsMenu';
 
 export default function DashboardLayout({ children, currentLedger, availableLedgers, setCurrentLedger, activeTab }) {
   const [lastExportText, setLastExportText] = useState('');
@@ -145,7 +146,7 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
           </div>
 
           {/* Right side controls */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4">            
             {/* Account Selection Group */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-2">
               <label className="text-sm text-gray-700 font-semibold hidden sm:block tracking-wide">Account:</label>
@@ -230,6 +231,9 @@ export default function DashboardLayout({ children, currentLedger, availableLedg
                 </div>
               )}
             </div>
+
+            {/* Settings Menu - All the way to the right */}
+            <SettingsMenu />
           </div>
         </div>
         </div>
