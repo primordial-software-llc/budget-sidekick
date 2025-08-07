@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { getLedger, getAllLedgerNames, getLatestConsent, recordConsent } from '@/utils/indexedDB';
+import { getLedger, getAllLedgerNames, getLatestConsent, recordConsent, saveLedger } from '@/utils/indexedDB';
 import Link from 'next/link';
 import { LOCAL_STORAGE_KEY_LEDGER } from '@/utils/constants';
 import DashboardLayout from '@/components/DashboardLayout';
