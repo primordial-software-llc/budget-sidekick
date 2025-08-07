@@ -1,64 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { SettingsIcon, InfoIcon, GitBranchIcon, GitCommitIcon, UserIcon } from 'lucide-react';
+import { SettingsIcon, InfoIcon } from 'lucide-react';
 
 function SettingsMenu() {
   const [isExpanded, setIsExpanded] = useState(false);
 
 
-  // These environment variables are automatically available in Next.js when prefixed with NEXT_PUBLIC_
-  const buildInfo = {
-    deploymentId: process.env.NEXT_PUBLIC_VERCEL_DEPLOYMENT_ID || 'dev-local',
-    gitCommitSha: process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || 'unknown',
-    gitCommitMessage: process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_MESSAGE || 'Local development',
-    gitBranch: process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_REF || 'local',
-    gitAuthor: process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_AUTHOR_NAME || 'Developer',
-    environment: process.env.NEXT_PUBLIC_VERCEL_ENV || 'development',
-    vercelUrl: process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost',
-  };
+  // Get commit SHA from Vercel environment variable
+  const commitSha = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || 'dev';
 
-  // Format deployment ID for display (shorter version)
-  const shortDeploymentId = buildInfo.deploymentId.startsWith('dpl_') 
-    ? buildInfo.deploymentId.slice(4, 12) 
-    : buildInfo.deploymentId.slice(0, 8);
-
-  // Format commit SHA for display
-  const shortCommitSha = buildInfo.gitCommitSha.slice(0, 7);
-
-  // Format commit message (truncate if too long)
-  const shortCommitMessage = buildInfo.gitCommitMessage.length > 35 
-    ? buildInfo.gitCommitMessage.slice(0, 32) + '...' 
-    : buildInfo.gitCommitMessage;
-
-  // Get environment styling
-  const getEnvStyling = (env) => {
-    switch (env) {
-      case 'production': 
-        return {
-          bg: 'bg-gradient-to-r from-emerald-100 to-emerald-200',
-          text: 'text-emerald-800',
-          border: 'border-emerald-300/50',
-          dot: 'bg-emerald-500'
-        };
-      case 'preview': 
-        return {
-          bg: 'bg-gradient-to-r from-amber-100 to-yellow-200',
-          text: 'text-amber-800',
-          border: 'border-amber-300/50',
-          dot: 'bg-yellow-500'
-        };
-      default: 
-        return {
-          bg: 'bg-gradient-to-r from-gray-100 to-gray-200',
-          text: 'text-gray-800',
-          border: 'border-gray-300/50',
-          dot: 'bg-gray-500'
-        };
-    }
-  };
-
-  const envStyle = getEnvStyling(buildInfo.environment);
+  // Format commit SHA for display (first 7 characters, standard git short hash)
+  const shortCommitSha = commitSha === 'dev' ? 'dev' : commitSha.slice(0, 7);
 
   return (
     <div className="relative">
@@ -104,82 +57,20 @@ function SettingsMenu() {
 
               {/* Menu Items */}
               <div className="p-2">
-                {/* Build Information */}
-                <div className="bg-gradient-to-r from-gray-50/80 to-white/80 p-4 rounded-xl border border-gray-200/30 mb-3">
-                  <div className="flex items-center gap-2 mb-3">
-                    <InfoIcon className="w-4 h-4 text-emerald-600" />
-                    <span className="font-semibold text-gray-900 text-sm">Build Information</span>
-                  </div>
-
-                  <div className="space-y-3">
-                    {/* Environment & Build ID */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <span className="text-xs text-gray-600 block mb-1">Environment</span>
-                        <span className={`px-2 py-1 rounded-lg text-xs font-semibold border ${envStyle.bg} ${envStyle.text} ${envStyle.border} block text-center`}>
-                          {buildInfo.environment}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-xs text-gray-600 block mb-1">Build ID</span>
-                        <span className="font-mono text-xs bg-white px-2 py-1 rounded border border-gray-200 text-gray-800 block text-center">
-                          {shortDeploymentId}
-                        </span>
-                      </div>
+                {/* Version */}
+                <div className="bg-gradient-to-r from-gray-50/80 to-white/80 p-3 rounded-xl border border-gray-200/30 mb-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <InfoIcon className="w-4 h-4 text-emerald-600" />
+                      <span className="font-semibold text-gray-900 text-sm">Version</span>
                     </div>
-
-                    {/* Git Information */}
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-600 flex items-center gap-1">
-                          <GitCommitIcon className="w-3 h-3" />
-                          Commit
-                        </span>
-                        <span className="font-mono text-xs bg-white px-2 py-0.5 rounded border border-gray-200 text-gray-800">
-                          {shortCommitSha}
-                        </span>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-600 flex items-center gap-1">
-                          <GitBranchIcon className="w-3 h-3" />
-                          Branch
-                        </span>
-                        <span className="font-mono text-xs bg-white px-2 py-0.5 rounded border border-gray-200 text-gray-800">
-                          {buildInfo.gitBranch}
-                        </span>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-600 flex items-center gap-1">
-                          <UserIcon className="w-3 h-3" />
-                          Author
-                        </span>
-                        <span className="text-xs bg-white px-2 py-0.5 rounded border border-gray-200 text-gray-800">
-                          {buildInfo.gitAuthor}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Commit Message */}
-                    {buildInfo.gitCommitMessage && buildInfo.gitCommitMessage !== 'Local development' && (
-                      <div className="pt-2 border-t border-gray-200/50">
-                        <span className="text-xs text-gray-600 block mb-1">Latest Commit</span>
-                        <p className="text-xs text-gray-700 leading-relaxed italic bg-white px-2 py-1 rounded border border-gray-200">
-                          "{shortCommitMessage}"
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Deployment URL */}
-                    {buildInfo.environment !== 'development' && buildInfo.vercelUrl && (
-                      <div className="pt-2 border-t border-gray-200/50">
-                        <span className="text-xs text-gray-600 block mb-1">Deployed to</span>
-                        <div className="font-mono bg-white px-2 py-1 rounded border border-gray-200 text-xs text-gray-700 break-all">
-                          {buildInfo.vercelUrl}
-                        </div>
-                      </div>
-                    )}
+                    <span className={`font-mono text-xs px-2 py-1 rounded ${
+                      shortCommitSha === 'dev' 
+                        ? 'bg-blue-100 text-blue-700' 
+                        : 'bg-gray-100 text-gray-700'
+                    }`}>
+                      {shortCommitSha}
+                    </span>
                   </div>
                 </div>
               </div>
