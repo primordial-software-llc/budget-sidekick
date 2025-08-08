@@ -118,7 +118,26 @@ function Dashboard() {
       
       try {
         const entries = await getLedger(currentLedger);
-        setLedgerEntries(entries);
+        
+        // Backward compatibility: Add IDs to entries that don't have them
+        let hasNewIds = false;
+        const entriesWithIds = entries.map(entry => {
+          if (!entry.id) {
+            hasNewIds = true;
+            return {
+              ...entry,
+              id: `entry_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+            };
+          }
+          return entry;
+        });
+        
+        // If we added new IDs, save them back to the database
+        if (hasNewIds) {
+          await saveLedger(currentLedger, entriesWithIds);
+        }
+        
+        setLedgerEntries(entriesWithIds);
       } catch (error) {
         console.error('Error loading ledger entries:', error);
       }
@@ -142,9 +161,7 @@ function Dashboard() {
 
   const handleDelete = (entryToDelete) => {
     const updatedEntries = ledgerEntries.filter(entry => 
-      entry.day !== entryToDelete.day || 
-      entry.amount !== entryToDelete.amount || 
-      entry.name !== entryToDelete.name
+      entry.id !== entryToDelete.id
     );
 
     saveLedger(currentLedger, updatedEntries)
@@ -171,6 +188,7 @@ function Dashboard() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newEntry = {
+      id: modalMode === 'edit' && editingEntry.id ? editingEntry.id : `entry_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       amount: parseFloat(formData.amount),
       day: parseInt(formData.day),
       name: formData.name,
@@ -182,11 +200,7 @@ function Dashboard() {
       updatedEntries = [...ledgerEntries, newEntry];
     } else if (modalMode === 'edit' && editingEntry) {
       updatedEntries = ledgerEntries.map(entry => 
-        (entry.day === editingEntry.day && 
-         entry.amount === editingEntry.amount && 
-         entry.name === editingEntry.name)
-          ? newEntry 
-          : entry
+        entry.id === editingEntry.id ? newEntry : entry
       );
     }
     

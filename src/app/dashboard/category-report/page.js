@@ -116,17 +116,25 @@ function CategoryItem({ name, data, level = 0, onToggle, fullPath = name }) {
           {/* Render individual entries if this is a leaf category */}
           {hasEntries && data.isLeaf && (
             <div style={{ paddingLeft: `${(level + 1) * 20}px` }}>
-              {data.entries.map((entry, index) => {
-                const entryAmount = new Decimal(entry.amount);
-                return (
-                  <div key={index} className="flex justify-between py-1 text-gray-600">
-                    <span>{entry.name}</span>
-                    <span className={`font-mono ${entryAmount.gte(0) ? 'text-green-600' : 'text-red-600'}`}>
-                      ${entryAmount.toFormat(2)}
+              {(() => {
+                // Group entries by name and sum their amounts
+                const groupedEntries = data.entries.reduce((acc, entry) => {
+                  if (!acc[entry.name]) {
+                    acc[entry.name] = new Decimal(0);
+                  }
+                  acc[entry.name] = acc[entry.name].plus(new Decimal(entry.amount));
+                  return acc;
+                }, {});
+                
+                return Object.entries(groupedEntries).map(([entryName, totalAmount]) => (
+                  <div key={entryName} className="flex justify-between py-1 text-gray-600">
+                    <span>{entryName}</span>
+                    <span className={`font-mono ${totalAmount.gte(0) ? 'text-green-600' : 'text-red-600'}`}>
+                      ${totalAmount.toFormat(2)}
                     </span>
                   </div>
-                );
-              })}
+                ));
+              })()}
             </div>
           )}
         </div>

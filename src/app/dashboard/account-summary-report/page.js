@@ -38,7 +38,7 @@ function createNestedStructure(entries) { // Helper function to create nested st
       }
       
       if (index === categories.length - 1) {
-        current[category].amount = new Decimal(entry.amount);
+        current[category].amount = current[category].amount.plus(new Decimal(entry.amount));
         current[category].isLeaf = true;
       }
       
